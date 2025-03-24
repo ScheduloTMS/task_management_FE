@@ -1,13 +1,14 @@
-import SubmitButton from "./Components/Button/SubmitButton"
+// App.jsx
+import React from 'react';
+import LoginPage from './Pages/LoginPage'
 
-function App() 
-{
- return(
-  <header>
-    <h1>Hello World</h1>
-    < SubmitButton />
-  </header>
- )
+function App() {
+  return (
+    <header>
+      <LoginPage/>
+    </header>
+  );
 }
 
-export default App
+export default App;
+

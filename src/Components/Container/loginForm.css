@@ -1,0 +1,9 @@
+.form-container {
+    width: 100%; 
+  }
+  
+  .input-group-text {
+    background-color: white;
+    border-right: none;
+  }
+  
