@@ -7,20 +7,11 @@
   height: 100vh; 
 }
 
-
-.left-section,
-.right-section {
-  flex: 1; 
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
-}
-
 .divider {
   width: 1px; 
-  background-color: #56358E; 
   height: 80%; 
- 
+  background: linear-gradient(to bottom, #56358E); 
+  box-shadow: 0 0 3px rgba(86, 53, 142, 0.5); 
+  
 }
-
 

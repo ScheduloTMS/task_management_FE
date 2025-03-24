@@ -10,11 +10,9 @@ const LoginPage = () => {
   return (
     <div className="container">
 
-      <div className="left-section">
         <div className="logo-container">
           <MainLogo />
         </div>
-      </div>
 
       <div className="divider"></div>
       
