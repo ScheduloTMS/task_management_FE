@@ -10,3 +10,22 @@
     border-right: none;
   }
   
+  .eye-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+.password-wrapper {
+  display: flex;
+  flex: 1; 
+  border: 1px solid #ced4da; 
+  border-radius: 5px; 
+  overflow: hidden;
+}
+
+.password-input {
+
+  border: none; 
+  outline: none; 
+}

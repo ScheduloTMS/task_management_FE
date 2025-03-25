@@ -4,7 +4,7 @@ import './loginPage.css';
 
 import MainLogo from '../components/Container/MainLogo.jsx';
 import LoginForm from '../components/Container/LoginForm.jsx';
-import LoginButton from '../components/Button/DefaultButton.jsx';
+import LoginButton from '../components/Button/Button.jsx';
 
 const LoginPage = () => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './defaultButton.css';
+import './Button.css';
 
 const Button = ({ label = 'Default', onClick, type = 'button', className = '' }) => {
   return (
