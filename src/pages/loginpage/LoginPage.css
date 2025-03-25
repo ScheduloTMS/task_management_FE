@@ -1,0 +1,43 @@
+.login-container {
+    display: flex;
+    overflow: hidden;
+    gap: 12rem;
+  }
+  
+ 
+  .left-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+  }
+  
+ 
+  .divider1 {
+    width: 1px;
+    background: rgb(86, 53, 142, 0.2);
+  }
+  
+ 
+  .right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+
+  }
+  
+  .user-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10%;
+  }
+  
+  .log {
+    margin-bottom: 10%;
+  }
+
+ 
