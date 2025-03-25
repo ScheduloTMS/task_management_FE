@@ -1,0 +1,18 @@
+.logo-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1rem;
+  }
+  
+  .logo-img {
+    width: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .site-name {
+    font-family: 'Inknut Antiqua', serif;
+    font-size: 80px;
+    color: #56358E;
+  }
+  

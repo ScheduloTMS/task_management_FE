@@ -1,11 +1,10 @@
-// App.jsx
 import React from 'react';
-import LoginPage from './Pages/LoginPage'
+import LoginPage from "./pages/loginpage/LoginPage.jsx";
 
 function App() {
   return (
     <header>
-      <LoginPage/>
+      <LoginPage />
     </header>
   );
 }

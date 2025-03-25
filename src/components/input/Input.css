@@ -1,0 +1,44 @@
+.input-field {
+  display: flex;
+  align-items: center;
+  width: 450px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(133, 133, 133, 0.3);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 30px; 
+  position: relative;
+}
+
+.input-icon {
+  font-size: 30px;
+  color: #56358E; 
+  margin-right: 8px;
+}
+
+.divider {
+  height: 30px;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.2);
+  margin-right: 8px;
+}
+
+.input-box {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  outline: none;
+  color: #000;
+}
+
+.input-box::placeholder {
+  color: #949393;
+}
+
+.eye-icon {
+  font-size: 22px;
+  cursor: pointer;
+  color: #5c2d91;
+  margin-right: 8px;
+}
