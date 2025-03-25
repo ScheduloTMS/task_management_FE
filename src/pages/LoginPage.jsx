@@ -2,9 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './loginPage.css';
 
-import MainLogo from '../Components/Container/MainLogo.jsx';
-import LoginForm from '../Components/Container/LoginForm.jsx';
-import LoginButton from '../Components/Button/LoginButton';
+import MainLogo from '../components/Container/MainLogo.jsx';
+import LoginForm from '../components/Container/LoginForm.jsx';
+import LoginButton from '../components/Button/DefaultButton.jsx';
 
 const LoginPage = () => {
   return (
@@ -19,7 +19,7 @@ const LoginPage = () => {
       <div className="right-section">
         <div className="form-container">
           <LoginForm />
-          <LoginButton />
+          <LoginButton label='Login'/>
         </div>
       </div>
 

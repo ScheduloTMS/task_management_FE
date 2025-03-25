@@ -1,6 +1,6 @@
 // App.jsx
 import React from 'react';
-import LoginPage from './Pages/LoginPage'
+import LoginPage from './pages/LoginPage'
 
 function App() {
   return (
