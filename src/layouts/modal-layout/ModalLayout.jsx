@@ -1,6 +1,6 @@
 
 import React from "react";
-import Alert from "../components/modal/Alert";
+import Alert from "../../components/modal/Alert";
 
 export const SuccessAlert = (props) => (
   <Alert 
