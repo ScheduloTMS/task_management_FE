@@ -1,7 +1,7 @@
 .input-field {
   display: flex;
   align-items: center;
-  width: 450px;
+  width: 100%;
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(133, 133, 133, 0.3);
   padding: 12px;
