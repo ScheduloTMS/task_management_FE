@@ -1,6 +1,6 @@
 .topbar {
     display: flex;
-    justify-content: space-between;  /* Aligns Searchbar and User on opposite ends */
+    justify-content: space-between; 
     align-items: flex-start;
     padding: 10px 20px;
     border-radius: 12px;

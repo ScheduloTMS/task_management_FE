@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from "../../components/input/Input.jsx";
 import { FiLock } from "react-icons/fi";
-import "./changePassword.css";
+import "./ChangePassword.css";
 
 const ChangePassword = () => {
   const [passwords, setPasswords] = useState({
