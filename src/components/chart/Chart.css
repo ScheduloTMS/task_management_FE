@@ -1,0 +1,55 @@
+.chartContainer {
+    max-width: 601px;
+    margin: auto;
+    border-radius: 10px;
+    background:#efeaf3;
+    position: relative;
+    text-align: center;
+    
+  }
+  .text-center {
+    color: rgba(41, 41, 41);
+    
+  } 
+  .chartWrapper {
+    position: relative;
+    display: flex;
+  justify-content: flex-start;
+    align-items: center;
+  }
+  
+  
+  .totalTasks {
+    position: absolute;
+    top: 60%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: rgba(41, 41, 41);
+    
+  }
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 20px; 
+    margin-top: 27px; 
+  }
+  
+  .legendItem {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    
+    
+  }
+  
+  .legendColor {
+    width: 18px;
+    height: 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 8px;
+  }
+  
