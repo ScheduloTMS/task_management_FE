@@ -1,10 +1,11 @@
 import React from 'react';
-import LoginPage from "./pages/loginpage/LoginPage.jsx";
+//import LoginPage from "./pages/loginpage/LoginPage.jsx";
+import Calendar from "./components/calendar/Calendar.jsx";
 
 function App() {
   return (
     <header>
-      <LoginPage />
+      <Calendar />
     </header>
   );
 }
