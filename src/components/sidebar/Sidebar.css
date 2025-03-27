@@ -1,0 +1,139 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #efeaf3;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease-in-out;
+    padding: 10px;
+    position: relative;
+    align-items: start;
+    overflow: hidden;
+  }
+  
+  .sidebar.collapsed {
+    width: 80px;
+    align-items: center;
+  }
+  
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+  }
+  
+   
+  
+  .collapse-btn {
+    background: none;
+    border: none;
+    color: rgba(41, 41, 41);
+    opacity: 60%;
+    cursor: pointer;
+    margin-bottom: 8px;
+    font-size: 24px;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    left : 180px;
+    
+  }
+  
+  .sidebar-menu {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+    
+  }
+  
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: rgba(41, 41, 41);
+    opacity: 60%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; 
+    border-radius: 20px;
+    
+  }
+  
+  
+  .sidebar-item:hover {
+    background: rgba(94, 60, 154, 0.11);
+    color: #56358E;
+  }
+   
+  .sidebar-item:hover svg {
+    color: #56358E; 
+}
+  .sidebar.collapsed .sidebar-text {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+.sidebar-item svg {
+    font-size: 20px;
+    transition: all 0.3s ease-in-out;
+
+}
+.sidebar.collapsed .sidebar-menu {
+    align-items: center;
+    gap: 13px; 
+    margin-top: 75px;
+}
+
+
+.sidebar.collapsed .sidebar-item svg {
+    font-size: 28px; 
+    
+}
+.sidebar.collapsed .collapse-btn {
+    top: 70px; 
+    left: 10px;
+
+}
+ 
+.logo-section {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: start !important;
+    gap: 8px !important;
+    width: 100% !important;
+    min-height: 60px !important;
+    padding: 0.25px !important;
+   
+  }
+  
+
+  .site-name {
+    font-family: 'Inknut Antiqua', serif;
+    font-size: 30px!important;
+    color: #56358E;
+  }
+  
+  
+  .logo-img {
+    width: 35px !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+  
+ 
+  .sidebar.collapsed .site-name {
+    display: none !important;
+  }
+  
+  
+  .sidebar.collapsed .logo-section {
+    justify-content: center !important;
+    min-height: 60px !important; 
+  }
+  
