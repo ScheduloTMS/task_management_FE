@@ -1,64 +1,48 @@
-import React from "react";
-import { FaUser, FaLock, FaSignOutAlt } from "react-icons/fa";
-import { Dropdown } from "react-bootstrap";
-import "./User.css"; 
+import React, { useState } from 'react';
+import './UserProfileDropdown.css';
+import avatarSrc from "../../assets/Shape.png";
 
-const UserDropdown = ({ userName = "Jane Joseph" }) => {
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <div
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-      className="dropdown-toggle-custom"
-    >
-      <div className="user-avatar">
-        {userName.charAt(0)}
-      </div>
-      <span className="user-name">{userName}</span>
-      {children}
-    </div>
-  ));
+const UserProfileDropdown = ({ user }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  
+  
 
   return (
-    <Dropdown className="user-dropdown-container">
-      <Dropdown.Toggle as={CustomToggle}>
-        <svg
-          className="dropdown-arrow"
-          width="12"
-          height="12"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M4 6L8 10L12 6"
-            stroke="#666"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu className="dropdown-menu-custom">
-        <Dropdown.Item className="menu-item">
-          <FaUser className="menu-icon" />
-          <span>Profile</span>
-        </Dropdown.Item>
-        <Dropdown.Item className="menu-item">
-          <FaLock className="menu-icon" />
-          <span>Change Password</span>
-        </Dropdown.Item>
-        <Dropdown.Divider className="menu-divider" />
-        <Dropdown.Item className="menu-item logout">
-          <FaSignOutAlt className="menu-icon" />
-          <span>Logout</span>
-        </Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+    <div className={`user-profile-wrapper ${isOpen ? 'active' : ''}`}>
+      <div className="user-profile" onClick={toggleDropdown}>
+        <div className="avatar-container">
+          <img src={avatarSrc} alt="User Avatar" className="avatar" />
+        </div>
+        <div className="username">{user.name}</div>
+        <div className={`dropdown-arrow ${isOpen ? 'open' : ''}`}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      
+      {isOpen && (
+        <div className="dropdown-menu">
+          <ul>
+            <li>
+              <a href="#profile">Profile</a>
+            </li>
+            <li>
+              <a href="#change-password">Change Password</a>
+            </li>
+            <li>
+              <a href="#logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default UserDropdown;
+export default UserProfileDropdown;
