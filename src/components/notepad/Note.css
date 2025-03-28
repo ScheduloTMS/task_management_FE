@@ -1,0 +1,124 @@
+.notepad-container {
+    width: 400px;
+    height: 500px; 
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  h2 {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  
+  .date {
+    font-size: 0.9rem;
+    color: #777;
+  }
+  
+ 
+  .header {
+    margin-bottom: 0;
+  }
+  
+  .date-header-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .add-btn {
+    background: transparent; 
+    border: none;
+    padding: 0; 
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .add-btn svg {
+    width: 40px; 
+  height: 40px;
+  color: #56358e; 
+  }
+  .add-btn:hover svg {
+    color: #4a1d6e; 
+    transform: scale(1.1); 
+  }
+  
+  
+  
+  .note-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    color: #777;
+  }
+  
+ 
+  .note-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-height: 350px; 
+    overflow-y: auto; 
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+   
+  }
+  
+  .note-list li {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 13px;
+    margin: 15px 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .note-list li.completed span {
+    text-decoration: line-through;
+    color: gray;
+  }
+  
+  .note-list li input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: #56358e; 
+  }
+  
+  .delete-btn {
+    background: transparent;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: auto;
+  }
+  
+  .delete-btn:hover {
+    color: darkred;
+  }
+  
+  .note-list::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .note-list::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 4px;
+  }
+  
+  .note-list::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
+  
