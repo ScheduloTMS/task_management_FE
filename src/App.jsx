@@ -2,12 +2,12 @@ import React from 'react';
 //import LoginPage from "./pages/loginpage/LoginPage.jsx";
 //import Calendar from "./components/calendar/Calendar.jsx";
 //import User from "./components/user/User.jsx";
-import TaskCard from "./components/task-card/TaskCard.jsx";
+import TaskCardLayout from "./layouts/task-card-layout/TaskCardLayout.jsx";
 
 function App() {
   return (
     <header>
-      <TaskCard />
+      <TaskCardLayout />
     </header>
   );
 }
