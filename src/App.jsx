@@ -1,11 +1,13 @@
 import React from 'react';
-//import Page from "./pages/loginpage/LoginPage.jsx";
-import Page from "./pages/changePassword/ChangePassword.jsx";
+//import LoginPage from "./pages/loginpage/LoginPage.jsx";
+//import Calendar from "./components/calendar/Calendar.jsx";
+//import User from "./components/user/User.jsx";
+import TaskCardLayout from "./layouts/task-card-layout/TaskCardLayout.jsx";
 
 function App() {
   return (
     <header>
-      <Page />
+      <TaskCardLayout />
     </header>
   );
 }

@@ -1,0 +1,62 @@
+.kanban-board {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+  }
+  
+  .kanban-column {
+    flex: 1;
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 8px;
+    min-width: 200px;
+  }
+  
+  .kanban-card {
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .progress-bar {
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: #4caf50;
+  }
+  
+  .mentor-info {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    position: relative;
+  }
+  
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-left: -10px; /* Creates overlapping effect */
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .avatar:first-child {
+    margin-left: 0; /* No overlap for first image */
+  }
+  
+  .avatar:hover {
+    transform: scale(1.2); /* Slight zoom effect on hover */
+    z-index: 10;
+  }
+  

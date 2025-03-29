@@ -1,0 +1,8 @@
+.task-board {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 100%;
+    margin: auto;
+  }
+  
