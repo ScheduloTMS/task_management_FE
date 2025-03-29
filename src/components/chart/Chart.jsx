@@ -6,13 +6,13 @@ const Chart = ({ tasks }) => {
   const [taskData, setTaskData] = useState([]);
 
   useEffect(() => {
-    if (tasks.length > 0) {
+    if (tasks && tasks.length > 0) { 
       const totalTasks = tasks.length;
       const toDo = tasks.filter(task => task.status === "To Do").length;
       const inProgress = tasks.filter(task => task.status === "In Progress").length;
       const completed = tasks.filter(task => task.status === "Completed").length;
       const overdue = tasks.filter(task => task.status === "Overdue").length;
-
+  
       const calculatedData = [
         { name: "Total Tasks", value: totalTasks, fill: "#d3d3d3" },
         { name: "To Do", value: toDo, fill: "#56358E" },
@@ -20,11 +20,12 @@ const Chart = ({ tasks }) => {
         { name: "Completed", value: completed, fill: "#28a745" },
         { name: "Overdue", value: overdue, fill: "#dc3545" },
       ];
-
+  
       setTaskData(calculatedData);
+    } else {
+      setTaskData([]); 
     }
   }, [tasks]);
-
   const totalTasks = taskData.find(item => item.name === "Total Tasks")?.value || 0;
   const filteredData = taskData.filter(item => item.name !== "Total Tasks");
 
