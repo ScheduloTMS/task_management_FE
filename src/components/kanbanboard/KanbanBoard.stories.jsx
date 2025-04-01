@@ -19,6 +19,9 @@ const sampleTasks = [
       { name: "Jane Smith", avatar: "https://via.placeholder.com/28" },
     ],
   },
+
+  
+  
   {
     id: 2,
     title: "Assignment Review",
@@ -32,7 +35,7 @@ const sampleTasks = [
     ],
   },
   {
-    id: 1,
+    id: 3,
     title: "Group Project",
     dueDate: "2025-04-10",
     status: "Completed",
@@ -43,7 +46,7 @@ const sampleTasks = [
     ],
   },
   {
-    id: 1,
+    id: 4,
     title: "Group Project",
     dueDate: "2025-04-10",
     status: "Overdue",
@@ -53,6 +56,7 @@ const sampleTasks = [
       { name: "Jane Smith", avatar: "https://via.placeholder.com/28" },
     ],
   },
+  
 ];
 
 export const StudentView = () => <KanbanBoard tasks={sampleTasks} isMentor={false} />;
