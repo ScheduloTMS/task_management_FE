@@ -30,21 +30,19 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    
   }
   
   .add-btn {
     background: transparent; 
     border: none;
-    padding: 0; 
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
+
   .add-btn svg {
     width: 40px; 
-  height: 40px;
-  color: #56358e; 
+    height: 40px;
+    color: #56358e; 
   }
   .add-btn:hover svg {
     color: #4a1d6e; 

@@ -1,0 +1,47 @@
+
+.custom-modal .modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  .animate-popup {
+    animation: popupFade 0.3s ease-in-out;
+  }
+  
+  @keyframes popupFade {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .custom-save-button {
+    background: #56358E;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    min-width: 30%;
+    cursor: pointer;
+    margin-left: 35%;
+    margin-top: 5%;
+    transition: background 0.3s ease-in-out;
+  }
+
+  
+  .custom-save-button:hover {
+    background-color: #462b75;
+    color: white;
+  }
+
+  .modal-body{
+    padding: 30px;
+  }
+  

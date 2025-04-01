@@ -4,6 +4,7 @@ import Chart from "../../components/chart/Chart.jsx";
 import CalendarNotesLayout from "../../layouts/calendarnotes-layout/CalendarNotesLayout.jsx";
 import TaskCardLayout from "../../layouts/task-card-layout/TaskCardLayout.jsx";
 import TopbarLayout from "../../layouts/topbar/Topbar.jsx";
+import Graph from '../../components/graph/Graph.jsx';
 
 import "./StudentDashboard.css";
 
@@ -16,8 +17,11 @@ const StudentDashboard = () => {
         <TopbarLayout />
 
         <div className="dashboard-content">
-          <div className="dashboard-box chart">
-            <Chart />
+          <div className="chart-graph">
+            <div className="dashboard-box chart">
+              <Chart />
+              <Graph/>
+            </div>   
           </div>
 
           <div className="dashboard-box task-card">

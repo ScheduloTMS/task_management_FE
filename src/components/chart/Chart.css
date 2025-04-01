@@ -1,5 +1,5 @@
 .chartContainer {
-    max-width: 100%;
+    width: 150%;
     align-items: flex-start;
     border-radius: 10px;
     position: relative;

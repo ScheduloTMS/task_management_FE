@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { FaUser, FaKey, FaSignOutAlt } from 'react-icons/fa';
-import { MdArrowDropDown,MdArrowDropUp } from "react-icons/md";
+import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
+import EditProfileSheet from '../sidesheets/EditProfileSheet'; // Profile modal
+import UpdatePasswordModal from '../sidesheets/ChangePasswordSheet'; // New password modal
 import './User.css';
 
 const User = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+
   const [user] = useState({
     name: 'Jaimie Miller',
     photo: 'https://randomuser.me/api/portraits/men/1.jpg'
@@ -26,14 +31,18 @@ const User = () => {
 
       {isOpen && (
         <div className="user-dropdown">
-          
-           
           <div className="dropdown-options">
-            <div className="dropdown-item">
+            <div className="dropdown-item" onClick={() => { 
+              setShowProfileModal(true);
+              setIsOpen(false); 
+            }}>
               <FaUser className="option-icon" />
               <span>Profile</span>
             </div>
-            <div className="dropdown-item">
+            <div className="dropdown-item" onClick={() => { 
+              setShowPasswordModal(true);
+              setIsOpen(false); 
+            }}>
               <FaKey className="option-icon" />
               <span>Change Password</span>
             </div>
@@ -47,6 +56,9 @@ const User = () => {
           </div>
         </div>
       )}
+
+      {showProfileModal && <EditProfileSheet onClose={() => setShowProfileModal(false)} />}
+      {showPasswordModal && <UpdatePasswordModal onClose={() => setShowPasswordModal(false)} />}
     </div>
   );
 };
