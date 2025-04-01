@@ -10,28 +10,22 @@ import "./StudentDashboard.css";
 const StudentDashboard = () => {
   return (
     <div className="dashboard-container">
-      
-      {/* Sidebar */}
       <Sidebar className="sidebar" />
 
       <div className="main-content">
-        {/* Topbar */}
         <TopbarLayout />
 
         <div className="dashboard-content">
-          {/* Chart (Left Top) */}
           <div className="dashboard-box chart">
             <Chart />
           </div>
 
-          {/* Task Board (Below Chart) */}
           <div className="dashboard-box task-card">
-            <h4 className="dashboard-main-heading">Task Board</h4>
+            <h5 className="dashboard-main-heading">Task Board</h5>
             <TaskCardLayout />
           </div>
 
-          {/* Calendar & Notes (Extreme Right) */}
-          <div className="dashboard-box calendar-notes">
+          <div className="dashboard-box calendarnote">
             <CalendarNotesLayout />
           </div>
         </div>

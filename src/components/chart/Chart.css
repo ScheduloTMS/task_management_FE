@@ -6,16 +6,18 @@
     text-align: center;
     box-shadow: none !important;
     border: none;
-    height: 80%;
+    height: 108%;
     background: linear-gradient(180deg,#efeaf3, hsl(0, 0%, 100%), #efeaf3);
+    
   }
 
   .chartWrapper {
     position: relative;
     display: flex;
+    padding: 15px;
     justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
   }
   
   

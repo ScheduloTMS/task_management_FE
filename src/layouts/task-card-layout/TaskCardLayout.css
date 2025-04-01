@@ -1,7 +1,6 @@
 .task-cards-container {
-    width: 700px; 
+    width: 950px; 
     overflow-x: auto;
-    margin: 0;
     padding: 20px;
     overflow-y: hidden;
     border-radius: 12px;
