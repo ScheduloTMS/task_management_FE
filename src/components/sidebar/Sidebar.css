@@ -116,18 +116,6 @@
    
   }
   
-
-  .site-name {
-    font-family: 'Inknut Antiqua', serif;
-    font-size: 25px!important;
-    color: #56358E;
-  }
-  
-  
-  .logo-img {
-    width: 33px !important;
-    object-fit: contain !important;
-  }
   
  
   .sidebar.collapsed .site-name {

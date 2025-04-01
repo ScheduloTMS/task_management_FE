@@ -1,59 +1,53 @@
-import React, { useState } from "react";
-import Input from "../../components/input/Input.jsx";
-import { FiLock } from "react-icons/fi";
-import "./ChangePassword.css";
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { authState } from '../../states/authState.jsx';
+import { changePassword } from "../../services/authService"; 
+import { useNavigate } from "react-router-dom";
 
 const ChangePassword = () => {
+  const [auth, setAuth] = useRecoilState(authState);
+  const resetAuth = useResetRecoilState(authState);
+  const navigate = useNavigate();
+
   const [passwords, setPasswords] = useState({
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
-
-  const [validations, setValidations] = useState({
-    length: null,
-    uppercase: null,
-    lowercase: null,
-    specialChar: null,
-    number: null
-  });
+  
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (field, value) => {
-    setPasswords((prev) => ({ ...prev, [field]: value }));
-
-    if (field === "newPassword") {
-      const hasValue = value.length > 0;
-      setValidations({
-        length: hasValue ? value.length >= 6 : null,
-        uppercase: hasValue ? /[A-Z]/.test(value) : null,
-        lowercase: hasValue ? /[a-z]/.test(value) : null,
-        specialChar: hasValue ? /[!@#$%^&*(),.?":{}|<>]/.test(value) : null,
-        number: hasValue ? /\d/.test(value) : null,
-      });
-    }
+    setPasswords(prev => ({ ...prev, [field]: value }));
   };
 
-  const isPasswordValid = Object.values(validations).every(val => val === true);
-  const isConfirmMatch = passwords.newPassword === passwords.confirmPassword;
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isPasswordValid && isConfirmMatch) {
-      alert("Password updated successfully!");
-    } else {
-      alert("Please fix the errors before proceeding.");
+    
+    if (passwords.newPassword !== passwords.confirmPassword) {
+      setError("New password and confirm password do not match.");
+      return;
     }
-  };
 
-  const getValidationClass = (condition) => {
-    if (condition === null) return "neutral";
-    return condition ? "valid" : "invalid";
+    setAuth(prev => ({ ...prev, isLoading: true }));
+
+    try {
+      await changePassword(passwords.currentPassword, passwords.newPassword, auth.token);
+      
+      resetAuth(); 
+      navigate('/login', { state: { passwordChanged: true } });
+    } catch (error) {
+      setError(error.message);
+      setAuth(prev => ({ ...prev, isLoading: false }));
+    }
   };
 
   return (
     <div className="change-password-container">
       <h2>Change your password</h2>
       <p className="subtext">Set a new password before accessing your account.</p>
+
+      {error && <div className="error-message">{error}</div>}
 
       <form onSubmit={handleSubmit}>
         <label>Current Password</label>
@@ -62,7 +56,9 @@ const ChangePassword = () => {
           placeholder="Enter your current Password"
           icon={<FiLock />}
           showToggle={true}
+          value={passwords.currentPassword}
           onChange={(e) => handleChange("currentPassword", e.target.value)}
+          required
         />
 
         <label>New Password</label>
@@ -71,31 +67,28 @@ const ChangePassword = () => {
           placeholder="Enter your new Password"
           icon={<FiLock />}
           showToggle={true}
+          value={passwords.newPassword}
           onChange={(e) => handleChange("newPassword", e.target.value)}
+          required
         />
 
         <label>Confirm New Password</label>
         <Input
           type="password"
-          placeholder="Enter your confirm new Password"
+          placeholder="Confirm your new Password"
           icon={<FiLock />}
           showToggle={true}
+          value={passwords.confirmPassword}
           onChange={(e) => handleChange("confirmPassword", e.target.value)}
+          required
         />
 
-        <div className="password-validation">
-          <p>Please add all necessary characters to create a safe password.</p>
-          <ul>
-            <li className={getValidationClass(validations.length)}> Minimum characters 6</li>
-            <li className={getValidationClass(validations.uppercase)}> One uppercase character</li>
-            <li className={getValidationClass(validations.lowercase)}> One lowercase character</li>
-            <li className={getValidationClass(validations.specialChar)}> One special character</li>
-            <li className={getValidationClass(validations.number)}> One number</li>
-          </ul>
-        </div>
-
-        <button type="submit" className="save-btn" disabled={!isPasswordValid || !isConfirmMatch}>
-          Save
+        <button 
+          type="submit" 
+          className="save-btn" 
+          disabled={loading || !passwords.newPassword || !passwords.confirmPassword}
+        >
+          {loading ? "Processing..." : "Save"}
         </button>
       </form>
     </div>

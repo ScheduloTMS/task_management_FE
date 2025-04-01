@@ -1,16 +1,7 @@
-import React from 'react';
-//import LoginPage from "./pages/loginpage/LoginPage.jsx";
-//import Calendar from "./components/calendar/Calendar.jsx";
-//import User from "./components/user/User.jsx";
-import StudentHomePage from "./pages/dashboard/StudentDashboard.jsx";
+import AppRouter from "./routes/AppRouter.jsx";
 
-function App() {
-  return (
-    <header>
-      <StudentHomePage />
-    </header>
-  );
-}
+const App = () => {
+  return <AppRouter />;
+};
 
 export default App;
-
