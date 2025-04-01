@@ -2,6 +2,7 @@
     display: flex;
     gap: 16px;
     overflow-x: auto;
+    
   }
   
   .kanban-column {
@@ -10,6 +11,7 @@
     padding: 10px;
     border-radius: 8px;
     min-width: 200px;
+    height: 300px;
   }
   
   .kanban-card {
@@ -18,20 +20,33 @@
     border-radius: 6px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 200px;
   }
-  
+  .progress-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+  }
   .progress-bar {
     height: 6px;
     background: #ddd;
     border-radius: 3px;
     overflow: hidden;
+    width: 100%;
   }
   
   .progress-fill {
     height: 100%;
     background: #4caf50;
   }
-  
+  .progress-percentage {
+    font-size: 14px;
+    
+    font-weight: bold;
+  }
   .mentor-info {
     display: flex;
     align-items: center;
@@ -47,16 +62,36 @@
     border: 2px solid white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     position: relative;
-    margin-left: -10px; /* Creates overlapping effect */
+    margin-left: -10px; 
     transition: transform 0.2s ease-in-out;
   }
   
   .avatar:first-child {
-    margin-left: 0; /* No overlap for first image */
+    margin-left: 0;
   }
   
   .avatar:hover {
-    transform: scale(1.2); /* Slight zoom effect on hover */
+    transform: scale(1.2);
     z-index: 10;
   }
   
+  .kanban-header{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+    width: 150px;
+    position :relative;
+    top:10px;
+    margin-left: 10px;
+  }
+  .due-date {
+    margin-top: 65px; 
+    font-size: 14px; 
+    
+    gap: 8px;
+    
+     
+  }

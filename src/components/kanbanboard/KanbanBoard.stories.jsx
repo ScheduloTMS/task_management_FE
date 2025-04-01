@@ -13,6 +13,7 @@ const sampleTasks = [
     title: "Group Project",
     dueDate: "2025-04-10",
     status: "To-Do",
+    description:"bfjehfjehf",
     assignedStudents: [
       { name: "John Doe", avatar: {img} },
       { name: "Jane Smith", avatar: "https://via.placeholder.com/28" },
@@ -23,10 +24,33 @@ const sampleTasks = [
     title: "Assignment Review",
     dueDate: "2025-04-12",
     status: "In Progress",
+    description:"bfjehfjehf",
     assignedStudents: [
       { name: "Alice Brown", avatar: "https://via.placeholder.com/28" },
       { name: "Bob White", avatar: "https://via.placeholder.com/28" },
       { name: "Charlie Green", avatar: "https://via.placeholder.com/28" },
+    ],
+  },
+  {
+    id: 1,
+    title: "Group Project",
+    dueDate: "2025-04-10",
+    status: "Completed",
+    description:"I hdfkfkjslflkahlfsggfhlsfgf,shs,",
+    assignedStudents: [
+      { name: "John Doe", avatar: {img} },
+      { name: "Jane Smith", avatar: "https://via.placeholder.com/28" },
+    ],
+  },
+  {
+    id: 1,
+    title: "Group Project",
+    dueDate: "2025-04-10",
+    status: "Overdue",
+    description:"bfjehfjehf",
+    assignedStudents: [
+      { name: "John Doe", avatar: {img} },
+      { name: "Jane Smith", avatar: "https://via.placeholder.com/28" },
     ],
   },
 ];

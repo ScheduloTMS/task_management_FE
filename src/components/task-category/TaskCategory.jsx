@@ -6,13 +6,13 @@ const TaskCategory = ({ status, tasks, config, isMentor }) => {
 
   return (
     <div className="task-category">
-      {/* Status Header - Accordion Toggle */}
+     
       <div className="status-header" style={{ backgroundColor: config.lightColor }} onClick={() => setIsOpen(!isOpen)}>
         <span className="status-icon" style={{ color: config.color }}>{config.icon}</span>
         <span className="status-text">{status}</span>
       </div>
 
-      {/* Task Table - Show if Open */}
+     
       {isOpen && (
         <table className="task-table">
           <thead>
