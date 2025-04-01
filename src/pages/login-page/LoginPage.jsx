@@ -1,6 +1,6 @@
 import React from "react";
 import "./LoginPage.css";
-import Input from "../../components/input/Input";
+import Input from "../../components/input/Input.jsx";
 import Button from "../../components/button/Button";
 import AuthLayout from "../../layouts/auth-layout/AuthLayout";
 import Logo from "../../components/logo/Logo";
@@ -14,7 +14,7 @@ const LoginPage = () => {
       <div className="login-container">
         
         <div className="left-section">
-          <Logo />
+        <Logo />
         </div>
 
         <div className="divider1"></div>

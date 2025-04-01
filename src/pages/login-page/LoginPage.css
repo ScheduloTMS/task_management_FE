@@ -1,3 +1,7 @@
+body{
+  font-family: 'Inter', sans-serif;
+}
+
 .login-container {
     display: flex;
     overflow: hidden;
@@ -39,3 +43,5 @@
   .log {
     margin-bottom: 10%;
   }
+
+ 

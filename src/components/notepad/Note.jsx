@@ -53,8 +53,7 @@ const Note = () => {
 
   return (
     <div className="notepad-container">
-      <h2>Notes</h2>
-      
+      <h4>Notes</h4>
       <div className="date-header-container">
         <p className="date">
           {new Date().toLocaleDateString("en-GB", { 

@@ -6,7 +6,7 @@ import './User.css';
 const User = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user] = useState({
-    name: 'John Doe',
+    name: 'Jaimie Miller',
     photo: 'https://randomuser.me/api/portraits/men/1.jpg'
   });
 

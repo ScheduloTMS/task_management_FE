@@ -1,6 +1,7 @@
 import React from "react";
 import Searchbar from '../../components/searchbar/Searchbar.jsx';
 import User from '../../components/user/User.jsx';
+
 import './Topbar.css';
 
 const Topbar = () => {
@@ -16,4 +17,6 @@ const Topbar = () => {
     );
 };
 
+
 export default Topbar;
+
