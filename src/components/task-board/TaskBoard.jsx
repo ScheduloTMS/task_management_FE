@@ -4,10 +4,10 @@ import { FaRegCircle, FaSpinner, FaCheckCircle, FaExclamationCircle } from "reac
 import "./TaskBoard.css";
 
 const statusConfig = {
-  "To Do": { icon: <FaRegCircle />, color: "#56358E", lightColor: "rgba(86, 53, 142, 0.1)" },
-  "In Progress": { icon: <FaSpinner />, color: "#ffc107", lightColor: "rgba(255, 193, 7, 0.1)" },
-  "Completed": { icon: <FaCheckCircle />, color: "#28a745", lightColor: "rgba(40, 167, 69, 0.1)" },
-  "Overdue": { icon: <FaExclamationCircle />, color: "#dc3545", lightColor: "rgba(220, 53, 69, 0.1)" },
+  "To Do": { icon: <FaRegCircle />, color: "#56358E" },
+  "In Progress": { icon: <FaSpinner />, color: "#ffc107"},
+  "Completed": { icon: <FaCheckCircle />, color: "#28a745" },
+  "Overdue": { icon: <FaExclamationCircle />, color: "#dc3545" },
 };
 
 const taskData = [

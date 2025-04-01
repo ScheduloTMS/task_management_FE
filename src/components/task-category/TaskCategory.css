@@ -10,24 +10,26 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+    width: 180px;
+    position :relative;
+   
   }
   
   .status-icon {
-    font-size: 22px;
+    font-size: 20px;
   }
   
   
   .task-table {
     width: 100%;
     border-collapse: collapse;
+    
   }
   
   .task-table th, .task-table td {
-    padding: 8px;
+    padding: 10px;
     border-bottom: 1px solid #ddd;
     text-align: left;
   }
