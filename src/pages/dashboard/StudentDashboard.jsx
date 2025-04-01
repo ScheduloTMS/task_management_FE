@@ -15,7 +15,7 @@ const StudentDashboard = () => {
 
       <div className="main-content">
         <TopbarLayout />
-
+        <h2>Welcome Jaimie!</h2>
         <div className="dashboard-content">
           <div className="chart-graph">
             <div className="dashboard-box chart">

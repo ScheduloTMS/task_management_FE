@@ -53,7 +53,7 @@ const UpdatePasswordModal = ({ onClose }) => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
-              <button className="custom-save-button" onClick={handleSave}>Save Changes</button>
+              <button className="custom-save-button" onClick={handleSave}>Save</button>
             </div>
           </div>
         </div>

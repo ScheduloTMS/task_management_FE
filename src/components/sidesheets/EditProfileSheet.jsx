@@ -40,7 +40,7 @@ const EditProfileSheet = ({ onClose }) => {
               </div>
               <div className="mb-3">
                 <label className="form-label">Name</label>
-                <input type="text" className="form-control" value="John Doe" disabled />
+                <input type="text" className="form-control" value="Jaimie Miller" disabled />
               </div>
               <div className="mb-3">
                 <label className="form-label">Email</label>
@@ -51,7 +51,7 @@ const EditProfileSheet = ({ onClose }) => {
                   onChange={(e) => setEmail(e.target.value)} 
                 />
               </div>
-              <button className="custom-save-button" onClick={handleSave}>Save Changes</button>
+              <button className="custom-save-button" onClick={handleSave}>Save</button>
             </div>
           </div>
         </div>
