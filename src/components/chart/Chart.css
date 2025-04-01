@@ -1,30 +1,30 @@
 .chartContainer {
-    max-width: 601px;
-    margin: auto;
+    max-width: 100%;
+    align-items: flex-start;
     border-radius: 10px;
-    background:#efeaf3;
     position: relative;
     text-align: center;
-    
+    box-shadow: none !important;
+    border: none;
+    height: 80%;
+    background: linear-gradient(180deg,#efeaf3, hsl(0, 0%, 100%), #efeaf3);
   }
-  .text-center {
-    color: rgba(41, 41, 41);
-    
-  } 
+
   .chartWrapper {
     position: relative;
     display: flex;
-  justify-content: flex-start;
+    justify-content: flex-start;
     align-items: center;
+    gap: 1rem;
   }
   
   
   .totalTasks {
     position: absolute;
     top: 60%;
-    left: 35%;
+    left: 38%;
     transform: translate(-50%, -50%);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: rgba(41, 41, 41);
     
@@ -33,16 +33,14 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-left: 20px; 
-    margin-top: 27px; 
+    margin-top: 6%;
   }
   
   .legendItem {
     display: flex;
     align-items: center;
-    font-size: 1rem;
-    
-    
+    font-size: 0.8rem;
+     
   }
   
   .legendColor {

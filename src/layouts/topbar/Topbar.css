@@ -2,8 +2,9 @@
     display: flex;
     justify-content: space-between; 
     align-items: flex-start;
-    padding: 20px 50px;
+    padding: 35px 15px !important;
     align-items: center;
+    
 }
 
 .search {

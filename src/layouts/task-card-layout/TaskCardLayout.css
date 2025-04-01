@@ -1,11 +1,10 @@
 .task-cards-container {
-    width: 770px; 
+    width: 700px; 
     overflow-x: auto;
+    margin: 0;
     padding: 20px;
-    margin: 0 auto;
-    background: white;
+    overflow-y: hidden;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
   .task-cards-scroll {
@@ -17,17 +16,17 @@
   
   
   .task-cards-container::-webkit-scrollbar {
-    height: 6px; 
+    height: 5px; 
+
   }
   
   .task-cards-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
     border-radius: 10px;
-    margin: 0 20px; 
+    margin: 0 5px; 
   }
   
   .task-cards-container::-webkit-scrollbar-thumb {
-    background: rgba(94, 60, 154, 0.5);
+    background: rgba(94, 60, 154, 0.11);
     border-radius: 10px;
   }
   
@@ -37,22 +36,9 @@
   
  
   .task-cards-scroll .task-card {
-    width: 260px; 
-    flex-shrink: 0; 
+    width: 250px; 
+    height: 300px;
   }
   
   
-  @media (max-width: 480px) {
-    .task-cards-container {
-      width: 320px; 
-      padding: 15px;
-    }
-    
-    .task-cards-scroll {
-      gap: 15px;
-    }
-    
-    .task-cards-scroll .task-card {
-      width: 240px;
-    }
-  }
+ 
