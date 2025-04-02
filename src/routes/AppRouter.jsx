@@ -27,7 +27,7 @@ const AppRouter = () => {
         
         <Route 
           path="/dashboard" 
-          element={token  && isFirstLogin === false? <Dashboard /> : <Navigate to="/login" />} 
+          element={token ? <Dashboard /> : <Navigate to="/login" />} 
         />
 
         
