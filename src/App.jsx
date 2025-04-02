@@ -1,16 +1,7 @@
-import React from 'react';
+import AppRouter from "./routes/AppRouter.jsx";
 
-//import StudentTaskOverview  from "./pages/task/StudentTaskOverview.jsx";
-import StudentBoard from './pages/task/StudentBoard.jsx';
-
-
-function App() {
-  return (
-    <header>
-      <StudentBoard />
-    </header>
-  );
-}
+const App = () => {
+  return <AppRouter />;
+};
 
 export default App;
-

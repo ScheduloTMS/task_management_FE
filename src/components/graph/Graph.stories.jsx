@@ -19,4 +19,3 @@ const monthlyData = [
 export const Default = () => (
   <Graph tasks={[]} data={monthlyData} />
 );
-

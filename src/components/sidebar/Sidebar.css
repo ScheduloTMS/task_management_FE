@@ -1,14 +1,14 @@
 .sidebar {
-  width: 13% !important;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease-in-out;
-  padding: 10px;
-  position: relative;
-  align-items: start;
-  overflow: hidden;
-  background: linear-gradient(180deg,#efeaf3, #fff, #efeaf3);
+    width: 15% !important;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease-in-out;
+    padding: 10px;
+    position: relative;
+    align-items: start;
+    overflow: hidden;
+    background: linear-gradient(180deg,#efeaf3, #fff, #efeaf3);
 }
 
 .sidebar.collapsed {
