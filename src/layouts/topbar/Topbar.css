@@ -4,16 +4,19 @@
     align-items: flex-start;
     padding: 35px 15px !important;
     align-items: center;
+    flex: 1;
     
 }
 
 .search {
     margin-right: 80px;
     flex: 1;
+    z-index: 1;
 }
 
 .user {
     display: flex;
     align-items: center;
     gap: 15px;
+    z-index: 1;
 }

@@ -1,21 +1,26 @@
 .kanban-board {
-    display: flex;
-    gap: 16px;
-    overflow-x: auto;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start; 
+  overflow-x: auto;
     
   }
   
   .kanban-column {
     flex: 1;
-    background: #f4f4f4;
+    
     padding: 10px;
     border-radius: 8px;
     min-width: 200px;
-    height: 300px;
+    background: linear-gradient(100deg,#efeaf3, #fff, #efeaf3);
+    min-height: 300px;
+    height: auto;
+     display: flex;
+    flex-direction: column; 
   }
   
   .kanban-card {
-    background: white;
+    background: linear-gradient(180deg,#efeaf3, #fff, #efeaf3);
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 10px;
@@ -24,7 +29,13 @@
     margin-left: 10px;
     margin-right: 10px;
     height: 200px;
+    
   }
+  
+  .kanban-card p{
+    opacity: 60%;
+  }
+
   .progress-bar-container {
     display: flex;
     align-items: center;
@@ -44,7 +55,7 @@
   }
   .progress-percentage {
     font-size: 14px;
-    
+    opacity: 50%;
     font-weight: bold;
   }
   .mentor-info {
@@ -93,5 +104,5 @@
     
     gap: 8px;
     
-     
+    opacity: 50%;
   }

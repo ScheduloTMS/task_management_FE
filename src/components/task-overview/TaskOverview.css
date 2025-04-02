@@ -1,14 +1,15 @@
 .task-overview-container {
     position: fixed;
     width: 100%;
-    max-width: 500px;
-    height: 90vh;
+    max-width: 45vw;
+    height: 35vh;
     padding: 15px;
-    background: #fff;
+    background: linear-gradient(180deg,#efeaf3, #fff, #efeaf3);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   
-    
+    bottom: 400px;
+    margin-left: 30px;
+    top:180px;
   }
   
   .task-overview-heading {
@@ -41,12 +42,5 @@
     
   }
   
-  .task-field a {
-    color: #007bff;
-    text-decoration: none;
-  }
   
-  .task-field a:hover {
-    text-decoration: underline;
-  }
   

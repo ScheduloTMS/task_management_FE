@@ -9,8 +9,6 @@ export default {
 const sampleTask = {
   title: "React Component Styling",
   description: "Create a well-structured Task Overview component.",
-  createdAt: "2025-03-30",
-  fileUrl: "https://example.com/sample-file.pdf",
   score: "85 / 100",
 };
 
