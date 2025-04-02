@@ -44,4 +44,12 @@
   .modal-body{
     padding: 30px;
   }
+
+  .close1 {
+    background: none;
+    color: #000000 !important;
+    font-size: 1.2rem;
+    z-index: 3;
+    border: none;
+  }
   

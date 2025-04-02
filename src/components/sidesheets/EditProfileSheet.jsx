@@ -27,7 +27,7 @@ const EditProfileSheet = ({ onClose }) => {
           <div className="modal-content animate-popup">
             <div className="modal-header">
               <h5 className="modal-title">Edit Profile</h5>
-              <button type="button" className="btn-close" onClick={onClose}></button>
+              <button type="button" className="close1" onClick={onClose}>x</button>
             </div>
             <div className="modal-body">
               <div className="mb-3">
