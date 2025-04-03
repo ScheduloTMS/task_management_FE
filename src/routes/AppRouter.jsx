@@ -29,11 +29,17 @@ const AppRouter = () => {
           path="/change-password"
           element={isFirstLogin === false ? <ChangePassword /> : <Navigate to="/" />}
         />
- 
+{/*  
         <Route
           path="/dashboard"
           element={token ? <Dashboard /> : <Navigate to="/" />}
+        /> */}
+
+           <Route
+          path="/dashboard"
+          element={token ? <Calendar /> : <Navigate to="/" />}
         />
+ 
  
         
         <Route path="*" element={<Navigate to="/" />} />
