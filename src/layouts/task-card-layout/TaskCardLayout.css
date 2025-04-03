@@ -1,44 +1,45 @@
 .task-cards-container {
-    width: 700px; 
-    overflow-x: auto;
-    margin: 0;
-    padding: 20px;
-    overflow-y: hidden;
-    border-radius: 12px;
-  }
-  
-  .task-cards-scroll {
-    display: flex;
-    gap: 20px;
-    width: fit-content;
-    min-width: calc(100% - 40px); 
-  }
-  
-  
-  .task-cards-container::-webkit-scrollbar {
-    height: 5px; 
+  width: 980px; 
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 12px;
+}
 
-  }
-  
-  .task-cards-container::-webkit-scrollbar-track {
-    border-radius: 10px;
-    margin: 0 5px; 
-  }
-  
-  .task-cards-container::-webkit-scrollbar-thumb {
-    background: rgba(94, 60, 154, 0.11);
-    border-radius: 10px;
-  }
-  
-  .task-cards-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(94, 60, 154, 0.7);
-  }
-  
- 
-  .task-cards-scroll .task-card {
-    width: 250px; 
-    height: 300px;
-  }
-  
-  
- 
+.task-cards-scroll {
+  display: flex;
+  gap: 10px;
+  width: fit-content;
+  min-width: calc(100% - 40px); 
+}
+
+
+.task-cards-container::-webkit-scrollbar {
+  height: 5px; 
+
+}
+
+.task-cards-container::-webkit-scrollbar-track {
+  border-radius: 10px;
+  margin: 0 5px; 
+}
+
+.task-cards-container::-webkit-scrollbar-thumb {
+  background: rgba(94, 60, 154, 0.11);
+  border-radius: 10px;
+}
+
+.task-cards-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(94, 60, 154, 0.7);
+}
+
+
+.task-cards-scroll .task-card {
+  width: 250px; 
+  height: 300px;
+}
+
+.task-card{
+  width: 102%;
+}
+
+

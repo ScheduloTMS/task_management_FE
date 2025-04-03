@@ -50,4 +50,5 @@ export const changePassword = async (currentPassword, newPassword, token) => {
   } catch (error) {
     throw new Error(error.response ? error.response.data.message : error.message);
   }
+
 };

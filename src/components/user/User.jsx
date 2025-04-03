@@ -1,47 +1,22 @@
-import React, { useState } from "react";
-import { FaUser, FaKey, FaSignOutAlt } from "react-icons/fa";
+import React, { useState } from 'react';
+import { FaUser, FaKey, FaSignOutAlt } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
-import { useRecoilState } from "recoil";
-import { authState } from "../../states/authState";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "./User.css";
-
-const API_URL = "http://localhost:8081/api";
+import EditProfileSheet from '../sidesheets/EditProfileSheet'; 
+import UpdatePasswordModal from '../sidesheets/ChangePasswordSheet'; 
+import './User.css';
 
 const User = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [auth, setAuth] = useRecoilState(authState); 
-  const navigate = useNavigate();
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
 
-  const user = {
-    name: "Jaimie Miller",
-    photo: "https://randomuser.me/api/portraits/men/1.jpg",
-  };
+  const [user] = useState({
+    name: 'Jaimie Miller',
+    photo: 'https://randomuser.me/api/portraits/men/1.jpg'
+  });
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleLogout = async () => {
-    try {
-      if (auth.token) {
-        await axios.post(`${API_URL}/auth/logout`, {}, {
-          headers: { Authorization: `Bearer ${auth.token}` },
-        });
-      }
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-
-    // Clear token from Recoil state
-    setAuth({ token: null, role: null, isFirstLogin: true });
-
-    // Remove token from local storage
-    localStorage.removeItem("authToken");
-
-    // Redirect to login page
-    navigate("/login");
   };
 
   return (
@@ -57,24 +32,33 @@ const User = () => {
       {isOpen && (
         <div className="user-dropdown">
           <div className="dropdown-options">
-            <div className="dropdown-item">
+            <div className="dropdown-item" onClick={() => { 
+              setShowProfileModal(true);
+              setIsOpen(false); 
+            }}>
               <FaUser className="option-icon" />
               <span>Profile</span>
             </div>
-            <div className="dropdown-item">
+            <div className="dropdown-item" onClick={() => { 
+              setShowPasswordModal(true);
+              setIsOpen(false); 
+            }}>
               <FaKey className="option-icon" />
               <span>Change Password</span>
             </div>
-
+            
             <div className="dropdown-divider"></div>
-
-            <div className="dropdown-item logout" onClick={handleLogout}>
+            
+            <div className="dropdown-item logout">
               <FaSignOutAlt className="option-icon" />
               <span>Logout</span>
             </div>
           </div>
         </div>
       )}
+
+      {showProfileModal && <EditProfileSheet onClose={() => setShowProfileModal(false)} />}
+      {showPasswordModal && <UpdatePasswordModal onClose={() => setShowPasswordModal(false)} />}
     </div>
   );
 };

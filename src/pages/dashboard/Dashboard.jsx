@@ -12,6 +12,7 @@ import { IoPeople } from "react-icons/io5";
 import "./Dashboard.css";
 
 const Dashboard = () => {
+   
   const { role, isFirstLogin } = useRecoilValue(authState); 
   const navigate = useNavigate();  
 
@@ -27,17 +28,17 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <Sidebar additionalMenuItem={role === "mentor" ? additionalMenuItem : null} />
+      <Sidebar className="sidebar" />
 
       <div className="main-content">
         <TopbarLayout />
-
+        <h2>Welcome Jaimie!</h2>
         <div className="dashboard-content">
           <div className="chart-graph">
             <div className="dashboard-box chart">
               <Chart />
-              <Graph />
-            </div>
+              <Graph/>
+            </div>   
           </div>
 
           <div className="dashboard-box task-card">
