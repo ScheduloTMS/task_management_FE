@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar.jsx";
 import TaskBoard from "../../components/task-board/TaskBoard.jsx";
 import TopbarLayout from "../../layouts/topbar/Topbar.jsx";
 import BoardListButtons from "../../components/button/BoardListButtons.jsx";
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaFilter } from "react-icons/fa";
 import "./StudentList.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,6 +13,7 @@ const StudentList = () => {
   const [filter, setFilter] = useState("All");
   const [selectedWeek, setSelectedWeek] = useState(null);
   const [showWeekPicker, setShowWeekPicker] = useState(false);
+  const [showStatusFilter, setShowStatusFilter] = useState(false);
 
   return (
     <div className="student-board-container">
@@ -31,27 +32,78 @@ const StudentList = () => {
           <hr className="divider" />
 
           <div className="filters-container">
-            {/* Status Filter */}
+            
             <div className="filter-item">
-              <label htmlFor="taskFilter">Filter by Status:</label>
-              <select
-                id="taskFilter"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
+              <button 
+                className="filter-button"
+                onClick={() => {
+                  setShowStatusFilter(!showStatusFilter);
+                  setShowWeekPicker(false);
+                }}
               >
-                <option value="All">All</option>
-                <option value="To Do">To Do</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-                <option value="Overdue">Overdue</option>
-              </select>
+                <FaFilter />
+                Filter
+              </button>
+              
+              {showStatusFilter && (
+                <div className="filter-dropdown">
+                  <div 
+                    className={`filter-option ${filter === "All" ? "selected" : ""}`}
+                    onClick={() => {
+                      setFilter("All");
+                      setShowStatusFilter(false);
+                    }}
+                  >
+                    All 
+                  </div>
+                  <div 
+                    className={`filter-option ${filter === "To Do" ? "selected" : ""}`}
+                    onClick={() => {
+                      setFilter("To Do");
+                      setShowStatusFilter(false);
+                    }}
+                  >
+                    To Do
+                  </div>
+                  <div 
+                    className={`filter-option ${filter === "In Progress" ? "selected" : ""}`}
+                    onClick={() => {
+                      setFilter("In Progress");
+                      setShowStatusFilter(false);
+                    }}
+                  >
+                    In Progress
+                  </div>
+                  <div 
+                    className={`filter-option ${filter === "Completed" ? "selected" : ""}`}
+                    onClick={() => {
+                      setFilter("Completed");
+                      setShowStatusFilter(false);
+                    }}
+                  >
+                    Completed
+                  </div>
+                  <div 
+                    className={`filter-option ${filter === "Overdue" ? "selected" : ""}`}
+                    onClick={() => {
+                      setFilter("Overdue");
+                      setShowStatusFilter(false);
+                    }}
+                  >
+                    Overdue
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Week Picker */}
-            <div className="filter-item week-picker">
+            
+            <div className="filter-item">
               <button 
-                className="calendar-button"
-                onClick={() => setShowWeekPicker(!showWeekPicker)}
+                className="filter-button"
+                onClick={() => {
+                  setShowWeekPicker(!showWeekPicker);
+                  setShowStatusFilter(false);
+                }}
               >
                 <FaCalendarAlt />
                 {selectedWeek 
@@ -60,7 +112,7 @@ const StudentList = () => {
               </button>
               
               {showWeekPicker && (
-                <div className="calendar-popover">
+                <div className="calendar-dropdown">
                   <DatePicker
                     selected={selectedWeek}
                     onChange={(date) => {
@@ -99,7 +151,7 @@ const StudentList = () => {
   );
 };
 
-// Helper function
+
 function formatWeekRange(startOfWeek) {
   const endOfWeek = new Date(startOfWeek);
   endOfWeek.setDate(startOfWeek.getDate() + 6);
