@@ -8,19 +8,19 @@
   
   .kanban-column {
     flex: 1;
-    
+    min-height: 75px;
     padding: 10px;
     border-radius: 8px;
     min-width: 200px;
     background: linear-gradient(100deg,#efeaf3, #fff, #efeaf3);
-    min-height: 300px;
+   
     height: auto;
      display: flex;
     flex-direction: column; 
   }
   
   .kanban-card {
-    background: linear-gradient(180deg,#efeaf3, #fff, #efeaf3);
+    background: linear-gradient(180deg, #efeaf3, #fff, #efeaf3);
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 10px;
@@ -28,7 +28,10 @@
     margin-top: 30px;
     margin-left: 10px;
     margin-right: 10px;
-    height: 200px;
+    min-height: 200px; /* Change from fixed height */
+    height: auto; /* Let it expand */
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
     
   }
   
@@ -61,8 +64,7 @@
   .mentor-info {
     display: flex;
     align-items: center;
-    margin-top: 8px;
-    position: relative;
+    gap: 8px;
   }
   
   .avatar {
@@ -74,6 +76,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     position: relative;
     margin-left: -10px; 
+    margin-top: -10px;
     transition: transform 0.2s ease-in-out;
   }
   
@@ -99,10 +102,16 @@
     margin-left: 10px;
   }
   .due-date {
-    margin-top: 65px; 
+    margin-top: 40px; 
     font-size: 14px; 
     
     gap: 8px;
     
     opacity: 50%;
+  }
+  
+  .task-description {
+    cursor: pointer;
+    overflow: hidden;
+    word-wrap: break-word;
   }

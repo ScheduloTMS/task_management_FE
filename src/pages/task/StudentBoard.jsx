@@ -23,7 +23,7 @@ const StudentBoard = () => {
 
       <div className="main-content">
 
-        <div className="topbar-container">
+        <div >
           <TopbarLayout />
         </div>
 

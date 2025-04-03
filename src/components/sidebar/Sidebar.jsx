@@ -19,9 +19,7 @@ const Sidebar = () => {
     <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
       <div className="sidebar-header">
       <Logo size="small"/>
-        <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
-          {collapsed ? <TbLayoutSidebarRightCollapse /> : <TbLayoutSidebarLeftCollapse />}
-        </button>
+        
       </div>
       <nav className="sidebar-menu">
         <div className="sidebar-item" onClick={() => navigate("/")}>

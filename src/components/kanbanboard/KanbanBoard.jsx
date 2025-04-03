@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./KanbanBoard.css";
 import AvatarCircles from "../avatarcircles/AvatarCircles.jsx";
 import { FaRegCircle, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { RiCalendarScheduleFill } from "react-icons/ri";
-
 
 const sampleTasks = [
   {
@@ -11,59 +10,37 @@ const sampleTasks = [
     title: "Group Project",
     dueDate: "2025-04-10",
     status: "To-Do",
-    description: "White lilies known as Lilium candidum",
+    description: "White lilies known as Lilium candidum. These flowers are famous for their elegant white petals and symbolic meaning. They are often associated with purity, commitment, and rejuvenation, making them a popular choice for various occasions.",
     assignedStudents: [
       { name: "John Doe", avatar: "https://via.placeholder.com/28" },
       { name: "Jane Smith", avatar: "https://via.placeholder.com/28" },
     ],
+    mentor: { avatar: "https://via.placeholder.com/28" },
   },
   {
     id: 2,
-    title: "Assignment Review",
-    dueDate: "2025-04-12",
-    status: "In Progress",
-    description: "White lilies known as Lilium candidum",
-    assignedStudents: [
-      { name: "Alice Brown", avatar: "https://via.placeholder.com/28" },
-      { name: "Bob White", avatar: "https://via.placeholder.com/28" },
-      { name: "Charlie Green", avatar: "https://via.placeholder.com/28" },
-    ],
-  },
-  {
-    id: 3,
     title: "Group Project",
     dueDate: "2025-04-10",
-    status: "Completed",
-    description: "White lilies known as Lilium candidum",
+    status: "To-Do",
+    description: "White lilies known as Lilium candidum. These flowers are famous for their elegant white petals and symbolic meaning. They are often associated with purity, commitment, and rejuvenation, making them a popular choice for various occasions.",
     assignedStudents: [
       { name: "John Doe", avatar: "https://via.placeholder.com/28" },
       { name: "Jane Smith", avatar: "https://via.placeholder.com/28" },
     ],
+    mentor: { avatar: "https://via.placeholder.com/28" },
   },
-
   
   {
-    id: 4,
-    title: "Group Project",
-    dueDate: "2025-04-10",
-    status: "Overdue",
-    description: "White lilies known as Lilium candidum",
-    assignedStudents: [
-      { name: "John Doe", avatar: "https://via.placeholder.com/28" },
-      { name: "Jane Smith", avatar: "https://via.placeholder.com/28" },
-    ],
-  },
-  {
-    id: 5,
+    id: 3,
     title: "Assignment Review",
     dueDate: "2025-04-12",
-    status: "In Progress",
-    description: "White lilies known as Lilium candidum",
+    status: "Overdue",
+    description: "The task involves reviewing assignments submitted by students. Each submission needs to be checked for plagiarism, formatting, and overall quality. Detailed feedback should be provided.",
     assignedStudents: [
       { name: "Alice Brown", avatar: "https://via.placeholder.com/28" },
       { name: "Bob White", avatar: "https://via.placeholder.com/28" },
-      { name: "Charlie Green", avatar: "https://via.placeholder.com/28" },
     ],
+    mentor: { name: "Prof. Daniel Scott", avatar: "https://via.placeholder.com/28" },
   },
 ];
 
@@ -75,18 +52,10 @@ const statusConfig = {
 };
 
 const KanbanBoard = ({ isMentor }) => {
-  const getProgress = (status) => {
-    switch (status.toLowerCase()) {
-      case "to-do":
-      case "overdue":
-        return 0;
-      case "in progress":
-        return 50;
-      case "completed":
-        return 100;
-      default:
-        return 0;
-    }
+  const [expandedTask, setExpandedTask] = useState(null);
+
+  const toggleDescription = (taskId) => {
+    setExpandedTask(expandedTask === taskId ? null : taskId);
   };
 
   return (
@@ -106,19 +75,31 @@ const KanbanBoard = ({ isMentor }) => {
               .map((task) => (
                 <div key={task.id} className="kanban-card">
                   <h4>{task.title}</h4>
-                  <p>{task.description}</p>
+                  
+                  <p className="task-description" onClick={() => toggleDescription(task.id)}>
+  {expandedTask === task.id ? task.description : `${task.description.substring(0, 120)}...`}
+</p>
+                  
                   <p className="due-date">
                     <RiCalendarScheduleFill /> {task.dueDate}
                   </p>
 
-                  <div className="progress-bar-container">
-                    <div className="progress-bar">
-                      <div className="progress-fill" style={{ width: `${getProgress(task.status)}%` }}></div>
+                  {isMentor ? (
+                    <div className="progress-bar-container">
+                      <div className="progress-bar">
+                        <div className="progress-fill" style={{ width: task.status === "In Progress" ? "50%" : task.status === "Completed" ? "100%" : "0%" }}></div>
+                      </div>
+                      <span className="progress-percentage">
+                        {task.status === "In Progress" ? "50%" : task.status === "Completed" ? "100%" : "0%"}
+                      </span>
                     </div>
-                    <span className="progress-percentage">
-                      {getProgress(task.status)}%
-                    </span>
-                  </div>
+                  ) : (
+                    task.mentor && (
+                      <div className="mentor-info">
+                        <AvatarCircles avatars={[{ imageUrl: task.mentor.avatar }]} />
+                      </div>
+                    )
+                  )}
 
                   {isMentor && task.assignedStudents?.length > 0 && (
                     <div className="mentor-info">

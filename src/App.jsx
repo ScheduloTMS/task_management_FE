@@ -1,7 +1,12 @@
-import AppRouter from "./routes/AppRouter.jsx";
+import React from 'react';
+import StudentList from './pages/task/StudentList.jsx';
 
-const App = () => {
-  return <AppRouter />;
-};
+function App() {
+  return (
+    <main>
+      <StudentList />
+    </main>
+  );
+}
 
 export default App;
