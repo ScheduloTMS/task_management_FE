@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
 import { FaUser, FaKey, FaSignOutAlt } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
-import EditProfileSheet from '../sidesheets/EditProfileSheet'; // Profile modal
-import UpdatePasswordModal from '../sidesheets/ChangePasswordSheet'; // New password modal
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { authState } from "../../states/authState"; 
+import { logoutUser } from "../../services/authService"; 
+import EditProfileSheet from '../sidesheets/EditProfileSheet';
+import UpdatePasswordModal from '../sidesheets/ChangePasswordSheet';
 import './User.css';
 
 const User = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+
+
+  const navigate = useNavigate();
+  const setAuth = useSetRecoilState(authState);  
+  const auth = useRecoilValue(authState); // Get auth state for token
 
   const [user] = useState({
     name: 'Jaimie Miller',
@@ -18,6 +30,36 @@ const User = () => {
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleLogout = async () => {
+    setError(""); // Clear previous errors
+    setLoading(true);
+  
+    try {
+      if (!auth.token) {
+        throw new Error("No token available. Redirecting to login.");
+      }
+  
+      const response = await logoutUser(auth.token); // Call API
+      console.log("Logout API Response:", response);
+  
+      if (response && response.status === "success") {
+        localStorage.removeItem("token"); // Clear token from storage
+        setAuth({ token: null, isFirstLogin: false }); // Clear state
+        navigate("/login"); // Redirect to login
+      } else {
+        throw new Error("Unexpected API response structure.");
+      }
+    } catch (err) {
+      console.error("Logout Failed:", err.message);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  
+  
 
   return (
     <div className="user-profile">
@@ -49,7 +91,7 @@ const User = () => {
             
             <div className="dropdown-divider"></div>
             
-            <div className="dropdown-item logout">
+            <div className="dropdown-item logout" onClick={handleLogout}>
               <FaSignOutAlt className="option-icon" />
               <span>Logout</span>
             </div>

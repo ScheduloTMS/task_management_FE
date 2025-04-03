@@ -1,7 +1,8 @@
 .logo-container {
   display: flex;        
   align-items: center;  
-  gap: 1.5rem;          
+  gap: 1.5rem;  
+
 }
 
 .logo-img {
@@ -12,6 +13,6 @@
 .site-name {
   font-family: 'Inknut Antiqua', serif;
   color: #56358E;
-  font-size: 80px;
+  font-size: 80px!important ;
   line-height: 1;      
 }

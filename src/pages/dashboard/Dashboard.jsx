@@ -32,7 +32,7 @@ const Dashboard = () => {
 
       <div className="main-content">
         <TopbarLayout />
-        <h2>Welcome Jaimie!</h2>
+        <h2>Welcome <span class="bold-name">Jaimie!</span></h2>
         <div className="dashboard-content">
           <div className="chart-graph">
             <div className="dashboard-box chart">
