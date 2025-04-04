@@ -1,55 +1,96 @@
 .task-category {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 20px; 
+}
+
+.status-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px; 
+  border-radius: 20px;
+  width: 180px;
+  position: relative;
+  margin: 10px; 
+  cursor: pointer; 
+  transition: background-color 0.2s; 
+}
+
+
+
+.status-icon {
+  font-size: 20px;
+}
+
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; 
+}
+
+.task-table th, .task-table td {
+  padding: 12px 15px; 
+  border-bottom: 1px solid #e0e0e0; 
+  text-align: left;
+  vertical-align: top; 
+}
+
+.task-table th {
+  background-color: #f8f9fa; 
+  font-weight: 600; 
+  position: sticky;
+  top: 0; 
+}
+
+
+.task-table td:nth-child(2) {
+  max-width: 300px;
+  min-width: 150px;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+
+.task-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.delete-btn {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 10px; 
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+}
+
+.delete-btn:hover {
+  background-color: #cc0000;
+}
+
+
+@media (max-width: 768px) {
+  .task-table {
+    display: block;
+    overflow-x: auto; 
   }
   
+  .task-table td:nth-child(2) {
+    max-width: 200px; 
+  }
   
   .status-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 10px;
-    border-radius: 20px;
-    width: 180px;
-    position :relative;
-   
-  }
-  
-  .status-icon {
-    font-size: 20px;
-  }
-  
-  
-  .task-table {
-    width: 100%;
-    border-collapse: collapse;
-    
-  }
-  
-  .task-table th, .task-table td {
+    width: auto; 
     padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
   }
-  
-  .task-table th {
-    background-color: #f5f5f5;
-  }
-  
-  
-  .delete-btn {
-    background-color: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 4px 8px;
-    border-radius: 4px;
-  }
-  
-  .delete-btn:hover {
-    background-color: darkred;
-  }
-  
+}

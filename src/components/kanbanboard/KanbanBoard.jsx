@@ -42,6 +42,30 @@ const sampleTasks = [
     ],
     mentor: { name: "Prof. Daniel Scott", avatar: "https://via.placeholder.com/28" },
   },
+  {
+    id: 4,
+    title: "Assignment Review",
+    dueDate: "2025-04-12",
+    status: "In Progress",
+    description: "The task involves reviewing assignments submitted by students. Each submission needs to be checked for plagiarism, formatting, and overall quality. Detailed feedback should be provided.",
+    assignedStudents: [
+      { name: "Alice Brown", avatar: "https://via.placeholder.com/28" },
+      { name: "Bob White", avatar: "https://via.placeholder.com/28" },
+    ],
+    mentor: { name: "Prof. Daniel Scott", avatar: "https://via.placeholder.com/28" },
+  },
+  {
+    id: 5,
+    title: "Assignment Review",
+    dueDate: "2025-04-12",
+    status: "Completed",
+    description: "The task involves reviewing assignments submitted by students. Each submission needs to be checked for plagiarism, formatting, and overall quality. Detailed feedback should be provided.",
+    assignedStudents: [
+      { name: "Alice Brown", avatar: "https://via.placeholder.com/28" },
+      { name: "Bob White", avatar: "https://via.placeholder.com/28" },
+    ],
+    mentor: { name: "Prof. Daniel Scott", avatar: "https://via.placeholder.com/28" },
+  },
 ];
 
 const statusConfig = {

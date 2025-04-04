@@ -11,38 +11,40 @@ const statusConfig = {
 };
 
 const taskData = [
-  { id: 1, title: "Solutions Pages", assignee: "John", dueDate: "Mar 17", status: "To Do" },
-  { id: 5, title: "Solutions Pages", assignee: "John", dueDate: "Mar 17", status: "To Do" },
-  { id: 2, title: "Order Flow", assignee: "Doe", dueDate: "Apr 18", status: "In Progress" },
-  { id: 6, title: "Order Flow", assignee: "Doe", dueDate: "Mar 18", status: "In Progress" },
-  { id: 3, title: "About Us", assignee: "Alice", dueDate: "Apr 20", status: "Completed" },
-  { id: 4, title: "Client Review", assignee: "Bob", dueDate: "Apr 15", status: "Overdue" },
+  { id: 1, title: "Solutions Pages",description:"White lilies, scientifically known as Lilium candidum, are known for their pure white, trumpet-shaped flowers, often associated with purity, rebirth, and innocence, and are popular for weddings", mentor: "John", dueDate: "Mar 17",createdAt:"March 2", status: "To Do" },
+  { id: 1, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Mar 20",createdAt:"March 2", status: "To Do" },
+  { id: 1, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Mar 17",createdAt:"March 2", status: "In Progress" },
+  { id: 1, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Apr 17",createdAt:"March 2", status: "Overdue" },
+  { id: 1, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Mar 17",createdAt:"March 2", status: "Completed" },
+  { id: 1, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Mar 17",createdAt:"March 2", status: "To Do" },
+  { id: 1, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Jul 17",createdAt:"March 2", status: "Completed" },
+  
 ];
 
-// Helper function to parse date strings (assuming format like "Mar 17")
+
 const parseDate = (dateStr) => {
   const [month, day] = dateStr.split(" ");
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const monthIndex = months.indexOf(month);
-  const year = new Date().getFullYear(); // Use current year
+  const year = new Date().getFullYear(); 
   return new Date(year, monthIndex, parseInt(day));
 };
 
 const TaskBoard = ({ filter, selectedWeek }) => {
-  // Filter tasks based on status
+  
   const statusFilteredTasks = filter === "All" 
     ? taskData 
     : taskData.filter(task => task.status === filter);
 
-  // Filter tasks based on selected week
+  
   let filteredTasks = [...statusFilteredTasks];
   
   if (selectedWeek) {
     const startOfWeek = new Date(selectedWeek);
-    startOfWeek.setDate(selectedWeek.getDate() - selectedWeek.getDay()); // Sunday
+    startOfWeek.setDate(selectedWeek.getDate() - selectedWeek.getDay()); 
     
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); // Saturday
+    endOfWeek.setDate(startOfWeek.getDate() + 6); 
     
     filteredTasks = statusFilteredTasks.filter(task => {
       const taskDate = parseDate(task.dueDate);
@@ -50,7 +52,7 @@ const TaskBoard = ({ filter, selectedWeek }) => {
     });
   }
 
-  // Group the filtered tasks by status
+  
   const groupedTasks = {
     "To Do": filteredTasks.filter((task) => task.status === "To Do"),
     "In Progress": filteredTasks.filter((task) => task.status === "In Progress"),
