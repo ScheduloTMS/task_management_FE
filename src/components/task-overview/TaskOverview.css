@@ -1,0 +1,77 @@
+.task-overview-container {
+  width: 100%;
+  max-width: 45vw;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 30px;
+  position: relative;
+}
+
+.task-title {
+  font-weight: bold;
+  color: #000000;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.divider {
+  border: none;
+  height: 1px;
+  background-color: #000000;
+  margin: 10px 20px;
+}
+
+
+.task-field {
+  font-size: 17px;
+  color: #000000;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  font-weight: 400;
+}
+
+
+.description-text {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 15px;
+  line-height: 2;
+}
+
+
+.task-assets-container {
+  margin-top: 15px;
+  padding-left: 20px;
+}
+
+.task-assets-title {
+  font-weight: bold;
+  display: block;
+  font-size: 17px;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.task-assets {
+  list-style: none;
+  padding-left: 0;
+}
+
+.asset-item {
+  margin-bottom: 5px;
+}
+
+.asset-item a {
+  color: #56358e;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.asset-item a:hover {
+  text-decoration: underline;
+}

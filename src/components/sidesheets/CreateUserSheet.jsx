@@ -5,7 +5,7 @@ import "./CreateUserSheet.css";
 const CreateUserModal = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState(""); // No default value selected
+  const [role, setRole] = useState(""); 
 
   return (
     <>
