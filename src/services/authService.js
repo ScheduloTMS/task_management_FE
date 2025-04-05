@@ -2,13 +2,12 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8081/api";
 
-export const loginUser = async (username, password) => {
+export const loginUser = async (email, password) => {
   try {
     const response = await axios.post(
       `${API_URL}/auth/login`,
       {
-        userId: username,  
-        password: password,
+        email, password,
       },
       {
         headers: {
@@ -33,7 +32,7 @@ export const loginUser = async (username, password) => {
 
 export const changePassword = async (currentPassword, newPassword, token) => {
   try {
-    const response = await axios.post(
+    const response = await axios.put(
       `${API_URL}/users/profile`,
       {
         currentPassword,

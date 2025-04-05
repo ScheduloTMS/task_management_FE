@@ -13,7 +13,7 @@ import { authState } from "../../states/authState";
 import "./LoginPage.css";
 
 const LoginPage = () => {
-  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const LoginPage = () => {
     setLoading(true);
   
     try {
-      const response = await loginUser(userId, password);
+      const response = await loginUser(email, password);
       console.log(" API Response:", response);
   
       
@@ -39,15 +39,18 @@ const LoginPage = () => {
         }
   
         
-        localStorage.setItem("token", token);
-        setAuth({ token, role });
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("role", role);
+        localStorage.setItem("isFirstLogin", isFirstLogin);
+
+        setAuth({ token, role, isFirstLogin });
   
         
         if (isFirstLogin ===true) {
           navigate("/change-password"); 
         } else {
           
-          navigate(role === "student" ? "/dashboard/student" : "/dashboard/mentor");
+          navigate("/dashboard");
         }
       } else {
         throw new Error("Invalid API response. Response structure is not as expected.");
@@ -76,10 +79,10 @@ const LoginPage = () => {
           <div className="log">
           <Input
            type="text"
-           placeholder="Enter your Username"
+           placeholder="Enter your Email"
            icon={<FiUser />}
-           value={userId}  
-           onChange={(e) => setUserId(e.target.value)} 
+           value={email}  
+           onChange={(e) => setEmail(e.target.value)} 
           />
 
           <Input

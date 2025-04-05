@@ -2,6 +2,10 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { authState } from '../../states/authState.jsx';
 import { changePassword } from "../../services/authService"; 
 import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import Input from '../../components/input/Input.jsx';
+import { FiLock, FiEyeOff } from "react-icons/fi";
+
 
 const ChangePassword = () => {
   const [auth, setAuth] = useRecoilState(authState);
