@@ -30,24 +30,20 @@ export const loginUser = async (email, password) => {
   }
 };
 
-export const changePassword = async (currentPassword, newPassword, token) => {
-  try {
-    const response = await axios.put(
-      `${API_URL}/users/profile`,
-      {
-        currentPassword,
-        newPassword,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json", 
-          Authorization: `Bearer ${token}`,
-        }
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response ? error.response.data.message : error.message);
-  }
+export const changePassword = async (currentPassword, newPassword, confirmPassword, token) => {
+  const formData = new FormData();
+  formData.append("currentPassword", currentPassword);
+  formData.append("newPassword", newPassword);
+  formData.append("confirmPassword", confirmPassword);
 
+  const response = await axios.put(`${API_URL}/users/profile`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
 };
+
+
