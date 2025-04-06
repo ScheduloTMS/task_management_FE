@@ -28,35 +28,37 @@ const LoginPage = () => {
       const response = await loginUser(email, password);
       console.log(" API Response:", response);
   
-      
       if (response && response.response) {
         const { token, isFirstLogin, role } = response.response;
   
-        console.log("isFirstLogin:", isFirstLogin);
-        
         if (!token) {
           throw new Error("Token is missing in the response. Please check the backend.");
         }
   
-        
         localStorage.setItem("authToken", token);
         localStorage.setItem("role", role);
         localStorage.setItem("isFirstLogin", isFirstLogin);
-
+  
         const userProfile = await getUserProfile(token);
-        const { name, email, photo } = userProfile;
-
+        const { name, email, photo, userId } = userProfile;
+  
+        localStorage.setItem("userId", userId);
         localStorage.setItem("name", name);
         localStorage.setItem("email", email);
-        localStorage.setItem("photo", photo);
-
-        setAuth({ token, role, isFirstLogin, name, email, photo});
+        localStorage.setItem("photo", photo || "");
   
-        
-        if (isFirstLogin ===true) {
-          navigate("/change-password"); 
+        setAuth({
+          token,
+          role,
+          name,
+          email,
+          photo: photo || "",
+          userId,
+        });
+  
+        if (isFirstLogin === true) {
+          navigate("/change-password");
         } else {
-          
           navigate("/dashboard");
         }
       } else {
@@ -69,6 +71,7 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+  
   
 
   return (

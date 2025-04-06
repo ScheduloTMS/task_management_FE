@@ -23,16 +23,17 @@ const User = () => {
   return (
     <div className="user-profile">
       <div className="user-initial-view" onClick={toggleDropdown}>
-  {photo ? (
-    <img src={photo} alt="User" className="user-avatar" />
-  ) : (
-    <div className="user-fallback-avatar">{firstLetter}</div> 
-  )}
+      {photo ? (
+  <img src={`data:image/png;base64,${photo}`} alt="User" className="user-avatar" />
+) : (
+  <div className="user-fallback-avatar">{firstLetter}</div>
+)}
 
-  <div className="name-dropdown">
-    <span className="user-name">{name}</span>
-    {isOpen ? <MdArrowDropUp className="dropdown-icon" /> : <MdArrowDropDown className="dropdown-icon" />}
-  </div>
+<div className="name-dropdown">
+  <span className="user-name">{name}</span>
+  {isOpen ? <MdArrowDropUp className="dropdown-icon" /> : <MdArrowDropDown className="dropdown-icon" />}
+</div>
+
 </div>
 
       {isOpen && (

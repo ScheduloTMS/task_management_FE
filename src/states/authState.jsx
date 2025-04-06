@@ -9,5 +9,7 @@ export const authState = atom({
     name: localStorage.getItem("name") || "",
     email: localStorage.getItem("email") || "",
     photo: localStorage.getItem("photo") || "",
+    userId: localStorage.getItem("userId") || "",
   },
 });
+
