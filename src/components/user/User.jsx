@@ -4,16 +4,17 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import EditProfileSheet from '../sidesheets/EditProfileSheet'; 
 import UpdatePasswordModal from '../sidesheets/ChangePasswordSheet'; 
 import './User.css';
+import { useRecoilValue } from 'recoil';
+import { authState } from '../../states/authState.jsx';
 
 const User = () => {
+  const { name, photo } = useRecoilValue(authState);
+  const firstLetter = name ? name.charAt(0).toUpperCase() : "";
   const [isOpen, setIsOpen] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
-  const [user] = useState({
-    name: 'Jaimie Miller',
-    photo: 'https://randomuser.me/api/portraits/men/1.jpg'
-  });
+  
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -22,12 +23,17 @@ const User = () => {
   return (
     <div className="user-profile">
       <div className="user-initial-view" onClick={toggleDropdown}>
-        <img src={user.photo} alt="User" className="user-avatar" />
-        <div className="name-dropdown">
-          <span className="user-name">{user.name}</span>
-          {isOpen ? <MdArrowDropUp className="dropdown-icon" /> : <MdArrowDropDown className="dropdown-icon" />}
-        </div>
-      </div>
+  {photo ? (
+    <img src={photo} alt="User" className="user-avatar" />
+  ) : (
+    <div className="user-fallback-avatar">{firstLetter}</div> 
+  )}
+
+  <div className="name-dropdown">
+    <span className="user-name">{name}</span>
+    {isOpen ? <MdArrowDropUp className="dropdown-icon" /> : <MdArrowDropDown className="dropdown-icon" />}
+  </div>
+</div>
 
       {isOpen && (
         <div className="user-dropdown">

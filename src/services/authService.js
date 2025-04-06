@@ -46,4 +46,19 @@ export const changePassword = async (currentPassword, newPassword, confirmPasswo
   return response.data;
 };
 
+export const getUserProfile = async (token) => {
+  try {
+    const response = await axios.get(`${API_URL}/users/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.response; 
+  } catch (error) {
+    console.error("Fetching user profile failed:", error);
+    throw new Error("Unable to fetch user profile.");
+  }
+};
+
+
 

@@ -6,7 +6,7 @@ import Logo from "../../components/logo/Logo";
 import userIcon from "../../assets/group.png";
 import { GoLock } from "react-icons/go";
 import { FiUser } from "react-icons/fi";
-import { loginUser } from "../../services/authService";
+import { loginUser, getUserProfile } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { authState } from "../../states/authState";
@@ -43,7 +43,14 @@ const LoginPage = () => {
         localStorage.setItem("role", role);
         localStorage.setItem("isFirstLogin", isFirstLogin);
 
-        setAuth({ token, role, isFirstLogin });
+        const userProfile = await getUserProfile(token);
+        const { name, email, photo } = userProfile;
+
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("photo", photo);
+
+        setAuth({ token, role, isFirstLogin, name, email, photo});
   
         
         if (isFirstLogin ===true) {
