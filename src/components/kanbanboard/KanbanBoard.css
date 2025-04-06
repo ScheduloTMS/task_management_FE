@@ -28,8 +28,8 @@
     margin-top: 30px;
     margin-left: 10px;
     margin-right: 10px;
-    min-height: 200px; /* Change from fixed height */
-    height: auto; /* Let it expand */
+    min-height: 200px; 
+    height: auto;
     overflow: hidden;
     transition: height 0.3s ease-in-out;
     
@@ -114,6 +114,16 @@
   
   .task-description {
     cursor: pointer;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    word-wrap: break-word;
+    text-overflow: ellipsis;
+    margin: 8px 0;
+    line-height: 1.4; 
+  }
+  
+  .task-description.expanded {
+    -webkit-line-clamp: unset;
+    display: block;
   }

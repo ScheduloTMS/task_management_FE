@@ -1,39 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 import { MdTask } from "react-icons/md";
 import { AiFillMessage } from "react-icons/ai";
 import { GoHomeFill } from "react-icons/go";
-import { TbLayoutSidebarLeftCollapse ,TbLayoutSidebarRightCollapse  } from "react-icons/tb";
 import { RiCalendarScheduleFill } from "react-icons/ri";
 import "./Sidebar.css";
 import Logo from "../logo/Logo";
 
-
-const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
-
+const Sidebar = ({ additionalItem }) => {
   const navigate = (path) => {
     window.location.href = path;
   };
 
+  const menuItems = [
+    { icon: <GoHomeFill />, text: "Home", path: "/" },
+    { icon: <MdTask />, text: "My Tasks", path: "/tasks" },
+    { icon: <AiFillMessage />, text: "Messages", path: "/messages" },
+    { icon: <RiCalendarScheduleFill />, text: "Calendar", path: "/calendar" }
+  ];
+
   return (
-    <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
+    <div className="sidebar">
       <div className="sidebar-header">
-      <Logo size="small"/>
-        
+        <Logo size="small" />
       </div>
       <nav className="sidebar-menu">
-        <div className="sidebar-item" onClick={() => navigate("/")}>
-          <GoHomeFill /> <span className="sidebar-text">Home</span>
-        </div>
-        <div className="sidebar-item" onClick={() => navigate("/tasks")}>
-          <MdTask  /> <span className="sidebar-text">My Tasks</span>
-        </div>
-        <div className="sidebar-item" onClick={() => navigate("/messages")}>
-          <AiFillMessage   /> <span className="sidebar-text">Messages</span>
-        </div>
-        <div className="sidebar-item" onClick={() => navigate("/calender")}>
-        <RiCalendarScheduleFill /> <span className="sidebar-text">Calendar</span>
-        </div>
+        {menuItems.map((item, index) => (
+          <div 
+            key={index} 
+            className="sidebar-item" 
+            onClick={() => navigate(item.path)}
+          >
+            {item.icon}
+            <span className="sidebar-text">{item.text}</span>
+          </div>
+        ))}
+        {additionalItem && (
+          <div 
+            className="sidebar-item" 
+            onClick={() => navigate(additionalItem.path)}
+          >
+            {additionalItem.icon}
+            <span className="sidebar-text">{additionalItem.label}</span>
+          </div>
+        )}
       </nav>
     </div>
   );

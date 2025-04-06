@@ -60,11 +60,11 @@
 }
 
 .delete-btn {
-  background-color: #ff4444;
+  background:none;
   color: white;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
   padding: 6px 10px; 
   border-radius: 4px;
   transition: background-color 0.2s;
@@ -73,12 +73,92 @@
   justify-content: center;
   min-width: 30px;
 }
+.delete-btn {
+  color: #56358E;
+}
 
-.delete-btn:hover {
-  background-color: #cc0000;
+.edit-btn{
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;  
+  font-size: 19px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px; 
+  transition: background-color 0.2s;
+}
+
+.edit-btn {
+  color: #56358E;
+}
+
+.description-cell, 
+.student-names {
+  cursor: pointer;
+  position: relative;
 }
 
 
+
+.description-cell {
+  max-width: 300px;
+  min-width: 150px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  padding-right: 20px;
+}
+
+.student-names {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* Make sure table rows don't break */
+.task-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.task-table td {
+  vertical-align: top;
+}
+
+
+.students-cell {
+  min-width: 150px;
+  max-width: 200px;
+}
+
+.student-names-container {
+  display: inline-block;
+  width: 100%;
+}
+
+.student-names {
+  display: inline;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.student-names:not(.expanded) {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsis {
+  position: relative;
+  display: inline;
+  background: white;
+  padding-left: 2px;
+}
 @media (max-width: 768px) {
   .task-table {
     display: block;

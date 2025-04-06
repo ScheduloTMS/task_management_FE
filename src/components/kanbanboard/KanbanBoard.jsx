@@ -54,18 +54,6 @@ const sampleTasks = [
     ],
     mentor: { name: "Prof. Daniel Scott", avatar: "https://via.placeholder.com/28" },
   },
-  {
-    id: 5,
-    title: "Assignment Review",
-    dueDate: "2025-04-12",
-    status: "Completed",
-    description: "The task involves reviewing assignments submitted by students. Each submission needs to be checked for plagiarism, formatting, and overall quality. Detailed feedback should be provided.",
-    assignedStudents: [
-      { name: "Alice Brown", avatar: "https://via.placeholder.com/28" },
-      { name: "Bob White", avatar: "https://via.placeholder.com/28" },
-    ],
-    mentor: { name: "Prof. Daniel Scott", avatar: "https://via.placeholder.com/28" },
-  },
 ];
 
 const statusConfig = {
@@ -100,8 +88,11 @@ const KanbanBoard = ({ isMentor }) => {
                 <div key={task.id} className="kanban-card">
                   <h4>{task.title}</h4>
                   
-                  <p className="task-description" onClick={() => toggleDescription(task.id)}>
-  {expandedTask === task.id ? task.description : `${task.description.substring(0, 120)}...`}
+                  <p 
+  className={`task-description ${expandedTask === task.id ? 'expanded' : ''}`}
+  onClick={() => toggleDescription(task.id)}
+>
+  {task.description}
 </p>
                   
                   <p className="due-date">
