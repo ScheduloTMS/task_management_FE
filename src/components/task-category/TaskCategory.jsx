@@ -49,54 +49,52 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
           </thead>
           <tbody>
             {tasks.map((task) => (
-              <tr key={task.id} className="task-row">
+              <tr key={task.taskId} className="task-row">
                 <td>{task.title}</td>
-                <td 
+                <td
                   className="description-cell"
-                  onClick={(e) => toggleDescription(task.id, e)}
+                  onClick={(e) => toggleDescription(task.taskId, e)}
                 >
-                  {expandedDescriptions[task.id] 
-  ? task.description 
-  : task.description 
-    ? `${task.description.substring(0, 100)}${task.description.length > 100 ? "..." : ""}`
-    : "No description"}
-
+                  {expandedDescriptions[task.taskId]
+                    ? task.description
+                    : task.description
+                      ? `${task.description.substring(0, 100)}${task.description.length > 100 ? "..." : ""}`
+                      : "No description"}
                 </td>
                 <td>{task.createdAt}</td>
                 <td>{task.dueDate}</td>
-                <td 
+                <td
                   className="students-cell"
-                  onClick={(e) => isMentor && toggleStudents(task.id, e)}
+                  onClick={(e) => isMentor && toggleStudents(task.taskId, e)}
                 >
                   {isMentor ? (
                     <div className="student-names-container">
-                      <span className={`student-names ${expandedStudents[task.id] ? 'expanded' : ''}`}>
-  {expandedStudents[task.id]
-    ? task.assignedStudents?.join(", ")
-    : `${task.assignedStudents?.slice(0, 2).join(", ")}${task.assignedStudents?.length > 2 ? "..." : ""}`}
-</span>
-
+                      <span className={`student-names ${expandedStudents[task.taskId] ? 'expanded' : ''}`}>
+                        {expandedStudents[task.taskId]
+                          ? task.assignedStudents?.join(", ")
+                          : `${task.assignedStudents?.slice(0, 2).join(", ")}${task.assignedStudents?.length > 2 ? "..." : ""}`}
+                      </span>
                     </div>
                   ) : (
-                    task.mentor
+                    task.createdBy || "Mentor not assigned"
                   )}
                 </td>
                 {isMentor && (
                   <td className="action-buttons">
-                    <button 
-                      className="edit-btn" 
+                    <button
+                      className="edit-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onEdit(task.id);
+                        onEdit(task.taskId);
                       }}
                     >
                       <FiEdit />
                     </button>
-                    <button 
-                      className="delete-btn" 
+                    <button
+                      className="delete-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onDelete(task.id);
+                        onDelete(task.taskId);
                       }}
                     >
                       <AiOutlineDelete />

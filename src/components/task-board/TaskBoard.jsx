@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import TaskCategory from "../task-category/TaskCategory.jsx";
-import { FaRegCircle, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import {
+  FaRegCircle,
+  FaSpinner,
+  FaCheckCircle,
+  FaExclamationCircle,
+} from "react-icons/fa";
 import "./TaskBoard.css";
-import { fetchAllTasks } from "../../services/taskService.js"; 
+import { fetchAllTasks } from "../../services/taskService.js";
 
 const statusConfig = {
   "To Do": { icon: <FaRegCircle />, color: "#56358E" },
@@ -12,66 +17,75 @@ const statusConfig = {
 };
 
 const parseDate = (dateStr) => {
+  if (!dateStr) return null;
   const [month, day] = dateStr.split(" ");
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
   const monthIndex = months.indexOf(month);
-  const year = new Date().getFullYear(); 
+  const year = new Date().getFullYear();
   return new Date(year, monthIndex, parseInt(day));
 };
 
-const TaskBoard = ({ filter, selectedWeek, isMentor = false }) => {
+const TaskBoard = ({ filter = "All", selectedWeek, isMentor = false }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadTasks = async () => {
       try {
-        const taskData = await fetchAllTasks(); 
-        setTasks(taskData || []);
+        const taskData = await fetchAllTasks();
+        const flattened = taskData.map(item => ({
+          ...item.task,
+          status: item.status
+        }));
+        setTasks(flattened);
       } catch (error) {
         console.error("Failed to fetch tasks:", error);
       } finally {
         setLoading(false);
       }
     };
+
     loadTasks();
   }, []);
 
   const handleDeleteTask = (taskId) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
-      setTasks(tasks.filter(task => task.id !== taskId));
+      setTasks(tasks.filter(task => task.taskId !== taskId));
     }
   };
 
   const handleEditTask = (taskId) => {
-    const taskToEdit = tasks.find(task => task.id === taskId);
+    const taskToEdit = tasks.find(task => task.taskId === taskId);
     if (taskToEdit) {
       const newTitle = prompt("Edit task title:", taskToEdit.title);
       if (newTitle !== null) {
-        setTasks(tasks.map(task => 
-          task.id === taskId ? { ...task, title: newTitle } : task
+        setTasks(tasks.map(task =>
+          task.taskId === taskId ? { ...task, title: newTitle } : task
         ));
       }
     }
   };
 
-  const statusFilteredTasks = Array.isArray(tasks)
-  ? (filter === "All" ? tasks : tasks.filter(task => task.status === filter))
-  : [];
-
+  const statusFilteredTasks =
+    filter === "All"
+      ? tasks
+      : tasks.filter(task => task.status === filter);
 
   let filteredTasks = [...statusFilteredTasks];
 
   if (selectedWeek) {
     const startOfWeek = new Date(selectedWeek);
-    startOfWeek.setDate(selectedWeek.getDate() - selectedWeek.getDay());
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
 
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 6);
 
     filteredTasks = filteredTasks.filter(task => {
       const taskDate = parseDate(task.dueDate);
-      return taskDate >= startOfWeek && taskDate <= endOfWeek;
+      return taskDate && taskDate >= startOfWeek && taskDate <= endOfWeek;
     });
   }
 
@@ -88,8 +102,8 @@ const TaskBoard = ({ filter, selectedWeek, isMentor = false }) => {
 
   return (
     <div className="task-board">
-      {Object.entries(groupedTasks).map(([status, statusTasks]) => (
-        statusTasks.length > 0 && (
+      {Object.entries(groupedTasks).map(([status, statusTasks]) =>
+        statusTasks.length > 0 ? (
           <TaskCategory
             key={status}
             status={status}
@@ -99,8 +113,8 @@ const TaskBoard = ({ filter, selectedWeek, isMentor = false }) => {
             onDelete={handleDeleteTask}
             onEdit={handleEditTask}
           />
-        )
-      ))}
+        ) : null
+      )}
     </div>
   );
 };
