@@ -4,32 +4,97 @@ import { FaRegCircle, FaSpinner, FaCheckCircle, FaExclamationCircle } from "reac
 import "./TaskBoard.css";
 
 const statusConfig = {
-  "To Do": { icon: <FaRegCircle />, color: "#56358E", lightColor: "rgba(86, 53, 142, 0.1)" },
-  "In Progress": { icon: <FaSpinner />, color: "#ffc107", lightColor: "rgba(255, 193, 7, 0.1)" },
-  "Completed": { icon: <FaCheckCircle />, color: "#28a745", lightColor: "rgba(40, 167, 69, 0.1)" },
-  "Overdue": { icon: <FaExclamationCircle />, color: "#dc3545", lightColor: "rgba(220, 53, 69, 0.1)" },
+  "To Do": { icon: <FaRegCircle />, color: "#56358E" },
+  "In Progress": { icon: <FaSpinner />, color: "#ffc107"},
+  "Completed": { icon: <FaCheckCircle />, color: "#28a745" },
+  "Overdue": { icon: <FaExclamationCircle />, color: "#dc3545" },
 };
 
-const taskData = [
-  { id: 1, title: "Solutions Pages", assignee: "John", dueDate: "Mar 17", status: "To Do" },
-  { id: 2, title: "Order Flow", assignee: "Doe", dueDate: "Mar 18",  status: "In Progress" },
-  { id: 3, title: "About Us", assignee: "Alice", dueDate: "Mar 20",  status: "Completed" },
-  { id: 4, title: "Client Review", assignee: "Bob", dueDate: "Mar 15",  status: "Overdue" },
+// Sample data with assignedStudents
+const initialTaskData = [
+  { id: 1, title: "Solutions Pages",description:"White lilies, scientifically known as Lilium candidum, are known for their pure white, trumpet-shaped flowers, often associated with purity, rebirth, and innocence, and are popular for weddings", mentor: "John", dueDate: "Mar 17",createdAt:"March 2", status: "To Do",assignedStudents: ["Alice", "Bob", "Charlie"] },
+  { id: 2, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Mar 20",createdAt:"March 2", status: "To Do" ,assignedStudents: ["Alice", "Bob", "Charlie"]},
+  { id: 3, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Mar 17",createdAt:"March 2", status: "In Progress",assignedStudents: ["Alice", "Bob", "Charlie"] },
+  { id: 4, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Apr 17",createdAt:"March 2", status: "Overdue",assignedStudents: ["Alice", "Bob", "Charlie"] },
+  { id: 5, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Mar 17",createdAt:"March 2", status: "Completed",assignedStudents: ["Alice", "Bob", "Charlie"] },
+  { id: 6, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Mar 17",createdAt:"March 2", status: "To Do" ,assignedStudents: ["Alice", "Bob", "Charlie"]},
+  { id: 7, title: "Solutions Pages",description:"hzhdljkd", mentor: "John", dueDate: "Jul 17",createdAt:"March 2", status: "Completed" ,assignedStudents: ["Alice", "Bob", "Charlie","Alice", "Bob", "Charlie"]},
 ];
 
-const TaskBoard = () => {
+const parseDate = (dateStr) => {
+  const [month, day] = dateStr.split(" ");
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthIndex = months.indexOf(month);
+  const year = new Date().getFullYear(); 
+  return new Date(year, monthIndex, parseInt(day));
+};
+
+const TaskBoard = ({ filter, selectedWeek, isMentor = false }) => {
+  const [tasks, setTasks] = useState(initialTaskData);
+
+  const handleDeleteTask = (taskId) => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      setTasks(tasks.filter(task => task.id !== taskId));
+    }
+  };
+
+  const handleEditTask = (taskId) => {
+    const taskToEdit = tasks.find(task => task.id === taskId);
+    if (taskToEdit) {
+      const newTitle = prompt("Edit task title:", taskToEdit.title);
+      if (newTitle !== null) {
+        setTasks(tasks.map(task => 
+          task.id === taskId ? {...task, title: newTitle} : task
+        ));
+      }
+    }
+  };
+
+  // Filter logic remains the same
+  const statusFilteredTasks = filter === "All" 
+    ? tasks 
+    : tasks.filter(task => task.status === filter);
+
+  let filteredTasks = [...statusFilteredTasks];
+  
+  if (selectedWeek) {
+    const startOfWeek = new Date(selectedWeek);
+    startOfWeek.setDate(selectedWeek.getDate() - selectedWeek.getDay()); 
+    
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); 
+    
+    filteredTasks = statusFilteredTasks.filter(task => {
+      const taskDate = parseDate(task.dueDate);
+      return taskDate >= startOfWeek && taskDate <= endOfWeek;
+    });
+  }
+
   const groupedTasks = {
-    "To Do": taskData.filter((task) => task.status === "To Do"),
-    "In Progress": taskData.filter((task) => task.status === "In Progress"),
-    "Completed": taskData.filter((task) => task.status === "Completed"),
-    "Overdue": taskData.filter((task) => task.status === "Overdue"),
+    "To Do": filteredTasks.filter((task) => task.status === "To Do"),
+    "In Progress": filteredTasks.filter((task) => task.status === "In Progress"),
+    "Completed": filteredTasks.filter((task) => task.status === "Completed"),
+    "Overdue": filteredTasks.filter((task) => task.status === "Overdue"),
   };
 
   return (
     <div className="task-board">
-      {Object.entries(groupedTasks).map(([status, tasks]) => (
-        <TaskCategory key={status} status={status} tasks={tasks} config={statusConfig[status]} />
-      ))}
+      {Object.entries(groupedTasks).map(([status, tasks]) => {
+        if (tasks.length > 0) {
+          return (
+            <TaskCategory 
+              key={status} 
+              status={status} 
+              tasks={tasks} 
+              config={statusConfig[status]} 
+              isMentor={isMentor}
+              onDelete={handleDeleteTask}
+              onEdit={handleEditTask}
+            />
+          );
+        }
+        return null;
+      })}
     </div>
   );
 };
