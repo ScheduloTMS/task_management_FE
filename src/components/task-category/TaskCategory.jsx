@@ -56,8 +56,11 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
                   onClick={(e) => toggleDescription(task.id, e)}
                 >
                   {expandedDescriptions[task.id] 
-                    ? task.description
-                    : `${task.description.substring(0, 100)}${task.description.length > 100 ? "..." : ""}`}
+  ? task.description 
+  : task.description 
+    ? `${task.description.substring(0, 100)}${task.description.length > 100 ? "..." : ""}`
+    : "No description"}
+
                 </td>
                 <td>{task.createdAt}</td>
                 <td>{task.dueDate}</td>
