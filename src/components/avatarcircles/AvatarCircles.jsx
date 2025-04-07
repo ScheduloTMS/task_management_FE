@@ -1,5 +1,5 @@
 import React from "react";
-import "./AvatarCircles.css"; // Import styles for avatar grouping
+import "./AvatarCircles.css"; 
 
 const AvatarCircles = ({ avatars, maxDisplay = 5 }) => {
   return (

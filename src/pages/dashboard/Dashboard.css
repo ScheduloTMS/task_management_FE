@@ -36,7 +36,7 @@ body{
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  overflow-x: auto;
+  overflow-x: hidden;
   padding: 20px;
   margin-left: 30px;
 }
@@ -79,8 +79,4 @@ body{
   margin-left: -20px;
   height: 400px;
   gap: 20px;
-}
-
-.bold-name {
-  font-weight: 800;
 }

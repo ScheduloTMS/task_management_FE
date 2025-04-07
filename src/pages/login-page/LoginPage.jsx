@@ -6,14 +6,14 @@ import Logo from "../../components/logo/Logo";
 import userIcon from "../../assets/group.png";
 import { GoLock } from "react-icons/go";
 import { FiUser } from "react-icons/fi";
-import { loginUser } from "../../services/authService";
+import { loginUser, getUserProfile } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { authState } from "../../states/authState";
 import "./LoginPage.css";
 
 const LoginPage = () => {
-  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,30 +25,58 @@ const LoginPage = () => {
     setLoading(true);
   
     try {
-      const response = await loginUser(userId, password);
-      console.log(" API Response:", response);
+      const response = await loginUser(email, password);
+      console.log("API Response:", response);
   
-      
       if (response && response.response) {
         const { token, isFirstLogin, role } = response.response;
   
-        console.log("isFirstLogin:", isFirstLogin);
-        
         if (!token) {
           throw new Error("Token is missing in the response. Please check the backend.");
         }
   
-        
-        localStorage.setItem("token", token);
-        setAuth({ token, role });
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("role", role);
+        localStorage.setItem("isFirstLogin", isFirstLogin);
   
         
-        if (isFirstLogin ===true) {
-          navigate("/change-password"); 
-        } else {
-          
-          navigate(role === "student" ? "/dashboard/student" : "/dashboard/mentor");
+        
+        if (isFirstLogin === true || isFirstLogin === "true") {
+          setAuth({
+            token,
+            role,
+            name: "",      
+            email,
+            photo: "",
+            userId: "",
+            isFirstLogin: true,
+          });
+  
+          navigate("/change-password");
+          return;
         }
+  
+        
+        const userProfile = await getUserProfile(token);
+        const { name, email: profileEmail, photo, userId } = userProfile;
+  
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", profileEmail);
+        localStorage.setItem("photo", photo || "");
+        localStorage.setItem("isFirstLogin", "false");
+  
+        setAuth({
+          token,
+          role,
+          name,
+          email: profileEmail,
+          photo: photo || "",
+          userId,
+          isFirstLogin,
+        });
+  
+        navigate("/dashboard");
       } else {
         throw new Error("Invalid API response. Response structure is not as expected.");
       }
@@ -59,6 +87,7 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+  
   
 
   return (
@@ -76,10 +105,10 @@ const LoginPage = () => {
           <div className="log">
           <Input
            type="text"
-           placeholder="Enter your Username"
+           placeholder="Enter your Email"
            icon={<FiUser />}
-           value={userId}  
-           onChange={(e) => setUserId(e.target.value)} 
+           value={email}  
+           onChange={(e) => setEmail(e.target.value)} 
           />
 
           <Input
