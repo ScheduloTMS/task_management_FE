@@ -1,53 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Sidebar from "../../components/sidebar/Sidebar.jsx";
 import TaskOverview from "../../components/task-overview/TaskOverview.jsx";
 import Remarks from "../../components/remarks/Remarks.jsx";
 import TopbarLayout from "../../layouts/topbar/Topbar.jsx";
 import Uploads from "../../components/uploads/Uploads.jsx";
+import MentorScoreUpload from "../../components/task-review/TaskReview.jsx";
+import AssignedStudents from "../../components/assignedstudents/AssignedStudents.jsx";
+import { useRecoilValue } from "recoil";
+import { authState } from "../../states/authState.jsx";
 import "./StudentTaskOverview.css";
 
-const StudentTaskOverview = () => {
-  const [taskTitle, setTaskTitle] = useState("Loading...");
-
-  useEffect(() => {
-    
-    setTimeout(() => {
-      setTaskTitle("Complete the Frontend"); 
-    }, 2000);
-  }, []);
+const TaskOverviewPage = () => {
+  const { role } = useRecoilValue(authState); 
 
   return (
-    <div className="student-task-overview-container">
-      
+    <div className="task-container">
       <div className="sidebar-container">
         <Sidebar />
       </div>
 
-
       <div className="main-content">
-
-        <div>
-          <TopbarLayout />
-        </div>
-
-
-        <div className="task-title">{taskTitle}</div>
-
-        
+        <TopbarLayout />
         <div className="content-wrapper">
-
           <div className="left-column">
-            <div >
-              <TaskOverview />
-            </div>
+            <TaskOverview />
             <div className="uploads-container">
-              <Uploads />
+              {role === "student" ? <Uploads /> : <AssignedStudents/>}
             </div>
           </div>
 
-          
-          <div className="remarks-container">
-            <Remarks />
+          <div >
+            {role === "student" ? <Remarks /> : <MentorScoreUpload />}
           </div>
         </div>
       </div>
@@ -55,4 +38,4 @@ const StudentTaskOverview = () => {
   );
 };
 
-export default StudentTaskOverview;
+export default TaskOverviewPage;

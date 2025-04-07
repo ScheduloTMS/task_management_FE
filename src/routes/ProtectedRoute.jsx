@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children, requireFirstLogin = null }) => {
   const { token, isFirstLogin } = useRecoilValue(authState);
 
   if (!token) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   if (requireFirstLogin === true && !isFirstLogin) {
@@ -17,6 +17,7 @@ const ProtectedRoute = ({ children, requireFirstLogin = null }) => {
   if (requireFirstLogin === false && isFirstLogin) {
     return <Navigate to="/change-password" />;
   }
+
 
   return children;
 };

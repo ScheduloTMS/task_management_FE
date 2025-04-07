@@ -16,25 +16,11 @@ const StudentBoard = () => {
   return (
     <div className="student-board-container">
 
-      <div className="sidebar-container">
-        <Sidebar />
-      </div>
-
-
       <div className="main-content">
-
-        <div >
-          <TopbarLayout />
-        </div>
 
 
         <div className="content-wrapper">
 
-          <div className="board-list-buttons">
-            <BoardListButtons setViewMode={setViewMode} /> 
-          </div>
-
-         
           <div className="board-content">
             {viewMode === "kanban" ? (
               <KanbanBoard />

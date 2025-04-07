@@ -17,17 +17,8 @@ const StudentList = () => {
 
   return (
     <div className="student-board-container">
-      <div className="sidebar-container">
-        <Sidebar />
-      </div>
-
       <div className="main-content">
-        <TopbarLayout />
-
         <div className="content-wrapper">
-          <div className="board-list-buttons">
-            <BoardListButtons setViewMode={setViewMode} /> 
-          </div>
 
           <hr className="divider" />
 
