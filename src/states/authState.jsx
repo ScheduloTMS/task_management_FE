@@ -5,7 +5,7 @@ export const authState = atom({
   default: {
     token: localStorage.getItem("authToken") || null,
     role: localStorage.getItem("role") || null,
-    isFirstLogin: localStorage.getItem("isFirstLogin") === "true",
+    isFirstLogin: JSON.parse(localStorage.getItem("isFirstLogin") || "false"),
     name: localStorage.getItem("name") || "",
     email: localStorage.getItem("email") || "",
     photo: localStorage.getItem("photo") || "",

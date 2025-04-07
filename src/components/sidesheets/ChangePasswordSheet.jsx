@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
 import './ChangePasswordSheet.css';
+import { changePassword } from '../../services/authService';
 
 const UpdatePasswordModal = ({ onClose }) => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    onClose();
+
+    setLoading(true);
+    const token = localStorage.getItem("authToken");
+
+    try {
+      const response = await changePassword(currentPassword, newPassword, confirmPassword, token);
+      alert(response.message || "Password changed successfully!");
+      onClose();
+    } catch (error) {
+      console.error("Password change failed:", error);
+      alert(error.message || "Failed to change password.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -53,7 +73,13 @@ const UpdatePasswordModal = ({ onClose }) => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
-              <button className="custom-save-button" onClick={handleSave}>Save</button>
+              <button
+                className="custom-save-button"
+                onClick={handleSave}
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Save"}
+              </button>
             </div>
           </div>
         </div>

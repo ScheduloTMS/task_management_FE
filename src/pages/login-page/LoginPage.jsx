@@ -26,7 +26,7 @@ const LoginPage = () => {
   
     try {
       const response = await loginUser(email, password);
-      console.log(" API Response:", response);
+      console.log("API Response:", response);
   
       if (response && response.response) {
         const { token, isFirstLogin, role } = response.response;
@@ -39,28 +39,44 @@ const LoginPage = () => {
         localStorage.setItem("role", role);
         localStorage.setItem("isFirstLogin", isFirstLogin);
   
+        
+        
+        if (isFirstLogin === true || isFirstLogin === "true") {
+          setAuth({
+            token,
+            role,
+            name: "",      
+            email,
+            photo: "",
+            userId: "",
+            isFirstLogin: true,
+          });
+  
+          navigate("/change-password");
+          return;
+        }
+  
+        
         const userProfile = await getUserProfile(token);
-        const { name, email, photo, userId } = userProfile;
+        const { name, email: profileEmail, photo, userId } = userProfile;
   
         localStorage.setItem("userId", userId);
         localStorage.setItem("name", name);
-        localStorage.setItem("email", email);
+        localStorage.setItem("email", profileEmail);
         localStorage.setItem("photo", photo || "");
+        localStorage.setItem("isFirstLogin", "false");
   
         setAuth({
           token,
           role,
           name,
-          email,
+          email: profileEmail,
           photo: photo || "",
           userId,
+          isFirstLogin,
         });
   
-        if (isFirstLogin === true) {
-          navigate("/change-password");
-        } else {
-          navigate("/dashboard");
-        }
+        navigate("/dashboard");
       } else {
         throw new Error("Invalid API response. Response structure is not as expected.");
       }
