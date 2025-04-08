@@ -51,10 +51,7 @@ const TaskReview = ({ student }) =>
       </div>
 
       <hr className="divider" />
-
-      <div className="comments-section">
         <Remarks />
-      </div>
     </div>
   );
 };

@@ -2,20 +2,9 @@
     display: flex;
     height: 100vh;
   }
-  .sidebar-container {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-  }
+ 
   
-  
-  .main-content {
-    margin-left: 280px;
-    width: calc(100% - 250px);
-  }
-  
+ 
   
   .content-wrapper {
     padding: 20px;

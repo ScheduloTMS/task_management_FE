@@ -6,11 +6,11 @@
     max-width: 800px;
     display: flex;
     flex-direction: column;
+    gap: 30px; /* spacing between sections */
   }
   
   .section-title {
     font-size: 24px;
-    margin-bottom: 20px;
     color: #56358E;
   }
   
@@ -21,6 +21,7 @@
   .uploaded-files ul {
     list-style: none;
     padding-left: 0;
+    margin-top: 8px;
   }
   
   .uploaded-files li a {
@@ -30,7 +31,6 @@
   }
   
   .divider {
-    margin: 30px 0;
     border: none;
     height: 1px;
     background-color: #ccc;
@@ -56,14 +56,24 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 10px;
   }
   
   .submit-score-btn:hover {
     background-color: #462b75;
   }
-
-  .score-submit{
+  
+  .score-submit {
     display: flex;
-    flex-direction: row;
+    align-items: center;
   }
+  
+  .comments-section {
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #f9f9fc;
+  }
+  
+  /* Optional: if Remarks has internal margin/padding, adjust accordingly */
   

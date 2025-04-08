@@ -10,7 +10,7 @@ import LoginPage from "../pages/login-page/LoginPage";
 import ChangePassword from "../pages/changePassword/ChangePassword";
 import Dashboard from "../pages/dashboard/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
-import Calendar from "../components/full-calendar/ FullCalendarComponent.jsx";
+import Calendar from "../pages/full-calendar/ FullCalendarComponent.jsx";
 import TaskPage from "../pages/task/TaskPage.jsx"
 import TaskDetails from "../pages/task/StudentTaskOverview.jsx"; 
 
