@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const API_URL = "http://localhost:8081/api";
 
 export const updateUserProfilePhoto = async (photo, token) => {
   
@@ -7,7 +8,7 @@ export const updateUserProfilePhoto = async (photo, token) => {
   formData.append("photo", photo);
 
   const response = await axios.put(
-    "http://localhost:8081/api/users/profile",
+    `${API_URL}/users/profile`,
     formData,
     {
       headers: {
@@ -22,7 +23,7 @@ export const updateUserProfilePhoto = async (photo, token) => {
 
 export const fetchAllStudents = async (token) => {
   try {
-    const res = await axios.get("http://localhost:8081/api/users", {
+    const res = await axios.get(`${API_URL}/users`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -35,5 +36,20 @@ export const fetchAllStudents = async (token) => {
   }
 };
 
+
+
+export const getAllUsers = async (token) => {
+  try {
+    const response = await axios.get(`${API_URL}/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.response; 
+  } catch (error) {
+    console.error("Failed to fetch users:", error);
+    throw error;
+  }
+};
 
 

@@ -34,7 +34,7 @@ const CreateTaskModal = () => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      setFile(selectedFile); // Save raw file object
+      setFile(selectedFile); 
     }
   };
  
@@ -53,7 +53,7 @@ const CreateTaskModal = () => {
       title,
       description,
       dueDate,
-      file, // Raw file object
+      file, 
     };
  
     try {
@@ -99,7 +99,7 @@ const CreateTaskModal = () => {
               ></button>
             </div>
             <div className="modal-body">
-              {/* Title */}
+              
               <div className="mb-3">
                 <label className="form-label">Title</label>
                 <input
@@ -109,7 +109,7 @@ const CreateTaskModal = () => {
                 />
               </div>
  
-              {/* Description */}
+              
               <div className="mb-3">
                 <label className="form-label">Description</label>
                 <textarea
@@ -119,7 +119,7 @@ const CreateTaskModal = () => {
                 />
               </div>
  
-              {/* Due Date */}
+              
               <div className="mb-3">
                 <label className="form-label">Due Date</label>
                 <input
@@ -130,7 +130,7 @@ const CreateTaskModal = () => {
                 />
               </div>
  
-              {/* File Upload */}
+              
               <div className="mb-3">
                 <label className="form-label">Upload File</label>
                 <input
@@ -140,7 +140,7 @@ const CreateTaskModal = () => {
                 />
               </div>
  
-              {/* Student Selection */}
+              
               <div className="mb-3">
                 <label className="form-label">Assign Students</label>
                 <input
@@ -192,7 +192,7 @@ const CreateTaskModal = () => {
               </div>
             </div>
  
-            {/* Footer */}
+           
             <div className="modal-footer">
               <button className="btn btn-secondary" data-bs-dismiss="modal">
                 Cancel
