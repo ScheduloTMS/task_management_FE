@@ -7,7 +7,7 @@ import MentorList from './pages/task/MentorList.jsx';
 function App() {
   return (
     <main>
-      <MentorBoard />
+      <MentorList />
     </main>
   );
 }
