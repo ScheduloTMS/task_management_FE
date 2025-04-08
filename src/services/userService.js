@@ -34,3 +34,6 @@ export const fetchAllStudents = async (token) => {
     throw error;
   }
 };
+
+
+

@@ -4,20 +4,20 @@ import { useRecoilValue } from "recoil";
 import { authState } from "../../states/authState";
 import { createTask } from "../../services/taskService.js";
 import { assignStudents } from "../../services/assignmentService.js";
-
+ 
 const CreateTaskModal = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [file, setFile] = useState(null); 
+  const [file, setFile] = useState(null);
   const [studentsList, setStudentsList] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { token } = useRecoilValue(authState);
-
+ 
   const dropdownRef = useRef();
-
+ 
   useEffect(() => {
     const loadStudents = async () => {
       try {
@@ -27,27 +27,27 @@ const CreateTaskModal = () => {
         console.error("Error loading students:", error);
       }
     };
-
+ 
     loadStudents();
   }, [token]);
-
+ 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile); // Save raw file object
     }
   };
-
+ 
   const handleSelectStudent = (id) => {
     if (!selectedStudents.includes(id)) {
       setSelectedStudents([...selectedStudents, id]);
     }
   };
-
+ 
   const handleRemoveStudent = (id) => {
     setSelectedStudents(selectedStudents.filter((s) => s !== id));
   };
-
+ 
   const handleCreateTask = async () => {
     const task = {
       title,
@@ -55,14 +55,14 @@ const CreateTaskModal = () => {
       dueDate,
       file, // Raw file object
     };
-
+ 
     try {
       const taskRes = await createTask(task, token);
       const taskId = taskRes.response.taskId;
-
+ 
       await assignStudents(taskId, selectedStudents, token);
       alert("Task created and students assigned!");
-
+ 
       setTitle("");
       setDescription("");
       setDueDate("");
@@ -74,7 +74,7 @@ const CreateTaskModal = () => {
       alert("Something went wrong.");
     }
   };
-
+ 
   return (
     <>
       <button
@@ -85,7 +85,7 @@ const CreateTaskModal = () => {
       >
         + Create Task
       </button>
-
+ 
       <div className="modal fade" id="createTaskModal" tabIndex="-1">
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
@@ -108,7 +108,7 @@ const CreateTaskModal = () => {
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
-
+ 
               {/* Description */}
               <div className="mb-3">
                 <label className="form-label">Description</label>
@@ -118,7 +118,7 @@ const CreateTaskModal = () => {
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
-
+ 
               {/* Due Date */}
               <div className="mb-3">
                 <label className="form-label">Due Date</label>
@@ -129,7 +129,7 @@ const CreateTaskModal = () => {
                   onChange={(e) => setDueDate(e.target.value)}
                 />
               </div>
-
+ 
               {/* File Upload */}
               <div className="mb-3">
                 <label className="form-label">Upload File</label>
@@ -139,7 +139,7 @@ const CreateTaskModal = () => {
                   onChange={handleFileChange}
                 />
               </div>
-
+ 
               {/* Student Selection */}
               <div className="mb-3">
                 <label className="form-label">Assign Students</label>
@@ -191,7 +191,7 @@ const CreateTaskModal = () => {
                 </div>
               </div>
             </div>
-
+ 
             {/* Footer */}
             <div className="modal-footer">
               <button className="btn btn-secondary" data-bs-dismiss="modal">
@@ -211,5 +211,6 @@ const CreateTaskModal = () => {
     </>
   );
 };
-
+ 
 export default CreateTaskModal;
+ 

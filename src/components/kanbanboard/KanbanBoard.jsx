@@ -79,7 +79,7 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
               .map((task) => (
                 <div key={task.taskid} className="kanban-card">
                   <div className="card-header">
-                    <h4>{task.title}</h4>
+                    <h5>{task.title}</h5>
                     {isMentor && (
                       <div className="dropdown-container">
                         <button
