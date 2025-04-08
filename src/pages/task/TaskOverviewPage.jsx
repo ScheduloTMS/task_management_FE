@@ -8,28 +8,29 @@ import MentorScoreUpload from "../../components/task-review/TaskReview.jsx";
 import AssignedStudents from "../../components/assignedstudents/AssignedStudents.jsx";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../states/authState.jsx";
-import "./StudentTaskOverview.css";
+import "./TaskOverviewPage.css";
 
 const TaskOverviewPage = () => {
-  const { role } = useRecoilValue(authState); 
+  const { role } = useRecoilValue(authState);
 
   return (
-    <div className="task-container">
-      <div className="sidebar-container">
-        <Sidebar />
-      </div>
+    <div className="dashboard-container">
+      <Sidebar role={role} className="sidebar" />
 
       <div className="main-content">
         <TopbarLayout />
-        <div className="content-wrapper">
-          <div className="left-column">
+        <h2>Task Overview</h2>
+
+        <div className="dashboard-content">
+          <div className="dashboard-box task-overview">
             <TaskOverview />
-            <div className="uploads-container">
-              {role === "student" ? <Uploads /> : <AssignedStudents/>}
-            </div>
           </div>
 
-          <div >
+          <div className="dashboard-box uploads">
+            {role === "student" ? <Uploads /> : <AssignedStudents />}
+          </div>
+
+          <div className="dashboard-box remarks">
             {role === "student" ? <Remarks /> : <MentorScoreUpload />}
           </div>
         </div>

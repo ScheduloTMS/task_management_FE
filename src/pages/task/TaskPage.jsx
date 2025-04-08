@@ -6,7 +6,7 @@ import MentorTaskList from "./MentorList";
 import StudentTaskBoard from "./StudentBoard";
 import StudentTaskList from "./StudentList";
 import BoardListButtons from "../../components/button/BoardListButtons";
-import CreateTaskSheet from "../../components/sidesheets/CreateTaskSheet.jsx"; 
+import CreateTaskSheet from "../../components/sidesheets/CreateTaskModal.jsx"; 
 import { useRecoilValue } from "recoil";
 import { authState } from "../../states/authState";
 import "./TaskPage.css";
