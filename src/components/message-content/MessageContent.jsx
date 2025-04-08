@@ -18,58 +18,51 @@ const MessageContent = ({ selectedUser, currentUser }) => {
     console.log("Selected user is:", selectedUser);
   }, [selectedUser]);
 const token = "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiTUVOVE9SIiwic3ViIjoiaGFycmlzQGdtYWlsLmNvbSIsImlhdCI6MTc0NDEwNTI0MCwiZXhwIjoxNzQ0MTQxMjQwfQ.LpXL7Od3K_CZqhlPtTA_dBfgFmoavjCqMv9WYpR20cWGkSgB14cQdIipxlrBvDEXCjtUwyhhnFYlWpRfK8LUNg";
-  useEffect(() => {
-    if (!currentUser) return;
- 
-    const stompClient = new Client({
-      webSocketFactory: () => {
-        console.log("Creating SockJS connection...");
-        const socket = new SockJS('http://localhost:8081/ws');
-        socket.onopen = () => console.log("SockJS socket opened");
-        socket.onclose = (e) => console.log("SockJS socket closed", e);
-        socket.onerror = (e) => console.error("SockJS error", e);
-        return socket;
-      },
-      connectHeaders: {
-        Authorization: `Bearer ${token}`
-      },
-      reconnectDelay: 5000,
-      debug: (str) => {
-        console.log('STOMP Debug:', str);
-      },
-      onWebSocketError: (error) => {
-        console.error('WebSocket Error:', error);
-      },
-      onWebSocketClose: (event) => {
-        console.log('WebSocket Connection Closed:', event);
-      },
-      onConnect: () => {
-        console.log('✅ Connected to WebSocket');
-        stompClient.subscribe(`/user/${currentUser.id}/queue/messages`, (message) => {
-          const received = JSON.parse(message.body);
-          console.log('📩 Received message:', received);
- 
-          setMessages(prev => [...prev, {
-            id: Date.now(),
-            text: received.content,
-            sender: 'them',
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            read: false,
-          }]);
-        });
-      },
-      onStompError: (frame) => {
-        console.error('❌ STOMP Error:', frame);
-      }
-    });
- 
-    stompClient.activate();
-    stompClientRef.current = stompClient;
- 
-    return () => {
-      stompClient.deactivate();
-    };
-  }, [currentUser]);
+useEffect(() => {
+  if (!currentUser) return;
+
+  const stompClient = new Client({
+    webSocketFactory: () => new SockJS('http://localhost:8081/ws'),
+    connectHeaders: {
+      Authorization: `Bearer ${token}`
+    },
+    debug: (str) => console.log('STOMP Debug:', str),
+    reconnectDelay: 5000,
+    onConnect: () => {
+      console.log('✅ Connected to WebSocket');
+      
+      stompClient.subscribe('/user/queue/messages', (message) => {
+        const received = JSON.parse(message.body);
+        console.log('📩 Received message:', received);
+
+        setMessages(prev => [...prev, {
+          id: Date.now(),
+          text: received.content,
+          sender: 'them',
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          read: false,
+        }]);
+      });
+    },
+    onStompError: (frame) => {
+      console.error('❌ STOMP Error:', frame);
+    },
+    onWebSocketError: (error) => {
+      console.error('WebSocket Error:', error);
+    },
+    onWebSocketClose: (event) => {
+      console.log('WebSocket Connection Closed:', event);
+    },
+  });
+
+  stompClient.activate();
+  stompClientRef.current = stompClient;
+
+  return () => {
+    stompClient.deactivate();
+  };
+}, [currentUser]);
+
  
   useEffect(() => {
     scrollToBottom();
