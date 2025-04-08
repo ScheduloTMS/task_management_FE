@@ -1,35 +1,120 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TaskCategory from "../task-category/TaskCategory.jsx";
-import { FaRegCircle, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import {
+  FaRegCircle,
+  FaSpinner,
+  FaCheckCircle,
+  FaExclamationCircle,
+} from "react-icons/fa";
 import "./TaskBoard.css";
+import { fetchAllTasks } from "../../services/taskService.js";
 
 const statusConfig = {
-  "To Do": { icon: <FaRegCircle />, color: "#56358E", lightColor: "rgba(86, 53, 142, 0.1)" },
-  "In Progress": { icon: <FaSpinner />, color: "#ffc107", lightColor: "rgba(255, 193, 7, 0.1)" },
-  "Completed": { icon: <FaCheckCircle />, color: "#28a745", lightColor: "rgba(40, 167, 69, 0.1)" },
-  "Overdue": { icon: <FaExclamationCircle />, color: "#dc3545", lightColor: "rgba(220, 53, 69, 0.1)" },
+  "To Do": { icon: <FaRegCircle />, color: "#56358E" },
+  "In Progress": { icon: <FaSpinner />, color: "#ffc107" },
+  "Completed": { icon: <FaCheckCircle />, color: "#28a745" },
+  "Overdue": { icon: <FaExclamationCircle />, color: "#dc3545" },
 };
 
-const taskData = [
-  { id: 1, title: "Solutions Pages", assignee: "John", dueDate: "Mar 17", status: "To Do" },
-  { id: 2, title: "Order Flow", assignee: "Doe", dueDate: "Mar 18",  status: "In Progress" },
-  { id: 3, title: "About Us", assignee: "Alice", dueDate: "Mar 20",  status: "Completed" },
-  { id: 4, title: "Client Review", assignee: "Bob", dueDate: "Mar 15",  status: "Overdue" },
-];
+const parseDate = (dateStr) => {
+  if (!dateStr) return null;
+  const [month, day] = dateStr.split(" ");
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  const monthIndex = months.indexOf(month);
+  const year = new Date().getFullYear();
+  return new Date(year, monthIndex, parseInt(day));
+};
 
-const TaskBoard = () => {
-  const groupedTasks = {
-    "To Do": taskData.filter((task) => task.status === "To Do"),
-    "In Progress": taskData.filter((task) => task.status === "In Progress"),
-    "Completed": taskData.filter((task) => task.status === "Completed"),
-    "Overdue": taskData.filter((task) => task.status === "Overdue"),
+const TaskBoard = ({ filter = "All", selectedWeek, isMentor = false }) => {
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadTasks = async () => {
+      try {
+        const taskData = await fetchAllTasks();
+        const flattened = taskData.map(item => ({
+          ...item.task,
+          status: item.status
+        }));
+        setTasks(flattened);
+      } catch (error) {
+        console.error("Failed to fetch tasks:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTasks();
+  }, []);
+
+  const handleDeleteTask = (taskId) => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      setTasks(tasks.filter(task => task.taskId !== taskId));
+    }
   };
+
+  const handleEditTask = (taskId) => {
+    const taskToEdit = tasks.find(task => task.taskId === taskId);
+    if (taskToEdit) {
+      const newTitle = prompt("Edit task title:", taskToEdit.title);
+      if (newTitle !== null) {
+        setTasks(tasks.map(task =>
+          task.taskId === taskId ? { ...task, title: newTitle } : task
+        ));
+      }
+    }
+  };
+
+  const statusFilteredTasks =
+    filter === "All"
+      ? tasks
+      : tasks.filter(task => task.status === filter);
+
+  let filteredTasks = [...statusFilteredTasks];
+
+  if (selectedWeek) {
+    const startOfWeek = new Date(selectedWeek);
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+    filteredTasks = filteredTasks.filter(task => {
+      const taskDate = parseDate(task.dueDate);
+      return taskDate && taskDate >= startOfWeek && taskDate <= endOfWeek;
+    });
+  }
+
+  const groupedTasks = {
+    "To Do": filteredTasks.filter(task => task.status === "To Do"),
+    "In Progress": filteredTasks.filter(task => task.status === "In Progress"),
+    "Completed": filteredTasks.filter(task => task.status === "Completed"),
+    "Overdue": filteredTasks.filter(task => task.status === "Overdue"),
+  };
+
+  if (loading) {
+    return <div className="task-board">Loading tasks...</div>;
+  }
 
   return (
     <div className="task-board">
-      {Object.entries(groupedTasks).map(([status, tasks]) => (
-        <TaskCategory key={status} status={status} tasks={tasks} config={statusConfig[status]} />
-      ))}
+      {Object.entries(groupedTasks).map(([status, statusTasks]) =>
+        statusTasks.length > 0 ? (
+          <TaskCategory
+            key={status}
+            status={status}
+            tasks={statusTasks}
+            config={statusConfig[status]}
+            isMentor={isMentor}
+            onDelete={handleDeleteTask}
+            onEdit={handleEditTask}
+          />
+        ) : null
+      )}
     </div>
   );
 };

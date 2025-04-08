@@ -19,18 +19,8 @@ const MentorList = () => {
 
   return (
     <div className="mentor-board-container">
-      <div className="sidebar-container">
-      <Sidebar className="sidebar"  additionalItem={additionalMenuItem}/>
-      </div>
-
       <div className="main-content">
-        <TopbarLayout />
-
         <div className="content-wrapper">
-          <div className="board-list-buttons">
-            <BoardListButtons setViewMode={setViewMode} /> 
-          </div>
-
           <hr className="divider" />
 
           <div className="filters-container">

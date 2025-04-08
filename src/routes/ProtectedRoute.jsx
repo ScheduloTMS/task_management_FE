@@ -18,6 +18,7 @@ const ProtectedRoute = ({ children, requireFirstLogin = null }) => {
     return <Navigate to="/change-password" />;
   }
 
+
   return children;
 };
 

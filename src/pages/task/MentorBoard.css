@@ -1,46 +1,46 @@
 .mentor-board-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  
-  .sidebar-container {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-  }
-  
-  
-  .main-content {
-    margin-left: 280px;
-    width: calc(100% - 250px);
-  }
-  
-  
-  
-  
-  
-  .content-wrapper {
-    padding: 20px;
-  }
-  
-  
-  .board-list-buttons {
-    margin-bottom: 8px;
-    margin-left: 4px;
-    margin-top: 3px;
-  }
-  
-  
-  .board-content {
-    padding-top: 50px;
-  }
-  
-  
-  .list-view {
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+  display: flex;
+  height: 100vh;
+}
+
+
+.sidebar-container {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+
+.main-content {
+  margin-left: 280px;
+  width: calc(100% - 250px);
+}
+
+
+
+
+
+.content-wrapper {
+  padding: 20px;
+}
+
+
+.board-list-buttons {
+  margin-bottom: 8px;
+  margin-left: 4px;
+  margin-top: 3px;
+}
+
+
+.board-content {
+  padding-top: 50px;
+}
+
+
+.list-view {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

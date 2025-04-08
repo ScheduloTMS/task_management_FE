@@ -10,7 +10,7 @@ import { updateUserProfilePhoto } from "../../services/userService.js";
 const EditProfileSheet = ({ onClose }) => {
   const auth = useRecoilValue(authState); // ✅ Hook must be called outside useEffect
   const setAuth = useSetRecoilState(authState);
-
+  const { token } = useRecoilValue(authState);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
