@@ -28,7 +28,7 @@ body{
 .topbar {
   display: flex;
   align-items: flex-start;
-  margin: -30px;
+ 
 }
 
 .main-content {
