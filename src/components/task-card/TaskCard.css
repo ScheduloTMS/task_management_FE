@@ -1,75 +1,74 @@
 .task-card {
-    border-radius: 10px;
-    background-color: rgb(255, 255, 255);
-    padding: 20px;
-    width: 100%;
-    height: 65%;
-    display: flex;
-    flex-direction: column;
-    
-  }
-  
-  .task-content {
-    background: linear-gradient(100deg,#efeaf3, #fff, #efeaf3);
-    border-radius: 12px;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-  }  
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+}
 
-  .task-name {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #000000;
-    margin: 6px 0 10px 0;
-  }
-  
-  .due-date-container {
-    display: flex;
+.task-content {
+  background: linear-gradient(100deg,#efeaf3, #fff, #efeaf3);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}  
+
+.task-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #000000;
+  margin: 6px 0 10px 0;
+}
+
+.due-date-container {
+  display: flex;
   flex-direction: column;
   gap: 2px;
   margin-top: auto
-  }
+}
+
+.due-date-label {
+  font-size: 0.75rem;
+  color: #718096;
+}
+
+.due-date {
+  font-size: 0.875rem;
+  color: #4A5568;
+}
+
+.divider {
+  height: 1px;
+  width: 100%; 
+  background-color: #E2E8F0;
+  margin: 20px 0;
+  border: none; 
+  position :relative;
+  top: 1px;
   
-  .due-date-label {
-    font-size: 0.75rem;
-    color: #718096;
-  }
-  
-  .due-date {
-    font-size: 0.875rem;
-    color: #4A5568;
-  }
-  
-  .divider {
-    height: 1px;
-    width: 100%; 
-    background-color: #E2E8F0;
-    margin: 20px 0;
-    border: none; 
-    position :relative;
-    top: 1px;
-    
-  }
-  .status-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid;
-    width: 120px;
-    position :relative;
-    top: 10px;
-  }
-  
-  .status-icon {
-    font-size: 14px;
-  }
-  
-  .status-text {
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
+}
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+  width: 120px;
+  position :relative;
+  top: 10px;
+}
+
+.status-icon {
+  font-size: 14px;
+}
+
+.status-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}

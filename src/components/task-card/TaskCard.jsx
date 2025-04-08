@@ -19,7 +19,7 @@ const TaskCard = ({ taskName, dueDate, status }) => {
   const { icon, color ,lightColor} = statusConfig[status] || statusConfig['To Do'];
 
   return (
-    <div className="task-card p-4">
+    <div className="task-card p-3">
       <div className="task-content">
         <h3 className="task-name">{taskName}</h3>
         <div className="due-date-container">
