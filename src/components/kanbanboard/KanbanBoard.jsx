@@ -55,9 +55,10 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
 
   const handleDelete = (taskId, e) => {
     e.stopPropagation();
+    if (window.confirm("Are you sure you want to delete this task?")) {
       setTasks(tasks.filter(task => task.task.id !== taskId));
       onDeleteTask?.(taskId);
-    
+    }
     setActiveMenu(null);
   };
 
@@ -73,11 +74,12 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
             </div>
 
             {tasks
-              .filter(task => task.status.toLowerCase() === status.toLowerCase())
+             .filter(task => task.status?.toLowerCase() === status.toLowerCase())
+
               .map((task) => (
                 <div key={task.taskid} className="kanban-card">
                   <div className="card-header">
-                    <h4>{task.title}</h4>
+                    <h5>{task.title}</h5>
                     {isMentor && (
                       <div className="dropdown-container">
                         <button

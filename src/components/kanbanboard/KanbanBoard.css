@@ -13,18 +13,17 @@
     border-radius: 8px;
     min-width: 200px;
     background: linear-gradient(100deg,#efeaf3, #fff, #efeaf3);
-   
     height: auto;
      display: flex;
     flex-direction: column; 
   }
   
   .kanban-card {
-    background: linear-gradient(180deg, #efeaf3, #fff, #efeaf3);
+    background-color: white;
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
     margin-top: 30px;
     margin-left: 10px;
     margin-right: 10px;
@@ -37,6 +36,7 @@
   
   .kanban-card p{
     opacity: 60%;
+    font-size: 12px;
   }
 
   .progress-bar-container {
@@ -46,12 +46,12 @@
     
   }
   .progress-bar {
-    height: 6px;
+    height: 8px;
     background: #ddd;
     border-radius: 3px;
     overflow: hidden;
     width: 100%;
-    margin-bottom: 20px;
+    
   }
   
   .progress-fill {
@@ -104,11 +104,9 @@
     margin-left: 10px;
   }
   .due-date {
-    margin-top: 40px; 
+    margin-top: 10px; 
     font-size: 14px; 
-    
     gap: 8px;
-    
     opacity: 50%;
   }
   
@@ -160,12 +158,12 @@
   right: 0;
   top: 100%;
   background: white;
-  border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000; 
+  z-index: 1; 
   min-width: 120px;
   display: block; 
+  border: none;
 }
 
 .dropdown-item {
