@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ⬅️ NEW
 import "./TaskCategory.css";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -7,6 +8,7 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
   const [isOpen, setIsOpen] = useState(true);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
   const [expandedStudents, setExpandedStudents] = useState({});
+  const navigate = useNavigate(); 
 
   const toggleDescription = (taskId, e) => {
     e.stopPropagation();
@@ -49,17 +51,15 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
           </thead>
           <tbody>
             {tasks.map((task) => (
-              <tr key={task.taskId} className="task-row">
+              <tr
+                key={task.taskId}
+                className="task-row"
+                onClick={() => navigate(`/tasks/${task.taskId}`)} 
+                style={{ cursor: "pointer" }}
+              >
                 <td>{task.title}</td>
-                <td
-                  className="description-cell"
-                  onClick={(e) => toggleDescription(task.taskId, e)}
-                >
-                  {expandedDescriptions[task.taskId]
-                    ? task.description
-                    : task.description
-                      ? `${task.description.substring(0, 100)}${task.description.length > 100 ? "..." : ""}`
-                      : "No description"}
+                <td>
+                  {task.description}
                 </td>
                 <td>{task.createdAt}</td>
                 <td>{task.dueDate}</td>
@@ -80,7 +80,7 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
                   )}
                 </td>
                 {isMentor && (
-                  <td className="action-buttons">
+                  <td className="action-buttons" onClick={(e) => e.stopPropagation()}>
                     <button
                       className="edit-btn"
                       onClick={(e) => {

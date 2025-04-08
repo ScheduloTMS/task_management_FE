@@ -12,10 +12,10 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import Calendar from "../components/full-calendar/FullCalendarComponent.jsx";
 import TaskPage from "../pages/task/TaskPage.jsx"
+import Review from "../pages/task/TaskOverviewPage.jsx"
 
 const AppRouter = () => {
   const role = useRecoilValue(authState);
-  // const isMentor = auth?.role === "MENTOR";
 
   return (
     <Router>
@@ -45,6 +45,15 @@ const AppRouter = () => {
           element={
             <ProtectedRoute requireFirstLogin={false}>
               <TaskPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tasks/:taskId"
+          element={
+            <ProtectedRoute requireFirstLogin={false}>
+              < Review/>
             </ProtectedRoute>
           }
         />
