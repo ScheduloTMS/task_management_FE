@@ -4,12 +4,19 @@
     height: 100vh;
   }
   
+
+  .sidebar-container {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
   
-  
-  
+
   
   .content-wrapper {
-    padding: 20px;
+    padding: 10px;
   }
   
 
@@ -21,7 +28,7 @@
   
 
   .board-content {
-    padding-top: 50px;
+    padding-top: 5px;
   }
   
   
@@ -49,12 +56,12 @@
     gap: 8px;
     padding: 8px 16px;
     border-radius: 6px;
-    border: 1px solid #ddd;
+    border: none;
     background-color: white;
     cursor: pointer;
     min-width: 120px;
     justify-content: center;
-    font-size: 14px;
+    font-size: 13px;
     color: #333;
     transition: all 0.2s;
     margin-top: 20px;
@@ -132,19 +139,4 @@
     color: inherit;
   }
   
-  @media (max-width: 600px) {
-    .filters-container {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    
-    .filter-button {
-      min-width: 160px;
-    }
-    
-    .filter-dropdown,
-    .calendar-dropdown {
-      left: 0;
-    }
-  }
+ 

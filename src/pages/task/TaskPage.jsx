@@ -6,9 +6,10 @@ import MentorTaskList from "./MentorList";
 import StudentTaskBoard from "./StudentBoard";
 import StudentTaskList from "./StudentList";
 import BoardListButtons from "../../components/button/BoardListButtons";
-import CreateTaskSheet from "../../components/sidesheets/CreateTaskModal.jsx"; 
+import CreateTaskSheet from "../../components/sidesheets/CreateTaskSheet.jsx"; 
 import { useRecoilValue } from "recoil";
 import { authState } from "../../states/authState";
+import "./TaskPage.css";
 
 const TaskPage = () => {
   const [viewMode, setViewMode] = useState("list");
@@ -16,16 +17,18 @@ const TaskPage = () => {
   const isMentor = auth?.role === "MENTOR";
 
   return (
-    <div style={{ display: "flex" }}>
-      <Sidebar />
-      <div style={{ flex: 1 }}>
+    <div className="taskpage-container">
+      <Sidebar className="sidebar" />
+      
+      <div className="main-content">
         <Topbar />
-        <div style={{ padding: "20px"  }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",  marginBottom: "20px" }}>
-            <BoardListButtons viewMode={viewMode} setViewMode={setViewMode} />
-            {isMentor && <CreateTaskSheet />} 
-          </div>
 
+        <div className="taskpage-header">
+          <BoardListButtons viewMode={viewMode} setViewMode={setViewMode} />
+          {isMentor && <CreateTaskSheet />}
+        </div>
+
+        <div className="taskpage-body">
           {isMentor ? (
             viewMode === "kanban" ? <MentorTaskBoard /> : <MentorTaskList />
           ) : (

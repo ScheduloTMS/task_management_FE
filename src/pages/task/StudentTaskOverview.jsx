@@ -11,29 +11,27 @@ import { authState } from "../../states/authState.jsx";
 import "./StudentTaskOverview.css";
 
 const TaskOverviewPage = () => {
-  const { role } = useRecoilValue(authState);
+  const { role } = useRecoilValue(authState); 
 
   return (
     <div className="task-container">
-      <Sidebar />
+      <div className="sidebar-container">
+        <Sidebar />
+      </div>
+
       <div className="main-content">
         <TopbarLayout />
         <div className="content-wrapper">
           <div className="left-column">
             <TaskOverview />
             <div className="uploads-container">
-              {role === "STUDENT" ? <Uploads /> : <AssignedStudents />}
+              {role === "student" ? <Uploads /> : <AssignedStudents/>}
             </div>
           </div>
 
-          {/* Wrap mentor component only */}
-          {role === "STUDENT" ? (
-            <Remarks />
-          ) : (
-            <div className="mentor-score-upload">
-              <MentorScoreUpload />
-            </div>
-          )}
+          <div >
+            {role === "student" ? <Remarks /> : <MentorScoreUpload />}
+          </div>
         </div>
       </div>
     </div>

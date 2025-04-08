@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/sidebar/Sidebar.jsx";
+
 import KanbanBoard from "../../components/kanbanboard/KanbanBoard.jsx";
-import TopbarLayout from "../../layouts/topbar/Topbar.jsx";
-import BoardListButtons from "../../components/button/BoardListButtons.jsx";  
+
 import "./StudentBoard.css";
 
 const StudentBoard = () => {

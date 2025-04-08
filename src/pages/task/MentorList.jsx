@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import Sidebar from "../../components/sidebar/Sidebar.jsx";
 import TaskBoard from "../../components/task-board/TaskBoard.jsx";
+import TopbarLayout from "../../layouts/topbar/Topbar.jsx";
+import BoardListButtons from "../../components/button/BoardListButtons.jsx";
 import { FaCalendarAlt, FaFilter } from "react-icons/fa";
 import "./MentorList.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoPeople } from "react-icons/io5";
+import { editTask, deleteTask } from "../../services/taskService";
 
 const MentorList = () => {
   const [viewMode, setViewMode] = useState("list"); 
@@ -12,7 +16,29 @@ const MentorList = () => {
   const [selectedWeek, setSelectedWeek] = useState(null);
   const [showWeekPicker, setShowWeekPicker] = useState(false);
   const [showStatusFilter, setShowStatusFilter] = useState(false);
-  const additionalMenuItem = { label: "Team", path: "/team", icon: <IoPeople /> };
+
+  const token = localStorage.getItem("authToken");
+
+  
+  const handleEditTask = async (taskId, updatedData) => {
+    try {
+      await editTask(taskId, updatedData, token);
+      alert("Task updated successfully");
+    } catch (err) {
+      console.error("Edit failed", err);
+    }
+  };
+  
+  const handleDeleteTask = async (taskId) => {
+    if (!window.confirm("Are you sure you want to delete this task?")) return;
+    try {
+      await deleteTask(taskId, token);
+      alert("Task deleted successfully");
+      // Optionally: re-fetch task list here
+    } catch (err) {
+      console.error("Delete failed", err);
+    }
+  };
 
   return (
     <div className="mentor-board-container">
@@ -32,54 +58,20 @@ const MentorList = () => {
                 <FaFilter />
                 Filter
               </button>
-              
               {showStatusFilter && (
                 <div className="filter-dropdown">
-                  <div 
-                    className={`filter-option ${filter === "All" ? "selected" : ""}`}
-                    onClick={() => {
-                      setFilter("All");
-                      setShowStatusFilter(false);
-                    }}
-                  >
-                    All 
-                  </div>
-                  <div 
-                    className={`filter-option ${filter === "To Do" ? "selected" : ""}`}
-                    onClick={() => {
-                      setFilter("To Do");
-                      setShowStatusFilter(false);
-                    }}
-                  >
-                    To Do
-                  </div>
-                  <div 
-                    className={`filter-option ${filter === "In Progress" ? "selected" : ""}`}
-                    onClick={() => {
-                      setFilter("In Progress");
-                      setShowStatusFilter(false);
-                    }}
-                  >
-                    In Progress
-                  </div>
-                  <div 
-                    className={`filter-option ${filter === "Completed" ? "selected" : ""}`}
-                    onClick={() => {
-                      setFilter("Completed");
-                      setShowStatusFilter(false);
-                    }}
-                  >
-                    Completed
-                  </div>
-                  <div 
-                    className={`filter-option ${filter === "Overdue" ? "selected" : ""}`}
-                    onClick={() => {
-                      setFilter("Overdue");
-                      setShowStatusFilter(false);
-                    }}
-                  >
-                    Overdue
-                  </div>
+                  {["All", "To Do", "In Progress", "Completed", "Overdue"].map((status) => (
+                    <div 
+                      key={status}
+                      className={`filter-option ${filter === status ? "selected" : ""}`}
+                      onClick={() => {
+                        setFilter(status);
+                        setShowStatusFilter(false);
+                      }}
+                    >
+                      {status}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -125,7 +117,9 @@ const MentorList = () => {
               <TaskBoard 
                 filter={filter}
                 selectedWeek={selectedWeek}
-                isMentor={true}  
+                isMentor={true}
+                onEditTask={handleEditTask}   // 🟡 Step 3
+                onDeleteTask={handleDeleteTask} // 🟡 Step 3
               /> 
             ) : (
               <div className="list-view">
