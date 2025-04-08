@@ -1,216 +1,135 @@
-import React, { useEffect, useState, useRef } from "react";
-import { fetchAllStudents } from "../../services/userService.js";
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { createUser } from "../../services/userService";
 import { useRecoilValue } from "recoil";
-import { authState } from "../../states/authState.jsx";
-import { createTask } from "../../services/taskService.js";
-import { assignStudents } from "../../services/assignmentService.js";
- 
-const CreateTaskModal = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [file, setFile] = useState(null);
-  const [studentsList, setStudentsList] = useState([]);
-  const [selectedStudents, setSelectedStudents] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { token } = useRecoilValue(authState);
- 
-  const dropdownRef = useRef();
- 
-  useEffect(() => {
-    const loadStudents = async () => {
-      try {
-        const students = await fetchAllStudents(token);
-        setStudentsList(students);
-      } catch (error) {
-        console.error("Error loading students:", error);
-      }
-    };
- 
-    loadStudents();
-  }, [token]);
- 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile); 
-    }
-  };
- 
-  const handleSelectStudent = (id) => {
-    if (!selectedStudents.includes(id)) {
-      setSelectedStudents([...selectedStudents, id]);
-    }
-  };
- 
-  const handleRemoveStudent = (id) => {
-    setSelectedStudents(selectedStudents.filter((s) => s !== id));
-  };
- 
-  const handleCreateTask = async () => {
-    const task = {
-      title,
-      description,
-      dueDate,
-      file, 
-    };
- 
+import { authState } from "../../states/authState";
+
+const CreateUserModal = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("Student");
+
+  const auth = useRecoilValue(authState);
+  const token = auth?.token;
+
+  const handleSave = async () => {
     try {
-      const taskRes = await createTask(task, token);
-      const taskId = taskRes.response.taskId;
- 
-      await assignStudents(taskId, selectedStudents, token);
-      alert("Task created and students assigned!");
- 
-      setTitle("");
-      setDescription("");
-      setDueDate("");
-      setFile(null);
-      setSelectedStudents([]);
-      document.getElementById("createTaskModalClose").click();
+      console.log("Save button clicked!");
+  
+      const userData = {
+        name,
+        email,
+        role: role.toUpperCase(),
+      };
+  
+      console.log("Creating user:", userData);
+      console.log("Token is:", token);
+      console.log("Calling createUser...");
+  
+      const createdUser = await createUser(userData, token);
+      console.log("User created:", createdUser);
+      alert("User created successfully!");
+  
+      setName("");
+      setEmail("");
+      setRole("Student");
+  
+      const modalElement = document.getElementById("createUserModal");
+      const modalInstance = window.bootstrap.Modal.getInstance(modalElement);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
     } catch (err) {
-      console.error("Error creating task:", err);
-      alert("Something went wrong.");
+      console.error("Unexpected error in handleSave:", err);
+      alert("An error occurred while creating the user.");
     }
   };
- 
+  
   return (
-    <>
-      <button
-        className="btn"
-        data-bs-toggle="modal"
-        data-bs-target="#createTaskModal"
-        style={{ backgroundColor: "#56358e", color: "white" }}
-      >
-        + Create Task
-      </button>
- 
-      <div className="modal fade" id="createTaskModal" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered modal-lg">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Create Task</h5>
-              <button
-                id="createTaskModalClose"
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div className="modal-body">
-              
+    <div
+      className="modal fade"
+      id="createUserModal"
+      tabIndex="-1"
+      aria-labelledby="createUserModalLabel"
+      aria-hidden="true"
+    >
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="createUserModalLabel">
+              Add User
+            </h5>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div className="modal-body">
+            <form>
               <div className="mb-3">
-                <label className="form-label">Title</label>
-                <input
-                  className="form-control"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </div>
- 
-              
-              <div className="mb-3">
-                <label className="form-label">Description</label>
-                <textarea
-                  className="form-control"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </div>
- 
-              
-              <div className="mb-3">
-                <label className="form-label">Due Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
-                />
-              </div>
- 
-              
-              <div className="mb-3">
-                <label className="form-label">Upload File</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  onChange={handleFileChange}
-                />
-              </div>
- 
-              
-              <div className="mb-3">
-                <label className="form-label">Assign Students</label>
+                <label className="form-label">Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search student..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onFocus={() => setDropdownOpen(true)}
+                  placeholder="Enter name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
-                {dropdownOpen && (
-                  <ul className="list-group">
-                    {studentsList
-                      .filter(
-                        (s) =>
-                          s.name
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) &&
-                          !selectedStudents.includes(s.userId)
-                      )
-                      .map((s) => (
-                        <li
-                          key={s.userId}
-                          className="list-group-item"
-                          onClick={() => handleSelectStudent(s.userId)}
-                        >
-                          {s.name} ({s.userId})
-                        </li>
-                      ))}
-                  </ul>
-                )}
-                <div className="mt-2">
-                  {selectedStudents.map((id) => {
-                    const student = studentsList.find(
-                      (s) => s.userId === id
-                    );
-                    return (
-                      <span key={id} className="badge bg-primary me-2">
-                        {student?.name} ({student?.userId})
-                        <button
-                          type="button"
-                          className="btn-close btn-close-white btn-sm ms-2"
-                          onClick={() => handleRemoveStudent(id)}
-                        />
-                      </span>
-                    );
-                  })}
-                </div>
               </div>
-            </div>
- 
-           
-            <div className="modal-footer">
-              <button className="btn btn-secondary" data-bs-dismiss="modal">
-                Cancel
-              </button>
-              <button
-                className="btn"
-                onClick={handleCreateTask}
-                style={{ backgroundColor: "#56358e", color: "white" }}
-              >
-                Save Task
-              </button>
-            </div>
+
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Role</label>
+                <select
+                  className="form-select"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  <option value="Student">Student</option>
+                  <option value="Mentor">Mentor</option>
+                </select>
+              </div>
+            </form>
+          </div>
+
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+  type="button"
+  className="btn"
+  onClick={() => {
+    console.log("Button clicked");
+    handleSave();
+  }}
+  style={{ backgroundColor: "#56358e", color: "white" }}
+>
+  Save User
+</button>
+
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
- 
-export default CreateTaskModal;
- 
+
+export default CreateUserModal;

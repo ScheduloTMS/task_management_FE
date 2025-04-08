@@ -53,3 +53,20 @@ export const getAllUsers = async (token) => {
 };
 
 
+export const createUser = async (userData, token) => {
+  try {
+    console.log("Making POST request to:", `${API_URL}/users`);
+    const response = await axios.post(`${API_URL}/users`, userData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("Raw API response:", response);
+    return response.data.response;
+  } catch (error) {
+    console.error("Error creating user:", error?.response || error.message);
+    throw error;
+  }
+};
+
