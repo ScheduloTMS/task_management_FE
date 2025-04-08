@@ -4,17 +4,34 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import EditProfileSheet from '../sidesheets/EditProfileSheet'; 
 import UpdatePasswordModal from '../sidesheets/ChangePasswordSheet'; 
 import './User.css';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { authState } from '../../states/authState.jsx';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../services/authService'; 
+
+
 
 const User = () => {
-  const { name, photo } = useRecoilValue(authState);
+  const [auth, setAuth] = useRecoilState(authState);
+  const navigate = useNavigate();
+  const { name, photo } = auth;
   const firstLetter = name ? name.charAt(0).toUpperCase() : "";
+
   const [isOpen, setIsOpen] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
-  
+  const handleLogout = async () => {
+    try {
+      await logoutUser(auth.token); 
+      setAuth({}); 
+      localStorage.removeItem("authToken"); 
+      navigate("/login"); 
+    } catch (err) {
+      console.error("Logout error:", err);
+      alert("Logout failed.");
+    }
+  };
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -56,7 +73,7 @@ const User = () => {
             
             <div className="dropdown-divider"></div>
             
-            <div className="dropdown-item logout">
+            <div className="dropdown-item logout" onClick={handleLogout}>
               <FaSignOutAlt className="option-icon" />
               <span>Logout</span>
             </div>
