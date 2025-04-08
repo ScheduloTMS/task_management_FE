@@ -25,12 +25,12 @@ const TaskOverviewPage = () => {
           <div className="left-column">
             <TaskOverview />
             <div className="uploads-container">
-              {role === "student" ? <Uploads /> : <AssignedStudents/>}
+              {role === "STUDENT" ? <Uploads /> : <AssignedStudents/>}
             </div>
           </div>
 
           <div >
-            {role === "student" ? <Remarks /> : <MentorScoreUpload />}
+            {role === "STUDENT" ? <Remarks /> : <MentorScoreUpload />}
           </div>
         </div>
       </div>

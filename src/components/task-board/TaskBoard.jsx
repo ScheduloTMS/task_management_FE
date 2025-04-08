@@ -51,10 +51,10 @@ const TaskBoard = ({ filter = "All", selectedWeek, isMentor = false }) => {
     loadTasks();
   }, []);
 
-  const handleDeleteTask = (taskId) => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
+  const handleDeleteTask = (taskId) => 
+    {
       setTasks(tasks.filter(task => task.taskId !== taskId));
-    }
+    
   };
 
   const handleEditTask = (taskId) => {

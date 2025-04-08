@@ -69,7 +69,6 @@ export const editTask = async (taskId, updatedTask, token) => {
   }
 };
 
-// Delete a task (mentor only)
 export const deleteTask = async (taskId, token) => {
   try {
     const res = await axios.delete(`${BASE_URL}/tasks/${taskId}`, {

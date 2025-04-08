@@ -12,6 +12,8 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import Calendar from "../components/full-calendar/ FullCalendarComponent.jsx";
 import TaskPage from "../pages/task/TaskPage.jsx"
+import TaskDetails from "../pages/task/StudentTaskOverview.jsx"; 
+
 
 const AppRouter = () => {
   const role = useRecoilValue(authState);
@@ -50,17 +52,24 @@ const AppRouter = () => {
         />
 
       <Route
-          path="/calendar"
-          element={
-            <ProtectedRoute requireFirstLogin={false}>
-              <Calendar />
-            </ProtectedRoute>
-          }
-        />
-         
-      </Routes>
+        path="/calendar"
+        element={
+          <ProtectedRoute requireFirstLogin={false}>
+            <Calendar />
+          </ProtectedRoute>
+        }
+      />
 
-    </Router>
+      <Route
+        path="/task/:taskId"
+        element={
+          <ProtectedRoute requireFirstLogin={false}>
+            <TaskDetails />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>  
+  </Router>
   );
 };
 
