@@ -8,49 +8,51 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { fetchAllTasks } from "../../services/taskService"; 
-import dayjs from "dayjs"; 
+import { fetchAllTasks } from "../../services/taskService";
+import dayjs from "dayjs";
 import "./Graph.css";
 
 const Graph = () => {
   const [monthlyData, setMonthlyData] = useState([]);
+  
 
   useEffect(() => {
     const loadGraphData = async () => {
       try {
         const tasks = await fetchAllTasks();
         const monthsMap = {};
-
+  
         tasks.forEach((task) => {
-          const month = dayjs(task.createdAt).format("MMM"); 
+          const month = dayjs(task.createdAt).format("MMM YYYY");
           const status = task.status || "To Do";
-
+  
           if (!monthsMap[month]) {
             monthsMap[month] = { month, Completed: 0, "Not Completed": 0 };
           }
-
+  
           if (status === "Completed") {
             monthsMap[month].Completed += 1;
           } else {
             monthsMap[month]["Not Completed"] += 1;
           }
         });
-
-        
-        const allMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const result = allMonths
-          .filter((month) => monthsMap[month]) 
-          .map((month) => monthsMap[month]);
-
+  
+        const result = Object.values(monthsMap).sort((a, b) =>
+          dayjs(a.month, "MMM YYYY").toDate() - dayjs(b.month, "MMM YYYY").toDate()
+        );
+  
+        console.log("✅ Months Map:", monthsMap);
+        console.log("✅ Result:", result);
+  
         setMonthlyData(result);
       } catch (err) {
         console.error("Failed to fetch task data:", err);
       }
     };
-
+  
     loadGraphData();
   }, []);
-
+  
   return (
     <div className="graph-container">
       <h5>Task Completion Overview</h5>

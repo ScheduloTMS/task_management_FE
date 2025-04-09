@@ -14,6 +14,7 @@ import Calendar from "../pages/full-calendar/FullCalendarComponent.jsx";
 import TaskPage from "../pages/task/TaskPage.jsx"
 import Review from "../pages/task/TaskOverviewPage.jsx"
 import Team from "../pages/team-page/TeamPage.jsx"
+import Messages from "../pages/message-page/MessagePage.jsx";
 
 const AppRouter = () => {
   const role = useRecoilValue(authState);
@@ -77,6 +78,16 @@ const AppRouter = () => {
           }
         />
       </Routes>
+
+      {/* <Route
+          path="/messages"
+          element={
+            <ProtectedRoute requireFirstLogin={false}>
+              <Messages/>
+            </ProtectedRoute>
+          }
+        /> */}
+
 
     </Router>
   );

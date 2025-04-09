@@ -1,0 +1,13 @@
+.messages-page {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .message-sidebar {
+    width: 300px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .message-content {
+    flex: 1;
+  }

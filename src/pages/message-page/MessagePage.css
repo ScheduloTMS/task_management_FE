@@ -1,0 +1,12 @@
+.message-page {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+  }

@@ -22,10 +22,10 @@ const TaskOverviewPage = () => {
           <div className="task-overview-left-column">
             <TaskOverview />
             <div className="task-overview-uploads">
-              {role === "student" ? <Uploads /> : <AssignedStudents />}
+              {role === "STUDENT" ? <Uploads /> : <AssignedStudents />}
             </div>
           </div>
-            {role === "student" ? (<Remarks />) : (<MentorScoreUpload />)}
+            {role === "STUDENT" ? (<Remarks />) : (<MentorScoreUpload />)}
           
         </div>
       </div>
