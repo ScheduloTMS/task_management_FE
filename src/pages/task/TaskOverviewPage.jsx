@@ -25,16 +25,8 @@ const TaskOverviewPage = () => {
               {role === "student" ? <Uploads /> : <AssignedStudents />}
             </div>
           </div>
-
-          <div className="task-overview-score-section">
-            {role === "student" ? (
-              <Remarks />
-            ) : (
-              <div className="task-overview-score-card">
-                <MentorScoreUpload />
-              </div>
-            )}
-          </div>
+            {role === "student" ? (<Remarks />) : (<MentorScoreUpload />)}
+          
         </div>
       </div>
     </div>

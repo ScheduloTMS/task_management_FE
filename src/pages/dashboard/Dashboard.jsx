@@ -26,9 +26,9 @@ const Dashboard = () => {
      
       <Sidebar role={role} className="sidebar" />
 
-      <div className="main-content">
+      <div className="content">
         <TopbarLayout />
-        <h2>Welcome {name?.split(" ")[0]}!</h2>
+        <h2 className="hello">Welcome {name?.split(" ")[0]}!</h2>
         <div className="dashboard-content">
           <div className="chart-graph">
             <div className="dashboard-box chart">

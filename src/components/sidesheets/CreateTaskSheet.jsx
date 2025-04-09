@@ -1,23 +1,27 @@
-import React, { useEffect, useState, useRef } from "react";
+
+
+import React, { useState, useEffect, useRef } from 'react';
+import { useRecoilValue } from 'recoil';
+import { authState } from "../../states/authState.jsx";
+import SuccessAlert from "../../layouts/modal-layout/ModalLayout.jsx"; 
+import { createTask, editTask as updateTask } from "../../services/taskService.js";
 import { fetchAllStudents } from "../../services/userService.js";
-import { useRecoilValue } from "recoil";
-import { authState } from "../../states/authState";
-import { createTask } from "../../services/taskService.js";
 import { assignStudents } from "../../services/assignmentService.js";
- 
-const CreateTaskModal = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
+
+const CreateTaskModal = ({ task = null, onTaskCreated, onClose }) => {
+  const isEditMode = !!task;
+  const [title, setTitle] = useState(task?.title || "");
+  const [description, setDescription] = useState(task?.description || "");
+  const [dueDate, setDueDate] = useState(task?.dueDate || "");
   const [file, setFile] = useState(null);
   const [studentsList, setStudentsList] = useState([]);
-  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState(task?.assignedStudents || []);
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { token } = useRecoilValue(authState);
- 
+  const [successModal, setSuccessModal] = useState({ visible: false, title: "", message: "" });
   const dropdownRef = useRef();
- 
+
   useEffect(() => {
     const loadStudents = async () => {
       try {
@@ -27,99 +31,105 @@ const CreateTaskModal = () => {
         console.error("Error loading students:", error);
       }
     };
- 
     loadStudents();
   }, [token]);
- 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile); // Save raw file object
-    }
-  };
- 
-  const handleSelectStudent = (id) => {
-    if (!selectedStudents.includes(id)) {
-      setSelectedStudents([...selectedStudents, id]);
-    }
-  };
- 
-  const handleRemoveStudent = (id) => {
-    setSelectedStudents(selectedStudents.filter((s) => s !== id));
-  };
- 
-  const handleCreateTask = async () => {
-    const task = {
-      title,
-      description,
-      dueDate,
-      file, // Raw file object
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
     };
- 
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSubmit = async () => {
+    const taskData = { title, description, dueDate, file };
+
     try {
-      const taskRes = await createTask(task, token);
-      const taskId = taskRes.response.taskId;
- 
-      await assignStudents(taskId, selectedStudents, token);
-      alert("Task created and students assigned!");
- 
-      setTitle("");
-      setDescription("");
-      setDueDate("");
-      setFile(null);
-      setSelectedStudents([]);
-      document.getElementById("createTaskModalClose").click();
+      let response;
+      if (isEditMode) {
+        response = await updateTask(task.taskId, taskData, token);
+      } else {
+        response = await createTask(taskData, token);
+        const taskId = response?.taskId || response?.response?.taskId;
+        if (taskId) {
+          await assignStudents(taskId, selectedStudents.map(s => s.email), token);
+        } else {
+          console.error("No taskId returned from createTask");
+        }
+      }
+
+      if (onTaskCreated) onTaskCreated(response.response);
+
+      setSuccessModal({
+        visible: true,
+        title: isEditMode ? "Task Updated!" : "Task Created!",
+        message: isEditMode
+          ? "The task was updated successfully."
+          : "The task was created and assigned successfully.",
+      });
+
+      if (onClose) onClose();
     } catch (err) {
-      console.error("Error creating task:", err);
+      console.error("Task operation failed", err);
       alert("Something went wrong.");
     }
   };
- 
+
   return (
     <>
-      <button
-        className="btn"
-        data-bs-toggle="modal"
-        data-bs-target="#createTaskModal"
-        style={{ backgroundColor: "#56358e", color: "white" }}
+      {!isEditMode && (
+        <button
+          className="btn"
+          data-bs-toggle="modal"
+          data-bs-target="#createTaskModal"
+          style={{ backgroundColor: "#56358e", color: "white" }}
+        >
+          + Create Task
+        </button>
+      )}
+
+      <div
+        className="modal fade show"
+        id="createTaskModal"
+        tabIndex="-1"
+        style={isEditMode ? { display: "block" } : {}}
+        role="dialog"
       >
-        + Create Task
-      </button>
- 
-      <div className="modal fade" id="createTaskModal" tabIndex="-1">
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Create Task</h5>
+              <h5 className="modal-title">{isEditMode ? "Edit Task" : "Create Task"}</h5>
               <button
-                id="createTaskModalClose"
                 type="button"
                 className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
+                onClick={() => onClose ? onClose() : document.getElementById("createTaskModalClose").click()}
+              />
             </div>
+
             <div className="modal-body">
-              {/* Title */}
               <div className="mb-3">
                 <label className="form-label">Title</label>
                 <input
+                  type="text"
                   className="form-control"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
- 
-              {/* Description */}
+
               <div className="mb-3">
                 <label className="form-label">Description</label>
                 <textarea
                   className="form-control"
+                  rows="3"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                />
+                ></textarea>
               </div>
- 
-              {/* Due Date */}
+
               <div className="mb-3">
                 <label className="form-label">Due Date</label>
                 <input
@@ -129,88 +139,101 @@ const CreateTaskModal = () => {
                   onChange={(e) => setDueDate(e.target.value)}
                 />
               </div>
- 
-              {/* File Upload */}
+
               <div className="mb-3">
-                <label className="form-label">Upload File</label>
+                <label className="form-label">File (optional)</label>
                 <input
                   type="file"
                   className="form-control"
-                  onChange={handleFileChange}
+                  onChange={(e) => setFile(e.target.files[0])}
                 />
               </div>
- 
-              {/* Student Selection */}
-              <div className="mb-3">
-                <label className="form-label">Assign Students</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search student..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onFocus={() => setDropdownOpen(true)}
-                />
+
+              <div className="mb-3 position-relative" ref={dropdownRef}>
+                <label className="form-label">Assign to Students</label>
+                <div
+                  className="form-control d-flex flex-wrap"
+                  onClick={() => setDropdownOpen(true)}
+                  style={{ minHeight: "38px", cursor: "text" }}
+                >
+                  {selectedStudents.map((student, idx) => (
+                    <span key={idx} className="badge bg-secondary me-1 mb-1">
+                      {student.name || student.email}
+                      <button
+                        type="button"
+                        className="btn-close btn-close-white btn-sm ms-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedStudents(selectedStudents.filter(s => s !== student));
+                        }}
+                      ></button>
+                    </span>
+                  ))}
+                  <input
+                    type="text"
+                    className="border-0 flex-grow-1"
+                    placeholder="Search students..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onFocus={() => setDropdownOpen(true)}
+                  />
+                </div>
+
                 {dropdownOpen && (
-                  <ul className="list-group">
+                  <ul className="list-group position-absolute w-100 mt-1 zindex-dropdown" style={{ maxHeight: "200px", overflowY: "auto" }}>
                     {studentsList
                       .filter(
-                        (s) =>
-                          s.name
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) &&
-                          !selectedStudents.includes(s.userId)
+                        student =>
+                          student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          student.userId?.toLowerCase().includes(searchTerm.toLowerCase())
                       )
-                      .map((s) => (
+                      .filter(student => !selectedStudents.includes(student))
+                      .map((student) => (
                         <li
-                          key={s.userId}
-                          className="list-group-item"
-                          onClick={() => handleSelectStudent(s.userId)}
+                          key={student.email}
+                          className="list-group-item list-group-item-action"
+                          onClick={() => {
+                            setSelectedStudents([...selectedStudents, student]);
+                            setSearchTerm("");
+                          }}
+                          style={{ cursor: "pointer" }}
                         >
-                          {s.name} ({s.userId})
+                          {student.name} ({student.userId})
                         </li>
                       ))}
                   </ul>
                 )}
-                <div className="mt-2">
-                  {selectedStudents.map((id) => {
-                    const student = studentsList.find(
-                      (s) => s.userId === id
-                    );
-                    return (
-                      <span key={id} className="badge bg-primary me-2">
-                        {student?.name} ({student?.userId})
-                        <button
-                          type="button"
-                          className="btn-close btn-close-white btn-sm ms-2"
-                          onClick={() => handleRemoveStudent(id)}
-                        />
-                      </span>
-                    );
-                  })}
-                </div>
               </div>
             </div>
- 
-            {/* Footer */}
+
             <div className="modal-footer">
-              <button className="btn btn-secondary" data-bs-dismiss="modal">
+              <button
+                className="btn btn-secondary"
+                onClick={() => onClose ? onClose() : document.getElementById("createTaskModalClose").click()}
+              >
                 Cancel
               </button>
               <button
                 className="btn"
-                onClick={handleCreateTask}
+                onClick={handleSubmit}
                 style={{ backgroundColor: "#56358e", color: "white" }}
               >
-                Save Task
+                {isEditMode ? "Update Task" : "Save Task"}
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {successModal.visible && (
+        <SuccessAlert
+          title={successModal.title}
+          message={successModal.message}
+          onConfirm={() => setSuccessModal({ ...successModal, visible: false })}
+        />
+      )}
     </>
   );
 };
- 
+
 export default CreateTaskModal;
- 

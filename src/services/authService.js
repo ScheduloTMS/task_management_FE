@@ -18,7 +18,6 @@ export const loginUser = async (email, password) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-     
       console.error('Login failed with status:', error.response.status);
       console.error('Error response:', error.response.data);
       throw new Error(error.response.data.message || 'Login failed');
@@ -60,5 +59,16 @@ export const getUserProfile = async (token) => {
   }
 };
 
-
-
+export const logoutUser = async (token) => {
+  try {
+    const response = await axios.post(`${API_URL}/auth/logout`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Logout failed:", error);
+    throw error;
+  }
+};

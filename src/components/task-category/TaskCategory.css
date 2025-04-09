@@ -74,7 +74,7 @@
   min-width: 30px;
 }
 .delete-btn {
-  color: #56358E;
+  color: #56358E !important;
 }
 
 .edit-btn {

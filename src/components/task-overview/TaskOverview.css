@@ -41,4 +41,44 @@
   
 }
 
+.file-link {
+  color: #56358e !important;
+  text-decoration: underline !important;
+  margin-left: 8px;
+}
+.file-link:hover {
+  color: #301b55 !important;
+}
 
+.status-todo {
+  background-color:rgb(86, 53, 142);
+  
+}
+ 
+.status-inprogress {
+  background-color: #ff9d00;
+}
+ 
+.status-completed {
+  background-color: #28a745;
+}
+ 
+.status-overdue {
+  background-color:  #dc3545;
+}
+
+.task-status-wrapper {
+  margin: 10px 0;
+  display: flex;
+  align-items: center
+}
+
+.task-status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-left: 8px;
+  color: white;
+  display: inline-block;
+}

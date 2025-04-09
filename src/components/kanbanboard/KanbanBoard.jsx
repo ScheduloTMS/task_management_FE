@@ -55,10 +55,9 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
 
   const handleDelete = (taskId, e) => {
     e.stopPropagation();
-    if (window.confirm("Are you sure you want to delete this task?")) {
+    
       setTasks(tasks.filter(task => task.task.id !== taskId));
       onDeleteTask?.(taskId);
-    }
     setActiveMenu(null);
   };
 

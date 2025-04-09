@@ -111,12 +111,9 @@
   color: #4a1d6e;
 }
 
-.delete-btn {
-  color: #ff4444;
-}
 
 .delete-btn {
-  color: #ff4444;
+  color: #ff4444 !important;
   font-size: 15px !important;
 }
 .save-btn {

@@ -1,7 +1,7 @@
 .board-list-toggle {
   display: flex;
   gap: 12px;
-  margin: 16px 20px;
+  margin: 16px 10px;
   z-index: 10;
   position: relative;
 }

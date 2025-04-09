@@ -1,29 +1,57 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ⬅️ NEW
+import { useNavigate } from "react-router-dom";
 import "./TaskCategory.css";
-import { FiEdit } from "react-icons/fi";
-import { AiOutlineDelete } from "react-icons/ai";
+import { CiEdit } from "react-icons/ci";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { deleteTask } from "../../services/taskService.js";
+import EditTaskModal from "../sidesheets/CreateTaskSheet.jsx"; 
+
+import {
+  SuccessAlert,
+  WarningAlert,
+} from "../../layouts/modal-layout/ModalLayout.jsx"; 
 
 const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [expandedDescriptions, setExpandedDescriptions] = useState({});
   const [expandedStudents, setExpandedStudents] = useState({});
-  const navigate = useNavigate(); 
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
 
-  const toggleDescription = (taskId, e) => {
-    e.stopPropagation();
-    setExpandedDescriptions(prev => ({
-      ...prev,
-      [taskId]: !prev[taskId]
-    }));
-  };
+  const [taskToDelete, setTaskToDelete] = useState(null);
+  const [showWarning, setShowWarning] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const navigate = useNavigate();
 
   const toggleStudents = (taskId, e) => {
     e.stopPropagation();
-    setExpandedStudents(prev => ({
+    setExpandedStudents((prev) => ({
       ...prev,
-      [taskId]: !prev[taskId]
+      [taskId]: !prev[taskId],
     }));
+  };
+
+  const handleEditClick = (taskId) => {
+    const task = tasks.find((t) => t.taskId === taskId);
+    setEditingTask(task);
+    setShowEditModal(true);
+  };
+
+  const handleDeleteClick = (taskId) => {
+    setTaskToDelete(taskId);
+    setShowWarning(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await deleteTask(taskToDelete, localStorage.getItem("authToken"));
+      onDelete(taskToDelete);
+      setShowWarning(false);
+      setShowSuccess(true);
+    } catch (error) {
+      alert("Error deleting task");
+      console.error(error);
+    }
   };
 
   return (
@@ -54,13 +82,11 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
               <tr
                 key={task.taskId}
                 className="task-row"
-                onClick={() => navigate(`/tasks/${task.taskId}`)} 
+                onClick={() => navigate(`/tasks/${task.taskId}`)}
                 style={{ cursor: "pointer" }}
               >
                 <td>{task.title}</td>
-                <td>
-                  {task.description}
-                </td>
+                <td>{task.description}</td>
                 <td>{task.createdAt}</td>
                 <td>{task.dueDate}</td>
                 <td
@@ -69,10 +95,18 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
                 >
                   {isMentor ? (
                     <div className="student-names-container">
-                      <span className={`student-names ${expandedStudents[task.taskId] ? 'expanded' : ''}`}>
+                      <span
+                        className={`student-names ${
+                          expandedStudents[task.taskId] ? "expanded" : ""
+                        }`}
+                      >
                         {expandedStudents[task.taskId]
                           ? task.assignedStudents?.join(", ")
-                          : `${task.assignedStudents?.slice(0, 2).join(", ")}${task.assignedStudents?.length > 2 ? "..." : ""}`}
+                          : `${task.assignedStudents
+                              ?.slice(0, 2)
+                              .join(", ")}${
+                              task.assignedStudents?.length > 2 ? "..." : ""
+                            }`}
                       </span>
                     </div>
                   ) : (
@@ -85,19 +119,19 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
                       className="edit-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onEdit(task.taskId);
+                        handleEditClick(task.taskId);
                       }}
                     >
-                      <FiEdit />
+                      <CiEdit />
                     </button>
                     <button
                       className="delete-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onDelete(task.taskId);
+                        handleDeleteClick(task.taskId);
                       }}
                     >
-                      <AiOutlineDelete />
+                      <RiDeleteBinLine />
                     </button>
                   </td>
                 )}
@@ -105,6 +139,39 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
             ))}
           </tbody>
         </table>
+      )}
+
+      
+      {showEditModal && editingTask && (
+        <><div className="modal-backdrop fade show"></div><EditTaskModal
+          task={editingTask}
+          onClose={() => {
+            setShowEditModal(false);
+            setEditingTask(null);
+          } }
+          onTaskCreated={onEdit} /></>        
+      )}
+
+      
+      {showWarning && (
+        <WarningAlert
+          title="Are you sure?"
+          message="This action will permanently delete the task."
+          onConfirm={confirmDelete}
+          onCancel={() => {
+            setShowWarning(false);
+            setTaskToDelete(null);
+          }}
+        />
+      )}
+
+      {/* Success Modal */}
+      {showSuccess && (
+        <SuccessAlert
+          title="Task Deleted!"
+          message="The task has been successfully deleted."
+          onConfirm={() => setShowSuccess(false)}
+        />
       )}
     </div>
   );

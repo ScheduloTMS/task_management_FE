@@ -1,4 +1,4 @@
-/* Dropdown Styling */
+/* 
 .user-dropdown {
     position: relative;
   }
@@ -22,7 +22,7 @@
     background-color: #f8f9fa;
   }
   
-  /* Selected User Chip */
+ 
   .selected-user {
     display: inline-flex;
     align-items: center;
@@ -37,8 +37,7 @@
   .modal-title {
     margin-left: 13px;
   }
-  
-  /* Close Button for Selected Users */
+
   .close-btn {
     margin-left: 8px;
     font-size: 15px;
@@ -52,7 +51,7 @@
     opacity: 0.7;
   }
   
-  /* Success Button Styling */
+
   .success {
     border: none;
     background-color: #56358E;
@@ -75,4 +74,4 @@
     outline: none;
     box-shadow: 0 0 5px rgba(86, 53, 142, 0.6);
   }
-  
+   */
