@@ -50,3 +50,23 @@
   color: #301b55 !important;
 }
 
+.status-todo {
+  color: #56358e;
+  background-color: #efe6ff;
+}
+
+.status-inprogress {
+  color: #ff9f00;
+  background-color: #fff4e5;
+}
+
+.status-completed {
+  color: #28a745;
+  background-color: #e9f7ef;
+}
+
+.status-overdue {
+  color: #dc3545;
+  background-color: #f8d7da;
+}
+

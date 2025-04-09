@@ -1,29 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./AssignedStudents.css";
+import { useParams } from "react-router-dom";
+import { getAllUsers } from "../../services/userService";
+import { getAssignedStudents } from "../../services/assignmentService";
+import { useRecoilValue } from "recoil";
+import { authState } from "../../states/authState";
 
+const AssignedStudents = () => {
+  const { taskId } = useParams();
+  const [students, setStudents] = useState([]);
+  const auth = useRecoilValue(authState);
+  const token = auth?.token;
 
-const dummyStudents = [
-  {
-    id: "s1",
-    name: "Alice Johnson",
-    photo: "https://i.pravatar.cc/150?img=1",
-    submitted: true,
-  },
-  {
-    id: "s2",
-    name: "Bob Smith",
-    photo: "https://i.pravatar.cc/150?img=2",
-    submitted: false,
-  },
-  {
-    id: "s3",
-    name: "Charlie Brown",
-    photo: "https://i.pravatar.cc/150?img=3",
-    submitted: true,
-  },
-];
+  useEffect(() => {
+    const loadStudents = async () => {
+      try {
+        const [assignmentData, users] = await Promise.all([
+          getAssignedStudents(taskId, token),
+          getAllUsers(token),
+        ]);
+  
+        // Ensure assignmentData is always an array:
+        const assignments = Array.isArray(assignmentData) ? assignmentData : [assignmentData];
+  
+        const mentorEmail = auth?.email?.toLowerCase();
+  
+        const enrichedStudents = assignments
+          .filter((assignment) => {
+            const assignedUser = users.find(
+              (user) => user.userId.toLowerCase() === assignment.userId.toLowerCase()
+            );
+            return assignedUser && assignedUser.email.toLowerCase() !== mentorEmail;
+          })
+          .map((assignment) => {
+            const matchedUser = users.find(
+              (user) => user.userId.toLowerCase() === assignment.userId.toLowerCase()
+            );
+    
+            return {
+              id: assignment.userId,
+              name: matchedUser?.name || assignment.userId,
+              photo: matchedUser?.photo || "/default-avatar.png",
+              submitted: assignment.submissionStatus === "Submitted",
+            };
+          });
+    
+        setStudents(enrichedStudents);
+      } catch (error) {
+        console.error("Error loading assigned students:", error);
+      }
+    };
+  
+    if (taskId && token) {
+      loadStudents();
+    }
+  }, [taskId, token, auth?.email]);
+  
 
-const AssignedStudents = ({ students = dummyStudents }) => {
   return (
     <div>
       <h3 className="assigned-students-heading">Assigned Students</h3>
@@ -31,7 +64,7 @@ const AssignedStudents = ({ students = dummyStudents }) => {
         {students.map((student) => (
           <li key={student.id} className="student-item">
             <img
-              src={student.photo || "/default-avatar.png"}
+              src={student.photo}
               alt={student.name}
               className="student-avatar"
             />

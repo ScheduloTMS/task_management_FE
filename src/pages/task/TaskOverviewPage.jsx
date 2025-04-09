@@ -27,11 +27,11 @@ const TaskOverviewPage = () => {
           </div>
 
           <div className="dashboard-box uploads">
-            {role === "student" ? <Uploads /> : <AssignedStudents />}
+            {role === "STUDENT" ? <Uploads /> : <AssignedStudents />}
           </div>
 
           <div className="dashboard-box remarks">
-            {role === "student" ? <Remarks /> : <MentorScoreUpload />}
+            {role === "STUDENT" ? <Remarks /> : <MentorScoreUpload />}
           </div>
         </div>
       </div>

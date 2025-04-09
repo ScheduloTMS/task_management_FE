@@ -160,33 +160,3 @@
   padding-left: 2px;
 }
 
-.task-status {
-  font-weight: bold;
-  font-size: 16px;
-  margin: 6px 0 16px 0;
-  padding: 4px 12px;
-  display: inline-block;
-  border-radius: 20px;
-  background-color: #f1f1f1;
-}
-
-/* Status-specific colors */
-.status-todo {
-  color: #56358e;
-  background-color: #efe6ff;
-}
-
-.status-inprogress {
-  color: #ff9f00;
-  background-color: #fff4e5;
-}
-
-.status-completed {
-  color: #28a745;
-  background-color: #e9f7ef;
-}
-
-.status-overdue {
-  color: #dc3545;
-  background-color: #f8d7da;
-}
