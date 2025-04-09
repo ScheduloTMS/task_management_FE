@@ -4,22 +4,13 @@ import "./TaskCategory.css";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { deleteTask } from "../../services/taskService.js";
-import EditTaskModal from "../sidesheets/CreateTaskSheet.jsx"; 
-
-import {
-  SuccessAlert,
-  WarningAlert,
-} from "../../layouts/modal-layout/ModalLayout.jsx"; 
+import EditTaskModal from "../sidesheets/EditTaskModal.jsx";
 
 const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [expandedStudents, setExpandedStudents] = useState({});
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
-
-  const [taskToDelete, setTaskToDelete] = useState(null);
-  const [showWarning, setShowWarning] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
 
   const navigate = useNavigate();
 
@@ -37,20 +28,13 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
     setShowEditModal(true);
   };
 
-  const handleDeleteClick = (taskId) => {
-    setTaskToDelete(taskId);
-    setShowWarning(true);
-  };
-
-  const confirmDelete = async () => {
+  const handleDeleteClick = async (taskId, e) => {
+    e.stopPropagation();
     try {
-      await deleteTask(taskToDelete, localStorage.getItem("authToken"));
-      onDelete(taskToDelete);
-      setShowWarning(false);
-      setShowSuccess(true);
+      await deleteTask(taskId, localStorage.getItem("authToken"));
+      onDelete(taskId);
     } catch (error) {
-      alert("Error deleting task");
-      console.error(error);
+      console.error("Error deleting task:", error);
     }
   };
 
@@ -126,10 +110,7 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
                     </button>
                     <button
                       className="delete-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteClick(task.taskId);
-                      }}
+                      onClick={(e) => handleDeleteClick(task.taskId, e)}
                     >
                       <RiDeleteBinLine />
                     </button>
@@ -141,37 +122,20 @@ const TaskCategory = ({ status, tasks, config, isMentor, onDelete, onEdit }) => 
         </table>
       )}
 
-      
       {showEditModal && editingTask && (
-        <><div className="modal-backdrop fade show"></div><EditTaskModal
-          task={editingTask}
-          onClose={() => {
-            setShowEditModal(false);
-            setEditingTask(null);
-          } }
-          onTaskCreated={onEdit} /></>        
-      )}
-
-      
-      {showWarning && (
-        <WarningAlert
-          title="Are you sure?"
-          message="This action will permanently delete the task."
-          onConfirm={confirmDelete}
-          onCancel={() => {
-            setShowWarning(false);
-            setTaskToDelete(null);
-          }}
-        />
-      )}
-
-      {/* Success Modal */}
-      {showSuccess && (
-        <SuccessAlert
-          title="Task Deleted!"
-          message="The task has been successfully deleted."
-          onConfirm={() => setShowSuccess(false)}
-        />
+        <>
+          <div className="modal-backdrop fade show"></div>
+          <EditTaskModal
+            task={editingTask}
+            show={showEditModal}
+            token={localStorage.getItem("authToken")}
+            onClose={() => {
+              setShowEditModal(false);
+              setEditingTask(null);
+            }}
+            onTaskUpdated={onEdit}
+          />
+        </>
       )}
     </div>
   );
