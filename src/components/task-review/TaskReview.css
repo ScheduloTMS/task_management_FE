@@ -1,0 +1,68 @@
+.task-review-container {
+  padding: 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #56358E;
+}
+
+.student-info p {
+  margin-bottom: 10px;
+}
+
+.uploaded-files ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.uploaded-files li a {
+  color: #56358E;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.divider {
+  margin: 30px 0;
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.score-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.score-input {
+  padding: 8px;
+  width: 120px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.submit-score-btn {
+  padding: 8px 16px;
+  background-color: #56358E;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-score-btn:hover {
+  background-color: #462b75;
+}
+
+.score-submit{
+  display: flex;
+  flex-direction: row;
+}

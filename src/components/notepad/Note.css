@@ -1,119 +1,141 @@
 .notepad-container {
-    width: 450px;
-    height: 400px; 
-    padding: 20px;
-    border-radius: 8px;
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(150deg, #efeaf3, #fff, #efeaf3);
-  }
-  
-  h2 {
-    text-align: left;
-    margin-bottom: 10px;
-  }
-  
-  .date {
-    font-size: 0.9rem;
-    color: #777;
-  }
-  
- 
-  .header {
-    margin-bottom: 0;
-  }
-  
-  .date-header-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    
-  }
-  
-  .add-btn {
-    background: transparent; 
-    border: none;
-    cursor: pointer;
-  }
+  width: 450px;
+  height: 400px;
+  padding: 20px;
+  border-radius: 8px;
+  background: linear-gradient(150deg, #efeaf3, #fff, #efeaf3);
+  display: flex;
+  flex-direction: column;
+}
 
-  .add-btn svg {
-    width: 40px; 
-    height: 40px;
-    color: #56358e; 
-  }
-  .add-btn:hover svg {
-    color: #4a1d6e; 
-    transform: scale(1.1); 
-  }
-  
-  .note-input {
-    width: 100%;
-    padding: 8px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    color: #000000;
-    outline: none; 
-    border: none;
-  }
-  
- 
-  .note-list {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-    max-height: 350px; 
-    overflow-y: auto; 
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-   
-  }
-  
-  .note-list li {
-    display: flex;
-    align-items: center;
-    background: white;
-    padding: 13px;
-    margin: 10px 0;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .note-list li.completed span {
-    text-decoration: line-through;
-    color: gray;
-  }
-  
-  .note-list li input[type="checkbox"] {
-    margin-right: 10px;
-    accent-color: #56358e; 
-  }
-  
-  .delete-btn {
-    background: transparent;
-    border: none;
-    color: red;
-    cursor: pointer;
-    font-size: 16px;
-    margin-left: auto;
-  }
-  
-  .delete-btn:hover {
-    color: darkred;
-  }
-  
-  .note-list::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .note-list::-webkit-scrollbar-thumb {
-    background: #aaa;
-    border-radius: 4px;
-  }
-  
-  .note-list::-webkit-scrollbar-thumb:hover {
-    background: #888;
-  }
-  
+.date-header-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.header h4 {
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.add-btn svg {
+  width: 30px;
+  height: 30px;
+  color: #56358e;
+}
+
+.note-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.note-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.note-item {
+  padding: 8px 0;
+  border-bottom: 1px dashed #ddd;
+}
+
+.note-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.note-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.note-text {
+  flex: 1;
+  font-size: 1rem;
+  word-break: break-word;
+  margin-right: 10px;
+  color: #000;
+}
+
+.edit-input {
+  flex: 1;
+  padding: 4px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 5px;
+  font-size: 25px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.action-buttons button:hover {
+  transform: scale(1.1);
+}
+
+.edit-btn {
+  color: #56358e;
+}
+
+.edit-btn:hover {
+  color: #4a1d6e;
+}
+
+.delete-btn {
+  color: #ff4444;
+}
+
+.delete-btn {
+  color: #ff4444;
+  font-size: 15px !important;
+}
+.save-btn {
+  color: #28a745;
+}
+
+.save-btn:hover {
+  color: #1e7e34;
+}
+
+.timestamp {
+  text-align: right;
+  font-size: 0.75rem;
+  color: #777;
+  margin-top: 4px;
+}
+
+.note-item.completed .note-text {
+  text-decoration: line-through;
+  color: #000000 !important;
+}
+

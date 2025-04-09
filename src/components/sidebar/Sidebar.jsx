@@ -1,15 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { authState } from "../../states/authState"; 
+
 import { MdTask } from "react-icons/md";
 import { AiFillMessage } from "react-icons/ai";
 import { GoHomeFill } from "react-icons/go";
 import { RiCalendarScheduleFill } from "react-icons/ri";
-import "./Sidebar.css";
-import Logo from "../logo/Logo";
+import { IoPeople } from "react-icons/io5";
 
-const Sidebar = ({ additionalItem }) => {
-  const navigate = (path) => {
-    window.location.href = path;
-  };
+import Logo from "../logo/Logo";
+import "./Sidebar.css";
+
+const Sidebar = () => {
+  const navigate = useNavigate();
+  const role = useRecoilValue(authState)?.role;
 
   const menuItems = [
     { icon: <GoHomeFill />, text: "Home", path: "/" },
@@ -23,26 +28,34 @@ const Sidebar = ({ additionalItem }) => {
       <div className="sidebar-header">
         <Logo size="small" />
       </div>
+
       <nav className="sidebar-menu">
-        {menuItems.map((item, index) => (
-          <div 
-            key={index} 
-            className="sidebar-item" 
-            onClick={() => navigate(item.path)}
-          >
-            {item.icon}
-            <span className="sidebar-text">{item.text}</span>
-          </div>
-        ))}
-        {additionalItem && (
-          <div 
-            className="sidebar-item" 
-            onClick={() => navigate(additionalItem.path)}
-          >
-            {additionalItem.icon}
-            <span className="sidebar-text">{additionalItem.label}</span>
+        <div className="sidebar-item" onClick={() => navigate("/dashboard")}>
+          <GoHomeFill />
+          <span className="sidebar-text">Home</span>
+        </div>
+
+        <div className="sidebar-item" onClick={() => navigate("/task")}>
+          <MdTask />
+          <span className="sidebar-text">My Tasks</span>
+        </div>
+
+        {role === "MENTOR" && (
+          <div className="sidebar-item" onClick={() => navigate("/team")}>
+            <IoPeople />
+            <span className="sidebar-text">Team</span>
           </div>
         )}
+
+        <div className="sidebar-item" onClick={() => navigate("/messages")}>
+          <AiFillMessage />
+          <span className="sidebar-text">Messages</span>
+        </div>
+
+        <div className="sidebar-item" onClick={() => navigate("/calendar")}>
+          <RiCalendarScheduleFill />
+          <span className="sidebar-text">Calendar</span>
+        </div>
       </nav>
     </div>
   );

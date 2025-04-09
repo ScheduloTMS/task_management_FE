@@ -16,7 +16,6 @@ const MentorBoard = () => {
   
   const handleDeleteTask = (taskId) => {
     console.log("Delete task:", taskId);
-    // Your delete logic here
   };
   useEffect(() => {
     
@@ -24,19 +23,9 @@ const MentorBoard = () => {
 
   return (
     <div className="mentor-board-container">
-      <div className="sidebar-container">
-      <Sidebar className="sidebar"  additionalItem={additionalMenuItem}/>
-      </div>
-
       <div className="main-content">
-        <div>
-          <TopbarLayout />
-        </div>
 
         <div className="content-wrapper">
-          <div className="board-list-buttons">
-            <BoardListButtons setViewMode={setViewMode} /> 
-          </div>
           
           <div  className="board-content">
             {viewMode === "kanban" ? (
@@ -48,7 +37,6 @@ const MentorBoard = () => {
             ) : (
               <div className="list-view"> 
                 <h2>List View</h2>
-                
               </div>
             )}
           </div>

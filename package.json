@@ -12,11 +12,16 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@stomp/stompjs": "^7.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@fullcalendar/daygrid": "^6.1.17",
+    "@fullcalendar/interaction": "^6.1.17",
+    "@fullcalendar/react": "^6.1.17",
+    "@fullcalendar/timegrid": "^6.1.17",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
-    "jwt-decode": "^4.0.0",
+    "dayjs": "^1.11.13",
     "react": "^18.3.1",
     "react-calendar": "^5.1.0",
     "react-datepicker": "^8.2.1",

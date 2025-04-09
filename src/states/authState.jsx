@@ -1,10 +1,14 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export const authState = atom({
-  key: 'authState',
+  key: "authState",
   default: {
-    token: null,
-    role: null,
-    isFirstLogin: false,  
+    token: localStorage.getItem("authToken") || null,
+    role: localStorage.getItem("role") || null,
+    isFirstLogin: JSON.parse(localStorage.getItem("isFirstLogin") || "false"),
+    name: localStorage.getItem("name") || "",
+    email: localStorage.getItem("email") || "",
+    photo: localStorage.getItem("photo") || "",
+    userId: localStorage.getItem("userId") || "",
   },
 });

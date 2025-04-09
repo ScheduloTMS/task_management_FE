@@ -1,38 +1,74 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { authState } from "../states/authState";
+import { authState } from "../states/authState.jsx";
 import LoginPage from "../pages/login-page/LoginPage";
 import ChangePassword from "../pages/changePassword/ChangePassword";
 import Dashboard from "../pages/dashboard/Dashboard";
+import ProtectedRoute from "./ProtectedRoute";
+import Calendar from "../components/full-calendar/FullCalendarComponent.jsx";
+import TaskPage from "../pages/task/TaskPage.jsx"
+import Review from "../pages/task/TaskOverviewPage.jsx"
 
 const AppRouter = () => {
-  const { token, isFirstLogin } = useRecoilValue(authState);  
+  const role = useRecoilValue(authState);
 
   return (
     <Router>
       <Routes>
-        
-        <Route 
-          path="/login" 
-          element={token && isFirstLogin === true ? <Navigate to="/change-password" /> : (token ? <Navigate to="/dashboard" /> : <LoginPage />)} 
+        <Route path="/" element={<LoginPage />} />
+
+        <Route
+          path="/change-password"
+          element={
+            <ProtectedRoute requireFirstLogin={true}>
+              <ChangePassword />
+            </ProtectedRoute>
+          }
         />
 
-        
-        <Route 
-          path="/change-password" 
-          element={isFirstLogin ===false ? <ChangePassword /> : <Navigate to="/login" />} 
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute requireFirstLogin={false}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+  
+      <Route
+          path="/task"
+          element={
+            <ProtectedRoute requireFirstLogin={false}>
+              <TaskPage />
+            </ProtectedRoute>
+          }
         />
 
-        
-        <Route 
-          path="/dashboard" 
-          element={token ? <Dashboard /> : <Navigate to="/login" />} 
+        <Route
+          path="/tasks/:taskId"
+          element={
+            <ProtectedRoute requireFirstLogin={false}>
+              < Review/>
+            </ProtectedRoute>
+          }
         />
 
-        
-        <Route path="*" element={<Navigate to="/login" />} />
+      <Route
+          path="/calendar"
+          element={
+            <ProtectedRoute requireFirstLogin={false}>
+              <Calendar />
+            </ProtectedRoute>
+          }
+        />
+         
       </Routes>
+
     </Router>
   );
 };

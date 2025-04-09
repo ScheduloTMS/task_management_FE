@@ -4,7 +4,7 @@ import { FiSend } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 import { PiEyeClosedFill } from 'react-icons/pi';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import messageService from '../../services/messageService'; // 👈 Use service
+import messageService from '../../services/messageService'; 
 
 const MessageContent = ({ selectedUser, currentUser }) => {
   const [messages, setMessages] = useState([]);

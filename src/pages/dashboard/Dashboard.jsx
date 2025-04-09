@@ -12,33 +12,29 @@ import { IoPeople } from "react-icons/io5";
 import "./Dashboard.css";
 
 const Dashboard = () => {
-   
-  const { role, isFirstLogin } = useRecoilValue(authState); 
-  const navigate = useNavigate();  
+  const { role, isFirstLogin ,name} = useRecoilValue(authState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isFirstLogin) {
-      
       navigate("/change-password");
     }
   }, [isFirstLogin, navigate]);
 
-  
-  const additionalMenuItem = { label: "Team", path: "/team", icon: <IoPeople /> };
-
   return (
     <div className="dashboard-container">
-      <Sidebar className="sidebar" />
+     
+      <Sidebar role={role} className="sidebar" />
 
       <div className="main-content">
         <TopbarLayout />
-        <h2>Welcome Jaimie!</h2>
+        <h2>Welcome {name?.split(" ")[0]}!</h2>
         <div className="dashboard-content">
           <div className="chart-graph">
             <div className="dashboard-box chart">
               <Chart />
-              <Graph/>
-            </div>   
+              <Graph />
+            </div>
           </div>
 
           <div className="dashboard-box task-card">

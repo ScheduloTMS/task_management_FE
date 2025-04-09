@@ -1,17 +1,18 @@
 .remarks-container {
-    position: fixed;
+    
     right: 20px;
     bottom: 20px;
     top: 95px;
     width: 600px;
     height: 76vh;
-    background: #fff;
+    
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+    
     
   }
   

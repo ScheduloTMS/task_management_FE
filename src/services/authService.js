@@ -2,13 +2,12 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8081/api";
 
-export const loginUser = async (username, password) => {
+export const loginUser = async (email, password) => {
   try {
     const response = await axios.post(
       `${API_URL}/auth/login`,
       {
-        userId: username,  
-        password: password,
+        email, password,
       },
       {
         headers: {
@@ -31,23 +30,35 @@ export const loginUser = async (username, password) => {
   }
 };
 
-export const changePassword = async (currentPassword, newPassword, token) => {
+export const changePassword = async (currentPassword, newPassword, confirmPassword, token) => {
+  const formData = new FormData();
+  formData.append("currentPassword", currentPassword);
+  formData.append("newPassword", newPassword);
+  formData.append("confirmPassword", confirmPassword);
+
+  const response = await axios.put(`${API_URL}/users/profile`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+};
+ 
+export const getUserProfile = async (token) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/users/profile`,
-      {
-        currentPassword,
-        newPassword,
+    const response = await axios.get(`${API_URL}/users/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          "Content-Type": "application/json", 
-          Authorization: `Bearer ${token}`,
-        }
-      }
-    );
-    return response.data;
+    });
+    return response.data.response; 
   } catch (error) {
-    throw new Error(error.response ? error.response.data.message : error.message);
+    console.error("Fetching user profile failed:", error);
+    throw new Error("Unable to fetch user profile.");
   }
 };
+
+
+

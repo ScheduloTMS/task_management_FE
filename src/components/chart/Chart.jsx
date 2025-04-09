@@ -1,39 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { PieChart, Pie, Cell } from "recharts";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { fetchAllTasks } from "../../services/taskService"; // adjust path as needed
 import "./Chart.css";
 
 const Chart = () => {
   const [taskData, setTaskData] = useState([]);
 
   useEffect(() => {
-   
-    const tasks = [
-      { status: "To Do" },
-      { status: "To Do" },
-      { status: "In Progress" },
-      { status: "Completed" },
-      { status: "Completed" },
-      { status: "Completed" },
-      { status: "Overdue" },
-      { status: "Overdue" },
-      { status: "In Progress" },
-    ];
+    const loadTaskData = async () => {
+      try {
+        const tasks = await fetchAllTasks();
 
-    const totalTasks = tasks.length;
-    const toDo = tasks.filter(task => task.status === "To Do").length;
-    const inProgress = tasks.filter(task => task.status === "In Progress").length;
-    const completed = tasks.filter(task => task.status === "Completed").length;
-    const overdue = tasks.filter(task => task.status === "Overdue").length;
+        const totalTasks = tasks.length;
+        const statusCounts = {
+          "To Do": 0,
+          "In Progress": 0,
+          "Completed": 0,
+          "Overdue": 0,
+        };
 
-    const calculatedData = [
-      { name: "Total Tasks", value: totalTasks, fill: "#d3d3d3" },
-      { name: "To Do", value: toDo, fill: "#56358E" },
-      { name: "In Progress", value: inProgress, fill: "#ffc107" },
-      { name: "Completed", value: completed, fill: "#28a745" },
-      { name: "Overdue", value: overdue, fill: "#dc3545" },
-    ];
+        tasks.forEach(task => {
+          const status = task.status || "To Do"; // Fallback to To Do if status is missing
+          statusCounts[status]++;
+        });
 
-    setTaskData(calculatedData);
+        const calculatedData = [
+          { name: "Total Tasks", value: totalTasks, fill: "#d3d3d3" },
+          { name: "To Do", value: statusCounts["To Do"], fill: "#56358E" },
+          { name: "In Progress", value: statusCounts["In Progress"], fill: "#ffc107" },
+          { name: "Completed", value: statusCounts["Completed"], fill: "#28a745" },
+          { name: "Overdue", value: statusCounts["Overdue"], fill: "#dc3545" },
+        ];
+
+        setTaskData(calculatedData);
+      } catch (err) {
+        console.error("Failed to load task data:", err);
+      }
+    };
+
+    loadTaskData();
   }, []);
 
   const totalTasks = taskData.find(item => item.name === "Total Tasks")?.value || 0;
@@ -42,7 +47,6 @@ const Chart = () => {
   return (
     <div className="card shadow p-5 chartContainer">
       <h5 className="mb-4">Task Overview</h5>
-
       <div className="chartWrapper">
         <PieChart width={380} height={250}>
           <Pie
@@ -60,6 +64,7 @@ const Chart = () => {
               <Cell key={`cell-${index}`} fill={entry.fill} />
             ))}
           </Pie>
+          <Tooltip />
         </PieChart>
 
         <div className="totalTasks">{totalTasks}<br />Total Tasks</div>

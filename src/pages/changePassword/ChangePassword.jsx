@@ -1,7 +1,10 @@
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { authState } from '../../states/authState.jsx';
-import { changePassword } from "../../services/authService"; 
+import { changePassword } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { FiLock } from "react-icons/fi";
+import Input from '../../components/input/Input.jsx'; 
 
 const ChangePassword = () => {
   const [auth, setAuth] = useRecoilState(authState);
@@ -13,7 +16,7 @@ const ChangePassword = () => {
     newPassword: "",
     confirmPassword: "",
   });
-  
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -23,22 +26,28 @@ const ChangePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (passwords.newPassword !== passwords.confirmPassword) {
       setError("New password and confirm password do not match.");
       return;
     }
 
-    setAuth(prev => ({ ...prev, isLoading: true }));
+    setLoading(true);
+    setError("");
 
     try {
-      await changePassword(passwords.currentPassword, passwords.newPassword, auth.token);
-      
+      await changePassword(
+        passwords.currentPassword,
+        passwords.newPassword,
+        passwords.confirmPassword, 
+        auth.token
+      );
+
       resetAuth(); 
-      navigate('/login', { state: { passwordChanged: true } });
-    } catch (error) {
-      setError(error.message);
-      setAuth(prev => ({ ...prev, isLoading: false }));
+      navigate('/', { state: { passwordChanged: true } });
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong.");
+      setLoading(false);
     }
   };
 

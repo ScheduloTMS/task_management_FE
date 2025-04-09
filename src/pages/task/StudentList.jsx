@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/sidebar/Sidebar.jsx";
 import TaskBoard from "../../components/task-board/TaskBoard.jsx";
-import TopbarLayout from "../../layouts/topbar/Topbar.jsx";
-import BoardListButtons from "../../components/button/BoardListButtons.jsx";
 import { FaCalendarAlt, FaFilter } from "react-icons/fa";
 import "./StudentList.css";
 import DatePicker from "react-datepicker";
@@ -17,17 +14,8 @@ const StudentList = () => {
 
   return (
     <div className="student-board-container">
-      <div className="sidebar-container">
-        <Sidebar />
-      </div>
-
       <div className="main-content">
-        <TopbarLayout />
-
         <div className="content-wrapper">
-          <div className="board-list-buttons">
-            <BoardListButtons setViewMode={setViewMode} /> 
-          </div>
 
           <hr className="divider" />
 
