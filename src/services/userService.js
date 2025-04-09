@@ -87,3 +87,17 @@ const response = await axios.post(
     throw error;
   }
 };
+
+export const deleteUser = async (userId, token) => {
+  try {
+    const response = await axios.delete(`${API_URL}/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting user:", error?.response || error.message);
+    throw error;
+  }
+};
