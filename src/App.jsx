@@ -6,11 +6,13 @@ import MentorList from './pages/task/MentorList.jsx';
 import MessageLayout from './components/message-layout/MessageLayout.jsx';
 import Team from './components/team/Team.jsx';
 import TeamPage from './pages/team-page/TeamPage.jsx';
+import MessagePage from './pages/message-page/MessagePage.jsx';
+
 
 function App() {
   return (
     <main>
-      <TeamPage/>
+      <MessagePage/>
     </main>
   );
 }

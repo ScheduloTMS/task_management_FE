@@ -11,7 +11,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 16px;
-    background-color: #f0f2f5;
+    background: linear-gradient(100deg,#efeaf3, #fff, #efeaf3);
     border-bottom: 1px solid #e9edef;
   }
   
@@ -58,8 +58,7 @@
     flex: 1;
     padding: 16px;
     overflow-y: auto;
-    background-color: #e5ddd5;
-    
+    background: linear-gradient(180deg,#efeaf3, #fff, #efeaf3);
     background-repeat: repeat;
   }
   
@@ -70,6 +69,7 @@
   
   .message.sent {
     justify-content: flex-end;
+    
   }
   
   .message.received {
@@ -85,12 +85,14 @@
   }
   
   .message.sent .message-bubble {
-    background-color: #d9fdd3;
+    background-color:rgb(86, 53, 142,0.2);
     border-top-right-radius: 0;
   }
   
   .message.received .message-bubble {
-    background-color: #ffffff;
+    
+    
+    background-color:rgb(86, 53, 142,0.4);
     border-top-left-radius: 0;
   }
   

@@ -1,110 +1,98 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Client } from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
 import './MessageContent.css';
 import { FiSend } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
-import { PiEyeClosedFill } from "react-icons/pi";
+import { PiEyeClosedFill } from 'react-icons/pi';
 import { BsThreeDotsVertical } from 'react-icons/bs';
- 
+import messageService from '../../services/messageService'; // 👈 Use service
+
 const MessageContent = ({ selectedUser, currentUser }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
-  const stompClientRef = useRef(null);
- 
- 
+
   useEffect(() => {
-    console.log("Selected user is:", selectedUser);
-  }, [selectedUser]);
-const token = "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiTUVOVE9SIiwic3ViIjoiaGFycmlzQGdtYWlsLmNvbSIsImlhdCI6MTc0NDEwNTI0MCwiZXhwIjoxNzQ0MTQxMjQwfQ.LpXL7Od3K_CZqhlPtTA_dBfgFmoavjCqMv9WYpR20cWGkSgB14cQdIipxlrBvDEXCjtUwyhhnFYlWpRfK8LUNg";
-useEffect(() => {
-  if (!currentUser) return;
+    if (!currentUser || !selectedUser) {
+      console.log("⛔ Missing currentUser or selectedUser");
+      return;
+    }
 
-  const stompClient = new Client({
-    webSocketFactory: () => new SockJS('http://localhost:8081/ws'),
-    connectHeaders: {
-      Authorization: `Bearer ${token}`
-    },
-    debug: (str) => console.log('STOMP Debug:', str),
-    reconnectDelay: 5000,
-    onConnect: () => {
-      console.log('✅ Connected to WebSocket');
-      
-      stompClient.subscribe('/user/queue/messages', (message) => {
-        const received = JSON.parse(message.body);
-        console.log('📩 Received message:', received);
-
-        setMessages(prev => [...prev, {
-          id: Date.now(),
-          text: received.content,
-          sender: 'them',
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    // Fetch chat history
+    messageService.getMessages(selectedUser.id)
+      .then((data) => {
+        const sorted = data.sort((a, b) => new Date(a.sendAt) - new Date(b.sendAt));
+        const formatted = sorted.map((msg) => ({
+          id: msg.msgId || Date.now() + Math.random(),
+          text: msg.content,
+          sender: msg.senderId === currentUser.id ? 'me' : 'them',
+          time: new Date(msg.sendAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           read: false,
-        }]);
-      });
-    },
-    onStompError: (frame) => {
-      console.error('❌ STOMP Error:', frame);
-    },
-    onWebSocketError: (error) => {
-      console.error('WebSocket Error:', error);
-    },
-    onWebSocketClose: (event) => {
-      console.log('WebSocket Connection Closed:', event);
-    },
-  });
+        }));
+        setMessages(formatted);
+        scrollToBottom();
+      })
+      .catch((err) => console.error('❌ Chat history error:', err));
 
-  stompClient.activate();
-  stompClientRef.current = stompClient;
+    // Connect WebSocket
+    messageService.connectWebSocket(
+      () => console.log("🟢 WebSocket setup complete"),
+      (received) => {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: received.msgId || Date.now(),
+            text: received.content,
+            sender: received.senderId === currentUser.id ? 'me' : 'them',
+            time: new Date(received.sendAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            read: false,
+          },
+        ]);
+      },
+      currentUser.id
+    );
 
-  return () => {
-    stompClient.deactivate();
-  };
-}, [currentUser]);
+    return () => {
+      messageService.disconnectWebSocket();
+    };
+  }, [currentUser, selectedUser]);
 
- 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
- 
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
- 
+
   const handleSendMessage = () => {
-    if (!newMessage.trim() || !selectedUser || !currentUser || !stompClientRef.current) return;
- 
+    if (!newMessage.trim() || !selectedUser || !currentUser) return;
+
     const messageObj = {
-      content: newMessage,
+      senderId: currentUser.id,
       receiverId: selectedUser.id,
+      content: newMessage,
+      sendAt: new Date().toISOString(),
     };
- 
-    try {
-      stompClientRef.current.publish({
-        destination: '/app/chat',
-        body: JSON.stringify(messageObj)
-      });
- 
-      const msg = {
+
+    messageService.sendMessage(messageObj);
+
+    setMessages((prev) => [
+      ...prev,
+      {
         id: Date.now(),
         text: newMessage,
         sender: 'me',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        read: false
-      };
- 
-      setMessages(prev => [...prev, msg]);
-      setNewMessage('');
-    } catch (error) {
-      console.error('⚠️ Error sending message:', error);
-    }
+        read: false,
+      },
+    ]);
+    setNewMessage('');
   };
- 
+
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') handleSendMessage();
   };
- 
+
   return (
     <div className="message-content">
       {selectedUser ? (
@@ -126,7 +114,7 @@ useEffect(() => {
               <BsThreeDotsVertical size={20} />
             </button>
           </div>
- 
+
           <div className="messages-container">
             {messages.map((message) => (
               <div
@@ -152,7 +140,7 @@ useEffect(() => {
             ))}
             <div ref={messagesEndRef} />
           </div>
- 
+
           <div className="message-input-container">
             <input
               type="text"
@@ -180,5 +168,5 @@ useEffect(() => {
     </div>
   );
 };
- 
+
 export default MessageContent;
