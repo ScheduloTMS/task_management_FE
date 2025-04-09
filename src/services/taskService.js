@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8081/api";
 
-// Fetch all tasks for the logged-in user
+
 export const fetchAllTasks = async () => {
   const token = localStorage.getItem("authToken");
 
@@ -29,7 +29,7 @@ export const createTask = async (task, token) => {
   formData.append("title", task.title);
   formData.append("description", task.description);
   formData.append("dueDate", task.dueDate);
-  formData.append("file", task.file); // File object
+  formData.append("file", task.file);
 
   try {
     const res = await axios.post(`${BASE_URL}/tasks`, formData, {
@@ -69,7 +69,7 @@ export const editTask = async (taskId, updatedTask, token) => {
   }
 };
 
-// Delete a task (mentor only)
+
 export const deleteTask = async (taskId, token) => {
   try {
     const res = await axios.delete(`${BASE_URL}/tasks/${taskId}`, {
@@ -83,3 +83,25 @@ export const deleteTask = async (taskId, token) => {
     throw error;
   }
 };
+
+export const fetchTaskById = async (taskId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.error("Token is missing!");
+      return;
+    }
+  
+    try {
+      const response = await axios.get(`${BASE_URL}/tasks/${taskId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      return response.data.response; 
+    } catch (error) {
+      console.error("Error fetching task:", error.response?.data || error.message);
+      throw error;
+    }
+  };
+  
