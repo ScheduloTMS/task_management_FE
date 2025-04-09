@@ -87,8 +87,7 @@ export const deleteTask = async (taskId, token) => {
 export const fetchTaskById = async (taskId) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      console.error("Token is missing!");
-      return;
+      throw new Error("Authentication required");
     }
   
     try {
@@ -97,11 +96,14 @@ export const fetchTaskById = async (taskId) => {
           Authorization: `Bearer ${token}`,
         },
       });
-  
-      return response.data.response; 
+      return response.data.response;
     } catch (error) {
-      console.error("Error fetching task:", error.response?.data || error.message);
+      if (error.response) {
+        
+        const apiError = new Error(error.response.data.message || "Failed to fetch task");
+        apiError.status = error.response.status;
+        throw apiError;
+      }
       throw error;
     }
   };
-  

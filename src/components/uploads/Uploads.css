@@ -99,4 +99,16 @@
   .remove-icon:hover {
     color: #ff0000;
   }
+
+  .attachments-container {
+    margin-top: 30px;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+  }
+  
+  .attachments-container h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
   

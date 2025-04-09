@@ -9,6 +9,7 @@ import AssignedStudents from "../../components/assignedstudents/AssignedStudents
 import { useRecoilValue } from "recoil";
 import { authState } from "../../states/authState.jsx";
 import "./TaskOverviewPage.css";
+import { useParams } from "react-router-dom";
 
 const TaskOverviewPage = () => {
   const { role } = useRecoilValue(authState);
@@ -23,7 +24,7 @@ const TaskOverviewPage = () => {
 
         <div className="dashboard-content">
           <div className="dashboard-box task-overview">
-            <TaskOverview />
+          <TaskOverview isMentor={role === "MENTOR"} />
           </div>
 
           <div className="dashboard-box uploads">

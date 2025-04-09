@@ -29,11 +29,26 @@ export const getAssignedStudents = async (taskId, token) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // response.data.response might be an object (if only one assignment)
+      
       const data = response.data.response;
-      return Array.isArray(data) ? data : [data]; // wrap object in array if needed
+      return Array.isArray(data) ? data : [data]; 
     } catch (error) {
       console.error("Error fetching assigned students:", error);
+      throw error;
+    }
+  };
+
+  export const submitAssignment = async (formData, token) => {
+    try {
+      const response = await axios.post("http://localhost:8081/api/assignments", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error submitting assignment:", error.response || error);
       throw error;
     }
   };
