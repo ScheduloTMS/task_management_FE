@@ -1,0 +1,41 @@
+.modal-header {
+    background-color: #56358E;
+    color: white;
+  }
+  
+  .modal-title {
+    font-weight: 600;
+  }
+  
+  .modal-footer {
+    border-top: none;
+  }
+  
+  .success {
+    border: none;
+    background-color: #56358E;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  .success:hover {
+    background-color: #462b75;
+    transform: translateY(-2px);
+  }
+  
+  .success:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(86, 53, 142, 0.6);
+  }
+
+  .secondary{
+    border: none;
+    background: transparent;
+  }

@@ -74,7 +74,7 @@
   min-width: 30px;
 }
 .delete-btn {
-  color: #56358E;
+  color: #56358E !important;
 }
 
 .edit-btn {
@@ -159,4 +159,18 @@
   background: white;
   padding-left: 2px;
 }
-
+@media (max-width: 768px) {
+  .task-table {
+    display: block;
+    overflow-x: auto; 
+  }
+  
+  .task-table td:nth-child(2) {
+    max-width: 200px; 
+  }
+  
+  .status-header {
+    width: auto; 
+    padding: 10px;
+  }
+}

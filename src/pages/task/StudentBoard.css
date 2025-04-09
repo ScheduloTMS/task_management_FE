@@ -1,6 +1,5 @@
 
 .student-board-container {
-    display: flex;
     height: 100vh;
   }
   
@@ -12,11 +11,6 @@
     left: 0;
     bottom: 0;
   }
-  
- 
- 
-  
-  
   
   .content-wrapper {
     padding: 20px;

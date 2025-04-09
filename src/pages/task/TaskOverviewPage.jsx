@@ -8,32 +8,25 @@ import MentorScoreUpload from "../../components/task-review/TaskReview.jsx";
 import AssignedStudents from "../../components/assignedstudents/AssignedStudents.jsx";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../states/authState.jsx";
-import "./TaskOverviewPage.css";
-import { useParams } from "react-router-dom";
+import "./TaskOverviewPage.css"; 
 
 const TaskOverviewPage = () => {
-  const { role } = useRecoilValue(authState);
+  const { role } = useRecoilValue(authState); 
 
   return (
-    <div className="dashboard-container">
-      <Sidebar role={role} className="sidebar" />
-
-      <div className="main-content">
+    <div className="task-overview-page-container">
+      <Sidebar />
+      <div className="task-overview-main-content">
         <TopbarLayout />
-        <h2>Task Overview</h2>
-
-        <div className="dashboard-content">
-          <div className="dashboard-box task-overview">
-          <TaskOverview isMentor={role === "MENTOR"} />
+        <div className="task-overview-content-wrapper">
+          <div className="task-overview-left-column">
+            <TaskOverview />
+            <div className="task-overview-uploads">
+              {role === "student" ? <Uploads /> : <AssignedStudents />}
+            </div>
           </div>
-
-          <div className="dashboard-box uploads">
-            {role === "STUDENT" ? <Uploads /> : <AssignedStudents />}
-          </div>
-
-          <div className="dashboard-box remarks">
-            {role === "STUDENT" ? <Remarks /> : <MentorScoreUpload />}
-          </div>
+            {role === "student" ? (<Remarks />) : (<MentorScoreUpload />)}
+          
         </div>
       </div>
     </div>
