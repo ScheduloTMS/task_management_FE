@@ -9,14 +9,14 @@ import { IoPeople } from "react-icons/io5";
 const MentorBoard = () => {
   const [viewMode, setViewMode] = useState("kanban"); 
   const additionalMenuItem = { label: "Team", path: "/team", icon: <IoPeople /> };
-  // In MentorTaskList or MentorTaskBoard:
+  
 const handleEditTask = (task) => {
   if (props.onEditTask) {
     props.onEditTask(task);
   }
 };
 
-// Use this in your edit button:
+
 <button onClick={() => handleEditClick(task)}>Edit</button>
   
   const handleDeleteTask = (taskId) => {

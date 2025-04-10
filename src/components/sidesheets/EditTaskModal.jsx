@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import SuccessAlert from "../../layouts/modal-layout/ModalLayout.jsx";
+import { SuccessAlert } from "../../layouts/modal-layout/ModalLayout.jsx";
+
 import { editTask } from "../../services/taskService.js";
 import { fetchAllStudents } from "../../services/userService.js";
 import { assignStudents } from "../../services/assignmentService.js";
