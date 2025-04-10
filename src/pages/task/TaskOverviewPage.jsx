@@ -9,9 +9,10 @@ import AssignedStudents from "../../components/assignedstudents/AssignedStudents
 import { useRecoilValue } from "recoil";
 import { authState } from "../../states/authState.jsx";
 import "./TaskOverviewPage.css"; 
-
+import { useParams } from "react-router-dom";
 const TaskOverviewPage = () => {
   const { role } = useRecoilValue(authState); 
+  const { taskId } = useParams(); // ✅
 
   return (
     <div className="task-overview-page-container">
@@ -20,14 +21,13 @@ const TaskOverviewPage = () => {
         <TopbarLayout />
         <div className="task-overview-content-wrapper">
           <div className="task-overview-left-column">
-            <TaskOverview />
+          <TaskOverview taskId={taskId} />;
             <div className="task-overview-uploads">
-              {role === "student" ? <Uploads /> : <AssignedStudents />}
+              {role === "STUDENT" ? <Uploads taskId={taskId} /> : <AssignedStudents taskId={taskId} />}
             </div>
           </div>
-
           <div className="task-overview-score-section">
-            {role === "student" ? (
+            {role === "STUDENT" ? (
               <Remarks />
             ) : (
               <div className="task-overview-score-card">

@@ -8,9 +8,8 @@ import { authState } from '../../states/authState';
 import { updateUserProfilePhoto } from "../../services/userService.js";
 
 const EditProfileSheet = ({ onClose }) => {
-  const auth = useRecoilValue(authState); // ✅ Hook must be called outside useEffect
+  const auth = useRecoilValue(authState);
   const setAuth = useSetRecoilState(authState);
-  const { token } = useRecoilValue(authState);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
@@ -30,7 +29,7 @@ const EditProfileSheet = ({ onClose }) => {
     setUserId(storedId || "");
 
     if (auth?.photo) {
-      setPreviewUrl(`data:image/png;base64,${auth.photo}`);
+      setPreviewUrl(`data:image/png;base64,${auth.photo.split('#')[0]}`);
     }
 
     return () => {
@@ -62,23 +61,27 @@ const EditProfileSheet = ({ onClose }) => {
       onClose();
       return;
     }
-
-    const token = localStorage.getItem("authToken");
-
+  
     try {
-      const response = await updateUserProfilePhoto(profileImage, token);
+      const response = await updateUserProfilePhoto(profileImage, auth.token);
       console.log("Profile updated:", response);
       alert("Profile photo updated successfully!");
-
+  
       if (response?.body?.photo) {
-        localStorage.setItem("photo", response.body.photo);
-
-        setAuth((prev) => ({
+        // Add timestamp to force refresh
+        const updatedPhoto = `${response.body.photo}#${Date.now()}`;
+        
+        // Update Recoil state
+        setAuth(prev => ({
           ...prev,
-          photo: response.body.photo,
+          photo: updatedPhoto,
+          user: {
+            ...prev.user,
+            photo: updatedPhoto
+          }
         }));
       }
-
+      
       onClose();
     } catch (err) {
       console.error("Error updating profile:", err);

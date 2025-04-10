@@ -2,7 +2,7 @@ import axios from 'axios';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
 
-const SOCKET_URL = 'https://localhost:8080/ws'; // 👈 WebSocket endpoint
+const SOCKET_URL = 'http://localhost:8081/ws'; // 👈 WebSocket endpoint
 
 let stompClient = null;
 
@@ -36,19 +36,30 @@ const disconnectWebSocket = () => {
 };
 
 const sendMessage = (messageObj) => {
-  if (stompClient && stompClient.connected) {
-    stompClient.send('/app/chat', {}, JSON.stringify(messageObj));
-  } else {
-    console.warn('⚠️ WebSocket is not connected');
-  }
-};
+    if (!messageObj.senderId || !messageObj.receiverId || !messageObj.content) {
+      console.warn('🚫 Missing message fields');
+      return;
+    }
+  
+    if (stompClient && stompClient.connected) {
+      stompClient.send('/app/chat', {}, JSON.stringify(messageObj));
+    } else {
+      console.warn('⚠️ WebSocket is not connected');
+    }
+  };
+  
 
 const getMessages = async (receiverId) => {
-  const response = await axios.get(`https://localhost:8080/api/messages`, {
-    params: { receiverId },
-  });
-  return response.data;
-};
+    const token = localStorage.getItem("authtoken");
+    const response = await axios.get(`http://localhost:8081/api/messages`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: { receiverId },
+    });
+    return response.data;
+  };
+  
 
 const messageService = {
   connectWebSocket,

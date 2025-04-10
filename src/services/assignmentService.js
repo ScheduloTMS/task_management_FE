@@ -1,23 +1,18 @@
 import axios from "axios";
 
-
-
-export const assignStudents = async (taskId, studentIds, token) => {
-    
+export const getAssignedStudents = async (taskId, token) => {
   try {
-    const response = await axios.post(
-      `http://localhost:8081/api/assignments/${taskId}/assign`,
-      {studentIds}, 
+    const response = await axios.get(
+      `http://localhost:8081/api/assignments/${taskId}/students`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
         },
       }
     );
-    return response.data.response;
+    return response.data.response; 
   } catch (err) {
-    console.error("Error assigning students:", err.response);
+    console.error("Error fetching assigned students:", err);
     throw err;
   }
 };

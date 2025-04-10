@@ -3,7 +3,7 @@ import { fetchAllStudents } from "../../services/userService.js";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../states/authState";
 import { createTask } from "../../services/taskService.js";
-import { assignStudents } from "../../services/assignmentService.js";
+import { getAssignedStudents } from "../../services/assignmentService.js";
  
 const CreateTaskModal = () => {
   const [title, setTitle] = useState("");
@@ -60,7 +60,7 @@ const CreateTaskModal = () => {
       const taskRes = await createTask(task, token);
       const taskId = taskRes.response.taskId;
  
-      await assignStudents(taskId, selectedStudents, token);
+      await getAssignedStudents(taskId, selectedStudents, token);
       alert("Task created and students assigned!");
  
       setTitle("");

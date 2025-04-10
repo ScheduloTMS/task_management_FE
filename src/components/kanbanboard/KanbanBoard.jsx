@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   FaRegCircle,
   FaSpinner,
@@ -22,6 +22,7 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
   const [tasks, setTasks] = useState([]);
   const [expandedTask, setExpandedTask] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
+  const menuRefs = useRef({});
 
   useEffect(() => {
     const loadTasks = async () => {
@@ -29,17 +30,35 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
       if (fetchedTasks) {
         const transformedTasks = fetchedTasks.map(item => ({
           ...item.task,
-          status: item.status
+          status: item.status,
+          taskid: item.task.id || `task-${Math.random().toString(36).substr(2, 9)}` // fallback if no id
         }));
         setTasks(transformedTasks);
       }
     };
     loadTasks();
   }, []);
-  
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if we clicked outside any menu
+      if (activeMenu) {
+        const menuElement = menuRefs.current[activeMenu];
+        if (menuElement && !menuElement.contains(event.target)) {
+          setActiveMenu(null);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [activeMenu]);
 
   const toggleDescription = (taskId) => {
     setExpandedTask(expandedTask === taskId ? null : taskId);
+    setActiveMenu(null);
   };
 
   const toggleMenu = (taskId, e) => {
@@ -56,7 +75,7 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
   const handleDelete = (taskId, e) => {
     e.stopPropagation();
     if (window.confirm("Are you sure you want to delete this task?")) {
-      setTasks(tasks.filter(task => task.task.id !== taskId));
+      setTasks(tasks.filter(task => task.taskid !== taskId));
       onDeleteTask?.(taskId);
     }
     setActiveMenu(null);
@@ -74,32 +93,52 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
             </div>
 
             {tasks
-             .filter(task => task.status?.toLowerCase() === status.toLowerCase())
-
+              .filter(task => task.status?.toLowerCase() === status.toLowerCase())
               .map((task) => (
-                <div key={task.taskid} className="kanban-card">
+                <div 
+                  key={task.taskid} 
+                  className="kanban-card" 
+                  onClick={() => setActiveMenu(null)}
+                >
                   <div className="card-header">
                     <h5>{task.title}</h5>
                     {isMentor && (
-                      <div className="dropdown-container">
+                      <div 
+                        className="dropdown-container"
+                        ref={el => menuRefs.current[task.taskid] = el}
+                      >
                         <button
                           className="dropdown-trigger"
-                          onClick={(e) => toggleMenu(task.id, e)}
+                          onClick={(e) => toggleMenu(task.taskid, e)}
                           aria-label="Task actions"
                         >
                           <FaEllipsisV />
                         </button>
-                        {activeMenu === task.id && (
-                          <div className="dropdown-menu" onClick={(e) => e.stopPropagation()}>
-                            <button className="dropdown-item" onClick={(e) => handleEdit(task.id, e)}>Edit</button>
-                            <button className="dropdown-item delete" onClick={(e) => handleDelete(task.id, e)}>Delete</button>
+                        {activeMenu === task.taskid && (
+                          <div 
+                            className="dropdown-menu" 
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <button 
+                              className="dropdown-item" 
+                              onClick={(e) => handleEdit(task.taskid, e)}
+                            >
+                              Edit
+                            </button>
+                            <button 
+                              className="dropdown-item delete" 
+                              onClick={(e) => handleDelete(task.taskid, e)}
+                            >
+                              Delete
+                            </button>
                           </div>
                         )}
                       </div>
                     )}
                   </div>
 
-                  <p className={`task-description ${expandedTask === task.id ? 'expanded' : ''}`}
+                  <p 
+                    className={`task-description ${expandedTask === task.taskid ? 'expanded' : ''}`}
                     onClick={() => toggleDescription(task.taskid)}
                   >
                     {task.description}
