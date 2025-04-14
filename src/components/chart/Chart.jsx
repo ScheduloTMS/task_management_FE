@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import { fetchAllTasks } from "../../services/taskService"; // adjust path as needed
+import { fetchAllTasks } from "../../services/taskService"; 
 import "./Chart.css";
 
 const Chart = () => {
@@ -20,7 +20,7 @@ const Chart = () => {
         };
 
         tasks.forEach(task => {
-          const status = task.status || "To Do"; // Fallback to To Do if status is missing
+          const status = task.status || "To Do"; 
           statusCounts[status]++;
         });
 

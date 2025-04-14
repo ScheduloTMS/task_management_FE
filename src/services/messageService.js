@@ -2,7 +2,7 @@ import axios from 'axios';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
 
-const SOCKET_URL = 'http://localhost:8081/ws'; // 👈 WebSocket endpoint
+const SOCKET_URL = 'http://localhost:8081/ws'; 
 
 let stompClient = null;
 
@@ -50,7 +50,7 @@ const sendMessage = (messageObj) => {
   
 
 const getMessages = async (receiverId) => {
-    const token = localStorage.getItem("authtoken");
+    const token = localStorage.getItem("authToken");
     const response = await axios.get(`http://localhost:8081/api/messages`, {
       headers: {
         Authorization: `Bearer ${token}`,

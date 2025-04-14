@@ -1,27 +1,49 @@
-// services/remarksService.js
+
 import axios from "axios";
 
-const API_BASE_URL = "/api/tasks";
-
-export const fetchRemarks = async (taskId, token) => {
-  const response = await axios.get(`${API_BASE_URL}/${taskId}/remarks`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return response.data.data; // assuming your response has `.data.data` structure from ApiResponse
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("authToken");
+  
+  return {
+    Authorization: `Bearer ${token}`,
+  };
 };
 
-export const postRemark = async (taskId, comment, token) => {
-  const response = await axios.post(
-    `${API_BASE_URL}/${taskId}/remarks`,
-    null,
+const BASE_URL = "http://localhost:8081/api";
+
+export const fetchRemarks = async (taskId) => {
+  const res = await axios.get(`${BASE_URL}/tasks/${taskId}/remarks`, {
+    headers: getAuthHeaders(),
+  });
+  return res.data.response;
+};
+
+export const addRemark = async (taskId, comment) => {
+  const token = localStorage.getItem("authToken");
+  console.log("Token being sent:", token);
+
+  const formData = new FormData();
+  formData.append("comment", comment);
+
+  const res = await axios.post(
+    `${BASE_URL}/tasks/${taskId}/remarks`,
+    formData,
     {
-      params: { comment },
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
       },
     }
   );
-  return response.data.data;
+
+  return res.data.response;
+};
+
+
+export const deleteRemark = async (remarkId) => {
+  const token = localStorage.getItem("authToken");
+  const res = await axios.delete(`${BASE_URL}/remarks/${remarkId}`, {
+    headers: getAuthHeaders(),
+  });
+  return res.data.response;
 };

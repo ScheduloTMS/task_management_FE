@@ -12,7 +12,7 @@ import TaskPage from "../pages/task/TaskPage.jsx";
 import Review from "../pages/task/TaskOverviewPage.jsx";
 import TeamPage from "../pages/team-page/TeamPage.jsx"; 
 import MessagePage from "../pages/message-page/MessagePage.jsx"; 
-
+import TaskReview from "../components/task-review/TaskReview";
 
 const AppRouter = () => {
   const role = useRecoilValue(authState);
@@ -87,6 +87,20 @@ const AppRouter = () => {
 
           
         />
+
+<Route
+  path="/tasks/:taskId/student/:studentId"
+  element={
+    <ProtectedRoute requireFirstLogin={false}>
+      <TaskReview />
+    </ProtectedRoute>
+  }
+/>
+
+
+
+
+
       </Routes>
     </Router>
   );

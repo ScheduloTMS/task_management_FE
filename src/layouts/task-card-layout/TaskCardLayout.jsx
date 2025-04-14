@@ -12,7 +12,7 @@ const TaskCardLayout = () => {
       try {
         const response = await fetchAllTasks();
 
-        console.log("Formatted Response:", response); // 🔍 for debugging
+        console.log("Formatted Response:", response); 
 
         const formattedTasks = response.map(entry => {
           const task = entry.task;
@@ -20,7 +20,7 @@ const TaskCardLayout = () => {
             id: task.taskId,
             taskName: task.title,
             dueDate: dayjs(task.dueDate).format("D MMMM YYYY"),
-            status: entry.status, // from outer object
+            status: entry.status, 
           };
         });
 

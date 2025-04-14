@@ -68,10 +68,10 @@ const EditProfileSheet = ({ onClose }) => {
       alert("Profile photo updated successfully!");
   
       if (response?.body?.photo) {
-        // Add timestamp to force refresh
+        
         const updatedPhoto = `${response.body.photo}#${Date.now()}`;
         
-        // Update Recoil state
+        
         setAuth(prev => ({
           ...prev,
           photo: updatedPhoto,

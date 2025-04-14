@@ -17,7 +17,7 @@ const MessageContent = ({ selectedUser, currentUser }) => {
       return;
     }
 
-    // Fetch chat history
+  
     messageService.getMessages(selectedUser.id)
       .then((data) => {
         const sorted = data.sort((a, b) => new Date(a.sendAt) - new Date(b.sendAt));
@@ -33,7 +33,7 @@ const MessageContent = ({ selectedUser, currentUser }) => {
       })
       .catch((err) => console.error('❌ Chat history error:', err));
 
-    // Connect WebSocket
+    
     messageService.connectWebSocket(
       () => console.log("🟢 WebSocket setup complete"),
       (received) => {

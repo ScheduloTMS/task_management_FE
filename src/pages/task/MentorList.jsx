@@ -34,7 +34,7 @@ const MentorList = () => {
     try {
       await deleteTask(taskId, token);
       alert("Task deleted successfully");
-      // Optionally: re-fetch task list here
+     
     } catch (err) {
       console.error("Delete failed", err);
     }
@@ -118,8 +118,8 @@ const MentorList = () => {
                 filter={filter}
                 selectedWeek={selectedWeek}
                 isMentor={true}
-                onEditTask={handleEditTask}   // 🟡 Step 3
-                onDeleteTask={handleDeleteTask} // 🟡 Step 3
+                onEditTask={handleEditTask}   
+                onDeleteTask={handleDeleteTask} 
               /> 
             ) : (
               <div className="list-view">

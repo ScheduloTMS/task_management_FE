@@ -1,30 +1,42 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./Remarks.css";
 import { FaPaperPlane } from "react-icons/fa";
+import { fetchRemarks, addRemark } from "../../services/remarkService.js";
+import "./Remarks.css";
 
-const Remarks = ({ remarks: initialRemarks = [] }) => {
-  // Initialize with default empty array if initialRemarks is undefined
-  const [remarks, setRemarks] = useState(() => {
-    return Array.isArray(initialRemarks) ? initialRemarks : [];
-  });
+const Remarks = ({ taskId }) => {
+  const [remarks, setRemarks] = useState([]);
   const [newRemark, setNewRemark] = useState("");
   const remarksEndRef = useRef(null);
 
-  const handleSendRemark = () => {
+  useEffect(() => {
+    const loadRemarks = async () => {
+      try {
+        const data = await fetchRemarks(taskId);
+        console.log("Fetched remarks:", data);
+        setRemarks(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Failed to load remarks", err);
+      }
+    };
+    loadRemarks();
+    console.log("Loaded Remarks with taskId:", taskId);
+  }, [taskId]);
+
+  useEffect(() => {
+    remarksEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [remarks]);
+
+  const handleSendRemark = async () => {
     if (!newRemark.trim()) return;
 
-    const newComment = {
-      id: Date.now(), // Better unique ID using timestamp
-      user: {
-        name: "John Doe",
-        profile_photo: "https://www.nature-and-garden.com/wp-content/uploads/sites/4/2022/04/lily.jpg",
-      },
-      content: newRemark,
-     
-    };
-
-    setRemarks(prev => [...prev, newComment]);
-    setNewRemark("");
+    try {
+      const newComment = await addRemark(taskId, newRemark);
+      console.log("New remark added:", newComment);
+      setRemarks((prev) => [...prev, newComment]);
+      setNewRemark("");
+    } catch (err) {
+      console.error("Failed to send remark", err);
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -34,34 +46,29 @@ const Remarks = ({ remarks: initialRemarks = [] }) => {
     }
   };
 
-  useEffect(() => {
-    remarksEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [remarks]);
-
   return (
     <div className="remarks-container">
       <h2 className="remarks-heading">Comments</h2>
-      
+
       <div className="remarks-list">
-        {remarks.length > 0 ? (
+        {Array.isArray(remarks) && remarks.length > 0 ? (
           remarks.map((remark) => (
-            <div key={remark.id} className="remark">
-              <img 
-                src={remark.user?.profile_photo} 
-                alt="User" 
-                className="user-photo" 
-                onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/40";
-                }}
+            <div key={remark.remarkId} className="remark">
+              <img
+                src={
+                  remark.userProfilePhoto
+                    ? `data:image/jpeg;base64,${remark.userProfilePhoto}`
+                    : "https://www.nature-and-garden.com/wp-content/uploads/sites/4/2022/04/lily.jpg"
+                }
+                alt="User"
+                className="user-photo"
               />
               <div className="remark-content">
-                <span className="username">
-                  {remark.user?.name || "Anonymous"}
-                </span>
-                <p className="comment-text">{remark.content}</p>
-                {remark.timestamp && (
+                <span className="username">{remark.userName || "User"}</span>
+                <p className="comment-text">{remark.comment}</p>
+                {remark.createdAt && (
                   <small className="comment-time">
-                    {new Date(remark.timestamp).toLocaleString()}
+                    {new Date(remark.createdAt).toLocaleString()}
                   </small>
                 )}
               </div>
@@ -81,7 +88,7 @@ const Remarks = ({ remarks: initialRemarks = [] }) => {
           onChange={(e) => setNewRemark(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <button 
+        <button
           onClick={handleSendRemark}
           disabled={!newRemark.trim()}
           aria-label="Send comment"

@@ -7,11 +7,11 @@ const CustomCalendar = ({ tasks = [] }) => {
   const [selectedTasks, setSelectedTasks] = useState([]);
 
   const formatDate = (date) => {
-    return date.toISOString().split("T")[0]; // Gives YYYY-MM-DD
+    return date.toISOString().split("T")[0]; 
   };
   
 
-  // Group tasks by due date
+  
   const taskMap = tasks.reduce((acc, taskObj) => {
     const due = taskObj.task.dueDate;
     if (!acc[due]) acc[due] = [];
@@ -38,7 +38,7 @@ const CustomCalendar = ({ tasks = [] }) => {
   console.log("Calendar Date:", formatDate(date), "Task Dates:", Object.keys(taskMap));
 
 
-  // On date click, show tooltip
+  
   const onDateClick = (value) => {
     setDate(value);
     const formatted = formatDate(value);

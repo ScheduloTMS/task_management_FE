@@ -31,7 +31,7 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
         const transformedTasks = fetchedTasks.map(item => ({
           ...item.task,
           status: item.status,
-          taskid: item.task.id || `task-${Math.random().toString(36).substr(2, 9)}` // fallback if no id
+          taskid: item.task.id || `task-${Math.random().toString(36).substr(2, 9)}` 
         }));
         setTasks(transformedTasks);
       }
@@ -41,7 +41,7 @@ const KanbanBoard = ({ isMentor, onEditTask, onDeleteTask }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Check if we clicked outside any menu
+      
       if (activeMenu) {
         const menuElement = menuRefs.current[activeMenu];
         if (menuElement && !menuElement.contains(event.target)) {

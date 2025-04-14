@@ -30,7 +30,7 @@ const User = () => {
       <div className="user-initial-view" onClick={toggleDropdown}>
         {localPhoto ? (
           <img
-            key={photo} // still good to keep
+            key={photo} 
             src={`data:image/png;base64,${localPhoto}`}
             alt="User"
             className="user-avatar"

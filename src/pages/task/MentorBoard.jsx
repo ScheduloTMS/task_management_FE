@@ -11,7 +11,7 @@ const MentorBoard = () => {
   const additionalMenuItem = { label: "Team", path: "/team", icon: <IoPeople /> };
   const handleEditTask = (taskId) => {
     console.log("Edit task:", taskId);
-    // Your edit logic here
+    
   };
   
   const handleDeleteTask = (taskId) => {

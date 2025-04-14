@@ -117,7 +117,7 @@
   display: block;
 }
 
-/* Make sure table rows don't break */
+
 .task-table {
   table-layout: fixed;
   width: 100%;
